@@ -4,8 +4,8 @@ import com.example.saebackend.model.id.Id;
 import com.example.saebackend.model.property.Property;
 public interface PropertyRepositoryInterface {
 
-    public void create(Property property);
-    public void update(Id id, Property property);
-    public void delete(Id id);
+    public Property create(Property property);
+    public Property update(Property property);
+    public Property delete(Id id);
     public Property getById(Id id);
 }

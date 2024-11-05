@@ -2,36 +2,34 @@ package com.example.saebackend.services.property;
 
 import com.example.saebackend.model.id.Id;
 import com.example.saebackend.model.property.Property;
-import com.example.saebackend.repositories.PropertyRepository;
+import com.example.saebackend.repositories.MariaDBPropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.example.saebackend.model.error.Error;
 
 import java.util.ArrayList;
 
 @Service
 public class PropertyService implements PropertyServiceInterface{
-    private final PropertyRepository propertyRepository;
+    private final MariaDBPropertyRepository mariaDBPropertyRepository;
 
     @Autowired
-    public PropertyService(PropertyRepository propertyRepository) {
-        this.propertyRepository = propertyRepository;
+    public PropertyService(MariaDBPropertyRepository mariaDBPropertyRepository) {
+        this.mariaDBPropertyRepository = mariaDBPropertyRepository;
     }
 
     @Override
     public Object create(Property property) {
-        propertyRepository.create(property);
+        return mariaDBPropertyRepository.create(property);
     }
 
     @Override
-    public Object update(Id id, Property property) {
-
+    public Object update(Property property) {
+        return mariaDBPropertyRepository.update(property);
     }
 
     @Override
     public Object delete(Id id) {
-
+        return mariaDBPropertyRepository.delete(id);
     }
 
     @Override
