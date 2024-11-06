@@ -1,8 +1,6 @@
 package com.example.saebackend.model.property.rental;
 
-import com.example.saebackend.model.property.PropertyLocation;
-import com.example.saebackend.model.property.PropertyRoomData;
-import com.example.saebackend.model.property.PropertyType;
+import com.example.saebackend.model.property.*;
 
 import java.util.ArrayList;
 
@@ -17,10 +15,10 @@ public class RentalPropertyReadModel {
     private final int landArea;
     private final PropertyRoomData rooms;
     private final String orientation;
-    private final String energyClass;
+    private final EnergyClass energyClass;
     private final String view;
-    private final String climateClass;
-    private final int estimationCostEnergy;
+    private final ClimateClass climateClass;
+    private final double estimationCostEnergy;
     private final SubscriptionFrequency subscriptionFrequency;
 
     //================================================================================
@@ -29,8 +27,8 @@ public class RentalPropertyReadModel {
 
     public RentalPropertyReadModel(String title, PropertyType propertyType, double subscriptionPrice, String description,
                                    PropertyLocation location, ArrayList<String> images, int livingArea, int landArea,
-                                   PropertyRoomData rooms, String orientation, String energyClass, String view, String climateClass,
-                                   int estimationCostEnergy, SubscriptionFrequency subscriptionFrequency) {
+                                   PropertyRoomData rooms, String orientation, EnergyClass energyClass, String view, ClimateClass climateClass,
+                                   double estimationCostEnergy, SubscriptionFrequency subscriptionFrequency) {
         this.title = title;
         this.propertyType = propertyType;
         this.subscriptionPrice = subscriptionPrice;
@@ -83,7 +81,7 @@ public class RentalPropertyReadModel {
         return orientation;
     }
 
-    public String getEnergyClass() {
+    public EnergyClass getEnergyClass() {
         return energyClass;
     }
 
@@ -91,11 +89,11 @@ public class RentalPropertyReadModel {
         return view;
     }
 
-    public String getClimateClass() {
+    public ClimateClass getClimateClass() {
         return climateClass;
     }
 
-    public int getEstimationCostEnergy() {
+    public double getEstimationCostEnergy() {
         return estimationCostEnergy;
     }
 

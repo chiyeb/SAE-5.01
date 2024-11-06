@@ -15,17 +15,17 @@ public abstract class Property {
     private final int landArea;
     private final PropertyRoomData rooms;
     private final String orientation;
-    private final String energyClass;
+    private final EnergyClass energyClass;
     private final String view;
-    private final String climateClass;
-    private final int estimationCostEnergy;
+    private final ClimateClass climateClass;
+    private final double estimationCostEnergy;
     private final Id idOwner;
 
     //================================================================================
     // Constructor
     //================================================================================
 
-    public Property(Id id, PropertyType propertyType, String title, String description, PropertyLocation location, ArrayList<String> images, int livingArea, int landArea, PropertyRoomData rooms, String orientation, String energyClass, String view, String climateClass, int estimationCostEnergy, Id idOwner) {
+    public Property(Id id, PropertyType propertyType, String title, String description, PropertyLocation location, ArrayList<String> images, int livingArea, int landArea, PropertyRoomData rooms, String orientation, EnergyClass energyClass, String view, ClimateClass climateClass, double estimationCostEnergy, Id idOwner) {
         this.id = id;
         this.propertyType = propertyType;
         this.title = title;
@@ -92,7 +92,7 @@ public abstract class Property {
         return orientation;
     }
 
-    public String getEnergyClass() {
+    public EnergyClass getEnergyClass() {
         return energyClass;
     }
 
@@ -100,11 +100,11 @@ public abstract class Property {
         return view;
     }
 
-    public String getClimateClass() {
+    public ClimateClass getClimateClass() {
         return climateClass;
     }
 
-    public int getEstimationCostEnergy() {
+    public double getEstimationCostEnergy() {
         return estimationCostEnergy;
     }
 

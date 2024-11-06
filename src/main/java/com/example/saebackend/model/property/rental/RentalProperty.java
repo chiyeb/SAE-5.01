@@ -12,7 +12,7 @@ public class RentalProperty extends Property {
 
     public RentalProperty(Id id, PropertyType propertyType, String title, String description, PropertyLocation location,
                           ArrayList<String> images, int livingArea, int landArea, PropertyRoomData rooms, String orientation,
-                          String energyClass, String view, String climateClass, int estimationCostEnergy, Id idOwner,
+                          EnergyClass energyClass, String view, ClimateClass climateClass, double estimationCostEnergy, Id idOwner,
                           Id idRenter, SubscriptionFrequency subscriptionFrequency, double subscriptionPrice) {
         super(id, propertyType, title, description, location, images, livingArea, landArea, rooms, orientation,
                 energyClass, view, climateClass, estimationCostEnergy, idOwner);

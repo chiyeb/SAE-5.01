@@ -1,8 +1,6 @@
 package com.example.saebackend.model.property.purchasable;
 
-import com.example.saebackend.model.property.PropertyLocation;
-import com.example.saebackend.model.property.PropertyRoomData;
-import com.example.saebackend.model.property.PropertyType;
+import com.example.saebackend.model.property.*;
 
 import java.util.ArrayList;
 
@@ -18,10 +16,10 @@ public class PurchasablePropertyReadModel {
     private final int landArea;
     private final PropertyRoomData rooms;
     private final String orientation;
-    private final String energyClass;
+    private final EnergyClass energyClass;
     private final String view;
-    private final String climateClass;
-    private final int estimationCostEnergy;
+    private final ClimateClass climateClass;
+    private final double estimationCostEnergy;
 
     //================================================================================
     // Constructor
@@ -29,8 +27,8 @@ public class PurchasablePropertyReadModel {
 
     public PurchasablePropertyReadModel(PropertyType propertyType, String title, double price, String description,
                                         PropertyLocation location, ArrayList<String> images, int livingArea, int landArea,
-                                        PropertyRoomData rooms, String orientation, String energyClass, String view,
-                                        String climateClass, int estimationCostEnergy) {
+                                        PropertyRoomData rooms, String orientation, EnergyClass energyClass, String view,
+                                        ClimateClass climateClass, double estimationCostEnergy) {
         this.propertyType = propertyType;
         this.title = title;
         this.price = price;
@@ -92,7 +90,7 @@ public class PurchasablePropertyReadModel {
         return orientation;
     }
 
-    public String getEnergyClass() {
+    public EnergyClass getEnergyClass() {
         return energyClass;
     }
 
@@ -100,11 +98,11 @@ public class PurchasablePropertyReadModel {
         return view;
     }
 
-    public String getClimateClass() {
+    public ClimateClass getClimateClass() {
         return climateClass;
     }
 
-    public int getEstimationCostEnergy() {
+    public double getEstimationCostEnergy() {
         return estimationCostEnergy;
     }
 }
