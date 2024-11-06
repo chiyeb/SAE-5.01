@@ -1,13 +1,16 @@
-package com.example.saebackend.model.property;
+package com.example.saebackend.model.property.purchasable;
 
-import com.example.saebackend.model.id.Id;
+import com.example.saebackend.model.property.PropertyLocation;
+import com.example.saebackend.model.property.PropertyRoomData;
+import com.example.saebackend.model.property.PropertyType;
 
 import java.util.ArrayList;
 
-public abstract class Property {
-    private final Id id;
+public class PurchasablePropertyReadModel {
+
     private final PropertyType propertyType;
     private final String title;
+    private final double price;
     private final String description;
     private final PropertyLocation location;
     private final ArrayList<String> images;
@@ -19,16 +22,18 @@ public abstract class Property {
     private final String view;
     private final String climateClass;
     private final int estimationCostEnergy;
-    private final Id idOwner;
 
     //================================================================================
     // Constructor
     //================================================================================
 
-    public Property(Id id, PropertyType propertyType, String title, String description, PropertyLocation location, ArrayList<String> images, int livingArea, int landArea, PropertyRoomData rooms, String orientation, String energyClass, String view, String climateClass, int estimationCostEnergy, Id idOwner) {
-        this.id = id;
+    public PurchasablePropertyReadModel(PropertyType propertyType, String title, double price, String description,
+                                        PropertyLocation location, ArrayList<String> images, int livingArea, int landArea,
+                                        PropertyRoomData rooms, String orientation, String energyClass, String view,
+                                        String climateClass, int estimationCostEnergy) {
         this.propertyType = propertyType;
         this.title = title;
+        this.price = price;
         this.description = description;
         this.location = location;
         this.images = images;
@@ -40,23 +45,12 @@ public abstract class Property {
         this.view = view;
         this.climateClass = climateClass;
         this.estimationCostEnergy = estimationCostEnergy;
-        this.idOwner = idOwner;
     }
-
-    //================================================================================
-    // Methods
-    //================================================================================
-
-    public abstract Object getReadModel();
-    public abstract double getPriceOrSubscriptionPrice();
 
     //================================================================================
     // Getters
     //================================================================================
 
-    public Id getId() {
-        return id;
-    }
 
     public PropertyType getPropertyType() {
         return propertyType;
@@ -64,6 +58,10 @@ public abstract class Property {
 
     public String getTitle() {
         return title;
+    }
+
+    public double getPrice() {
+        return price;
     }
 
     public String getDescription() {
@@ -86,7 +84,9 @@ public abstract class Property {
         return landArea;
     }
 
-    public PropertyRoomData getRooms() {return rooms;}
+    public PropertyRoomData getRooms() {
+        return rooms;
+    }
 
     public String getOrientation() {
         return orientation;
@@ -107,9 +107,4 @@ public abstract class Property {
     public int getEstimationCostEnergy() {
         return estimationCostEnergy;
     }
-
-    public Id getIdOwner() {
-        return idOwner;
-    }
-
 }

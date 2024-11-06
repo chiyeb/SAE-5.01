@@ -1,13 +1,15 @@
-package com.example.saebackend.model.property;
+package com.example.saebackend.model.property.rental;
 
-import com.example.saebackend.model.id.Id;
+import com.example.saebackend.model.property.PropertyLocation;
+import com.example.saebackend.model.property.PropertyRoomData;
+import com.example.saebackend.model.property.PropertyType;
 
 import java.util.ArrayList;
 
-public abstract class Property {
-    private final Id id;
-    private final PropertyType propertyType;
+public class RentalPropertyReadModel {
     private final String title;
+    private final PropertyType propertyType;
+    private final double subscriptionPrice;
     private final String description;
     private final PropertyLocation location;
     private final ArrayList<String> images;
@@ -19,16 +21,19 @@ public abstract class Property {
     private final String view;
     private final String climateClass;
     private final int estimationCostEnergy;
-    private final Id idOwner;
+    private final SubscriptionFrequency subscriptionFrequency;
 
     //================================================================================
     // Constructor
     //================================================================================
 
-    public Property(Id id, PropertyType propertyType, String title, String description, PropertyLocation location, ArrayList<String> images, int livingArea, int landArea, PropertyRoomData rooms, String orientation, String energyClass, String view, String climateClass, int estimationCostEnergy, Id idOwner) {
-        this.id = id;
-        this.propertyType = propertyType;
+    public RentalPropertyReadModel(String title, PropertyType propertyType, double subscriptionPrice, String description,
+                                   PropertyLocation location, ArrayList<String> images, int livingArea, int landArea,
+                                   PropertyRoomData rooms, String orientation, String energyClass, String view, String climateClass,
+                                   int estimationCostEnergy, SubscriptionFrequency subscriptionFrequency) {
         this.title = title;
+        this.propertyType = propertyType;
+        this.subscriptionPrice = subscriptionPrice;
         this.description = description;
         this.location = location;
         this.images = images;
@@ -40,37 +45,23 @@ public abstract class Property {
         this.view = view;
         this.climateClass = climateClass;
         this.estimationCostEnergy = estimationCostEnergy;
-        this.idOwner = idOwner;
-    }
-
-    //================================================================================
-    // Methods
-    //================================================================================
-
-    public abstract Object getReadModel();
-    public abstract double getPriceOrSubscriptionPrice();
-
-    //================================================================================
-    // Getters
-    //================================================================================
-
-    public Id getId() {
-        return id;
-    }
-
-    public PropertyType getPropertyType() {
-        return propertyType;
+        this.subscriptionFrequency = subscriptionFrequency;
     }
 
     public String getTitle() {
         return title;
+    }
+    public PropertyType getPropertyType() {return propertyType;}
+
+    public double getSubscriptionPrice() {
+        return subscriptionPrice;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public PropertyLocation getLocation() {
+    public PropertyLocation getLocalisation() {
         return location;
     }
 
@@ -108,8 +99,5 @@ public abstract class Property {
         return estimationCostEnergy;
     }
 
-    public Id getIdOwner() {
-        return idOwner;
-    }
-
+    public SubscriptionFrequency getSubscriptionFrequency() {return subscriptionFrequency;}
 }
