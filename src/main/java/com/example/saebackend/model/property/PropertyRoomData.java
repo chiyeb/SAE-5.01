@@ -11,7 +11,6 @@ import java.util.HashSet;
 public class PropertyRoomData {
     private final HashMap<RoomType, Integer> rooms;
 
-    @JsonCreator
     public PropertyRoomData(HashMap<RoomType, Integer> rooms) {
         this.rooms = rooms;
     }
