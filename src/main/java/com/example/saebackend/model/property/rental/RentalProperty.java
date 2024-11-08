@@ -2,6 +2,9 @@ package com.example.saebackend.model.property.rental;
 
 import com.example.saebackend.model.id.Id;
 import com.example.saebackend.model.property.*;
+import com.example.saebackend.model.property.enums.ClimateClass;
+import com.example.saebackend.model.property.enums.EnergyClass;
+import com.example.saebackend.model.property.enums.PropertyType;
 
 import java.util.ArrayList;
 
@@ -29,7 +32,7 @@ public class RentalProperty extends Property {
     @Override
     public RentalPropertyReadModel getReadModel() {
         return new RentalPropertyReadModel(getTitle(), getPropertyType(), getSubscriptionPrice(), getDescription(),
-                getLocation(), getImages(), getLivingArea(), getLandArea(), getRooms(), getOrientation(), getEnergyClass(),
+                getLocation(), getImages(), getLivingArea(), getLandArea(), getRoomsData(), getOrientation(), getEnergyClass(),
                 getView(), getClimateClass(), getEstimationCostEnergy(), subscriptionFrequency);
     }
 

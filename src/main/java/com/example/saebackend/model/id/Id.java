@@ -2,7 +2,17 @@ package com.example.saebackend.model.id;
 
 import java.util.Objects;
 
-public record Id(String id) {
+public class Id {
+
+    private final String id;
+
+    public Id(String id) {
+        this.id = id;
+    }
+
+    public Id(){
+        this.id = java.util.UUID.randomUUID().toString();
+    }
 
     public static Id generate() {
         return new Id(java.util.UUID.randomUUID().toString());

@@ -1,15 +1,18 @@
 package com.example.saebackend.model.property;
 
 import com.example.saebackend.model.id.Id;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
 public class PropertyRoomData {
-    private final HashMap<RoomType, Id> rooms;
+    private final HashMap<RoomType, Integer> rooms;
 
-    public PropertyRoomData(HashMap<RoomType, Id> rooms) {
+    @JsonCreator
+    public PropertyRoomData(HashMap<RoomType, Integer> rooms) {
         this.rooms = rooms;
     }
 
@@ -17,7 +20,7 @@ public class PropertyRoomData {
     // Getters
     //================================================================================
 
-    public HashMap<RoomType, Id> getRooms() {
+    public HashMap<RoomType, Integer> getRooms() {
         return rooms;
     }
 

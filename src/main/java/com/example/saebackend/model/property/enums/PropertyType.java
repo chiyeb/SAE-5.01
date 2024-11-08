@@ -1,4 +1,4 @@
-package com.example.saebackend.model.property;
+package com.example.saebackend.model.property.enums;
 
 public enum PropertyType {
     HOUSE,

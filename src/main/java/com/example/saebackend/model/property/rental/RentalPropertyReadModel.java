@@ -1,6 +1,9 @@
 package com.example.saebackend.model.property.rental;
 
 import com.example.saebackend.model.property.*;
+import com.example.saebackend.model.property.enums.ClimateClass;
+import com.example.saebackend.model.property.enums.EnergyClass;
+import com.example.saebackend.model.property.enums.PropertyType;
 
 import java.util.ArrayList;
 

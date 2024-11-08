@@ -2,6 +2,8 @@ package com.example.saebackend.controllers;
 
 import com.example.saebackend.model.id.Id;
 import com.example.saebackend.model.property.Property;
+import com.example.saebackend.model.property.purchasable.PurchasableProperty;
+import com.example.saebackend.model.property.rental.RentalProperty;
 import com.example.saebackend.services.property.PropertyHandler;
 import com.google.gson.Gson;
 import org.springframework.http.MediaType;
@@ -19,10 +21,21 @@ public class PropertyController {
         this.gson = new Gson();
     }
 
-    //TODO: Implement controller methods (create, update, delete, etc.)
+    // TODO: FAIRE MARCHER CETTE PUTAIN DE FONCTION DE MERDE | j'arrive pas à trouver réelement le probleme ...
+    @PostMapping(value = "/create/rental", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createProperty(@RequestBody RentalProperty property) {
+        if (property == null) {
+            return ResponseEntity.badRequest().body("Property is null");
+        }
+        Object createdProperty = propertyHandler.create(property);
+        return ResponseEntity.ok(createdProperty);
+    }
 
-    @PostMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createProperty(@RequestBody Property property) {
+    @PostMapping(value = "/create/purchasable", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createProperty(@RequestBody PurchasableProperty property) {
+        if (property == null) {
+            return ResponseEntity.badRequest().body("Property is null");
+        }
         Object createdProperty = propertyHandler.create(property);
         return ResponseEntity.ok(createdProperty);
     }

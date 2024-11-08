@@ -1,6 +1,9 @@
 package com.example.saebackend.model.property;
 
 import com.example.saebackend.model.id.Id;
+import com.example.saebackend.model.property.enums.ClimateClass;
+import com.example.saebackend.model.property.enums.EnergyClass;
+import com.example.saebackend.model.property.enums.PropertyType;
 
 import java.util.ArrayList;
 
@@ -22,7 +25,7 @@ public abstract class Property {
     private final Id idOwner;
 
     //================================================================================
-    // Constructor
+    // Constructor with Id
     //================================================================================
 
     public Property(Id id, PropertyType propertyType, String title, String description, PropertyLocation location, ArrayList<String> images, int livingArea, int landArea, PropertyRoomData rooms, String orientation, EnergyClass energyClass, String view, ClimateClass climateClass, double estimationCostEnergy, Id idOwner) {
@@ -43,6 +46,23 @@ public abstract class Property {
         this.idOwner = idOwner;
     }
 
+    public Property(PropertyType propertyType, String title, String description, PropertyLocation location, ArrayList<String> images, int livingArea, int landArea, PropertyRoomData rooms, String orientation, EnergyClass energyClass, String view, ClimateClass climateClass, double estimationCostEnergy, Id idOwner) {
+        this.id = new Id();
+        this.propertyType = propertyType;
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.images = images;
+        this.livingArea = livingArea;
+        this.landArea = landArea;
+        this.rooms = rooms;
+        this.orientation = orientation;
+        this.energyClass = energyClass;
+        this.view = view;
+        this.climateClass = climateClass;
+        this.estimationCostEnergy = estimationCostEnergy;
+        this.idOwner = idOwner;
+    }
     //================================================================================
     // Methods
     //================================================================================
@@ -86,7 +106,7 @@ public abstract class Property {
         return landArea;
     }
 
-    public PropertyRoomData getRooms() {return rooms;}
+    public PropertyRoomData  getRoomsData() {return rooms;}
 
     public String getOrientation() {
         return orientation;
