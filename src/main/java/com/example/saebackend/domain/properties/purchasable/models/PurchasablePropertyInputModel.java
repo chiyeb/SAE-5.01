@@ -1,13 +1,11 @@
 package com.example.saebackend.domain.properties.purchasable.models;
 
 import com.example.saebackend.domain.properties.models.PropertyLocationModel;
-import com.example.saebackend.domain.properties.models.PropertyReadModel;
 import com.example.saebackend.domain.properties.models.RoomCountModel;
 
 import java.util.List;
 
-public record PurchasablePropertyReadModel(
-        String id,
+public record PurchasablePropertyInputModel(
         String type,
         String title,
         String description,
@@ -21,4 +19,4 @@ public record PurchasablePropertyReadModel(
         String energyClass,
         String climateClass,
         String view,
-        double estimationCostEnergy) implements PropertyReadModel {}
+        double estimationCostEnergy) {}

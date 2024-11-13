@@ -6,16 +6,16 @@ public class Id {
 
     private final String id;
 
-    public Id(String id) {
+    private Id(String id) {
         this.id = id;
-    }
-
-    public Id(){
-        this.id = java.util.UUID.randomUUID().toString();
     }
 
     public static Id generate() {
         return new Id(java.util.UUID.randomUUID().toString());
+    }
+
+    public String toString() {
+        return id;
     }
 
     public static Id fromString(String id) {

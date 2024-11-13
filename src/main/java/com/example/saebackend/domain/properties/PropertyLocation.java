@@ -1,5 +1,7 @@
 package com.example.saebackend.domain.properties;
 
+import com.example.saebackend.domain.properties.models.PropertyLocationModel;
+
 public class PropertyLocation {
 
     private final double latitude;
@@ -16,6 +18,14 @@ public class PropertyLocation {
         this.city = city;
         this.postalCode = postalCode;
         this.country = country;
+    }
+
+    public static PropertyLocation createFromModel(PropertyLocationModel propertyLocationModel){
+        return new PropertyLocation(propertyLocationModel.latitude(), propertyLocationModel.longitude(), propertyLocationModel.address(), propertyLocationModel.city(), propertyLocationModel.postalCode(), propertyLocationModel.country());
+    }
+
+    public PropertyLocationModel readModel() {
+        return new PropertyLocationModel(latitude, longitude, address, city, postalCode, country);
     }
 
     //================================================================================

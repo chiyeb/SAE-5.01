@@ -1,7 +1,6 @@
 package com.example.saebackend.domain.properties.enums;
 
 public enum EnergyClass {
-
     A,
     B,
     C,
