@@ -1,11 +1,12 @@
-package com.example.saebackend.repositories;
+package com.example.saebackend.data;
 
-import com.example.saebackend.model.id.Id;
-import com.example.saebackend.model.property.Property;
+import com.example.saebackend.domain.id.Id;
+import com.example.saebackend.domain.properties.Property;
+import com.example.saebackend.repositories.PropertyRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MariaDBPropertyRepository implements PropertyRepositoryInterface {
+public class MariaDBPropertyRepository implements PropertyRepository {
 
     @Override
     public Property create(Property property) {

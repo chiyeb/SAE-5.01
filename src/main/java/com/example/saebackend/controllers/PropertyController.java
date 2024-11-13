@@ -1,9 +1,9 @@
 package com.example.saebackend.controllers;
 
-import com.example.saebackend.model.id.Id;
-import com.example.saebackend.model.property.Property;
-import com.example.saebackend.model.property.purchasable.PurchasableProperty;
-import com.example.saebackend.model.property.rental.RentalProperty;
+import com.example.saebackend.domain.id.Id;
+import com.example.saebackend.domain.properties.Property;
+import com.example.saebackend.domain.properties.purchasable.PurchasableProperty;
+import com.example.saebackend.domain.properties.rental.RentalProperty;
 import com.example.saebackend.services.property.PropertyHandler;
 import com.google.gson.Gson;
 import org.springframework.http.MediaType;

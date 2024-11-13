@@ -1,4 +1,4 @@
-package com.example.saebackend.model.property.rental;
+package com.example.saebackend.domain.properties.rental;
 
 public enum SubscriptionFrequency {
     DAILY,

@@ -1,4 +1,4 @@
-package com.example.saebackend.model.error;
+package com.example.saebackend.domain.exceptions;
 
 public class Error {
 

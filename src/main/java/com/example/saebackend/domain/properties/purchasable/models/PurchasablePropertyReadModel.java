@@ -1,16 +1,17 @@
-package com.example.saebackend.model.property.rental;
+package com.example.saebackend.domain.properties.purchasable.models;
 
-import com.example.saebackend.model.property.*;
-import com.example.saebackend.model.property.enums.ClimateClass;
-import com.example.saebackend.model.property.enums.EnergyClass;
-import com.example.saebackend.model.property.enums.PropertyType;
+import com.example.saebackend.domain.properties.*;
+import com.example.saebackend.domain.properties.enums.ClimateClass;
+import com.example.saebackend.domain.properties.enums.EnergyClass;
+import com.example.saebackend.domain.properties.enums.PropertyType;
 
 import java.util.ArrayList;
 
-public class RentalPropertyReadModel {
-    private final String title;
+public class PurchasablePropertyReadModel {
+
     private final PropertyType propertyType;
-    private final double subscriptionPrice;
+    private final String title;
+    private final double price;
     private final String description;
     private final PropertyLocation location;
     private final ArrayList<String> images;
@@ -22,19 +23,18 @@ public class RentalPropertyReadModel {
     private final String view;
     private final ClimateClass climateClass;
     private final double estimationCostEnergy;
-    private final SubscriptionFrequency subscriptionFrequency;
 
     //================================================================================
     // Constructor
     //================================================================================
 
-    public RentalPropertyReadModel(String title, PropertyType propertyType, double subscriptionPrice, String description,
-                                   PropertyLocation location, ArrayList<String> images, int livingArea, int landArea,
-                                   PropertyRoomData rooms, String orientation, EnergyClass energyClass, String view, ClimateClass climateClass,
-                                   double estimationCostEnergy, SubscriptionFrequency subscriptionFrequency) {
-        this.title = title;
+    public PurchasablePropertyReadModel(PropertyType propertyType, String title, double price, String description,
+                                        PropertyLocation location, ArrayList<String> images, int livingArea, int landArea,
+                                        PropertyRoomData rooms, String orientation, EnergyClass energyClass, String view,
+                                        ClimateClass climateClass, double estimationCostEnergy) {
         this.propertyType = propertyType;
-        this.subscriptionPrice = subscriptionPrice;
+        this.title = title;
+        this.price = price;
         this.description = description;
         this.location = location;
         this.images = images;
@@ -46,23 +46,30 @@ public class RentalPropertyReadModel {
         this.view = view;
         this.climateClass = climateClass;
         this.estimationCostEnergy = estimationCostEnergy;
-        this.subscriptionFrequency = subscriptionFrequency;
+    }
+
+    //================================================================================
+    // Getters
+    //================================================================================
+
+
+    public PropertyType getPropertyType() {
+        return propertyType;
     }
 
     public String getTitle() {
         return title;
     }
-    public PropertyType getPropertyType() {return propertyType;}
 
-    public double getSubscriptionPrice() {
-        return subscriptionPrice;
+    public double getPrice() {
+        return price;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public PropertyLocation getLocalisation() {
+    public PropertyLocation getLocation() {
         return location;
     }
 
@@ -78,7 +85,9 @@ public class RentalPropertyReadModel {
         return landArea;
     }
 
-    public PropertyRoomData getRooms() {return rooms;}
+    public PropertyRoomData getRooms() {
+        return rooms;
+    }
 
     public String getOrientation() {
         return orientation;
@@ -99,6 +108,4 @@ public class RentalPropertyReadModel {
     public double getEstimationCostEnergy() {
         return estimationCostEnergy;
     }
-
-    public SubscriptionFrequency getSubscriptionFrequency() {return subscriptionFrequency;}
 }

@@ -1,8 +1,8 @@
 package com.example.saebackend.repositories;
 
-import com.example.saebackend.model.id.Id;
-import com.example.saebackend.model.property.Property;
-public interface PropertyRepositoryInterface {
+import com.example.saebackend.domain.id.Id;
+import com.example.saebackend.domain.properties.Property;
+public interface PropertyRepository {
 
     public Property create(Property property);
     public Property update(Property property);

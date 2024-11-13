@@ -1,4 +1,4 @@
-package com.example.saebackend.model.id;
+package com.example.saebackend.domain.id;
 
 import java.util.Objects;
 

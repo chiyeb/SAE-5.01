@@ -1,4 +1,4 @@
-package com.example.saebackend.model.property;
+package com.example.saebackend.domain.properties;
 
 public class PropertyLocation {
 

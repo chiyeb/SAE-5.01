@@ -1,7 +1,7 @@
 package com.example.saebackend.services.property;
 
-import com.example.saebackend.model.id.Id;
-import com.example.saebackend.model.property.Property;
+import com.example.saebackend.domain.id.Id;
+import com.example.saebackend.domain.properties.Property;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

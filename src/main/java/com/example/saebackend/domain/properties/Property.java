@@ -1,9 +1,9 @@
-package com.example.saebackend.model.property;
+package com.example.saebackend.domain.properties;
 
-import com.example.saebackend.model.id.Id;
-import com.example.saebackend.model.property.enums.ClimateClass;
-import com.example.saebackend.model.property.enums.EnergyClass;
-import com.example.saebackend.model.property.enums.PropertyType;
+import com.example.saebackend.domain.id.Id;
+import com.example.saebackend.domain.properties.enums.ClimateClass;
+import com.example.saebackend.domain.properties.enums.EnergyClass;
+import com.example.saebackend.domain.properties.enums.PropertyType;
 
 import java.util.ArrayList;
 

@@ -1,13 +1,14 @@
-package com.example.saebackend.repositories;
+package com.example.saebackend.data;
 
-import com.example.saebackend.model.id.Id;
-import com.example.saebackend.model.property.Property;
+import com.example.saebackend.domain.id.Id;
+import com.example.saebackend.domain.properties.Property;
+import com.example.saebackend.repositories.PropertyRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 
 @Repository
-public class InMemoryPropertyRepository implements PropertyRepositoryInterface{
+public class InMemoryPropertyRepository implements PropertyRepository {
 
     private final HashMap<Id, Property> properties = new HashMap<>();
 

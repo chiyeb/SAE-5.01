@@ -1,17 +1,17 @@
-package com.example.saebackend.model.property.purchasable;
+package com.example.saebackend.domain.properties.rental.models;
 
-import com.example.saebackend.model.property.*;
-import com.example.saebackend.model.property.enums.ClimateClass;
-import com.example.saebackend.model.property.enums.EnergyClass;
-import com.example.saebackend.model.property.enums.PropertyType;
+import com.example.saebackend.domain.properties.*;
+import com.example.saebackend.domain.properties.enums.ClimateClass;
+import com.example.saebackend.domain.properties.enums.EnergyClass;
+import com.example.saebackend.domain.properties.enums.PropertyType;
+import com.example.saebackend.domain.properties.rental.SubscriptionFrequency;
 
 import java.util.ArrayList;
 
-public class PurchasablePropertyReadModel {
-
-    private final PropertyType propertyType;
+public class RentalPropertyReadModel {
     private final String title;
-    private final double price;
+    private final PropertyType propertyType;
+    private final double subscriptionPrice;
     private final String description;
     private final PropertyLocation location;
     private final ArrayList<String> images;
@@ -23,18 +23,19 @@ public class PurchasablePropertyReadModel {
     private final String view;
     private final ClimateClass climateClass;
     private final double estimationCostEnergy;
+    private final SubscriptionFrequency subscriptionFrequency;
 
     //================================================================================
     // Constructor
     //================================================================================
 
-    public PurchasablePropertyReadModel(PropertyType propertyType, String title, double price, String description,
-                                        PropertyLocation location, ArrayList<String> images, int livingArea, int landArea,
-                                        PropertyRoomData rooms, String orientation, EnergyClass energyClass, String view,
-                                        ClimateClass climateClass, double estimationCostEnergy) {
-        this.propertyType = propertyType;
+    public RentalPropertyReadModel(String title, PropertyType propertyType, double subscriptionPrice, String description,
+                                   PropertyLocation location, ArrayList<String> images, int livingArea, int landArea,
+                                   PropertyRoomData rooms, String orientation, EnergyClass energyClass, String view, ClimateClass climateClass,
+                                   double estimationCostEnergy, SubscriptionFrequency subscriptionFrequency) {
         this.title = title;
-        this.price = price;
+        this.propertyType = propertyType;
+        this.subscriptionPrice = subscriptionPrice;
         this.description = description;
         this.location = location;
         this.images = images;
@@ -46,30 +47,23 @@ public class PurchasablePropertyReadModel {
         this.view = view;
         this.climateClass = climateClass;
         this.estimationCostEnergy = estimationCostEnergy;
-    }
-
-    //================================================================================
-    // Getters
-    //================================================================================
-
-
-    public PropertyType getPropertyType() {
-        return propertyType;
+        this.subscriptionFrequency = subscriptionFrequency;
     }
 
     public String getTitle() {
         return title;
     }
+    public PropertyType getPropertyType() {return propertyType;}
 
-    public double getPrice() {
-        return price;
+    public double getSubscriptionPrice() {
+        return subscriptionPrice;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public PropertyLocation getLocation() {
+    public PropertyLocation getLocalisation() {
         return location;
     }
 
@@ -85,9 +79,7 @@ public class PurchasablePropertyReadModel {
         return landArea;
     }
 
-    public PropertyRoomData getRooms() {
-        return rooms;
-    }
+    public PropertyRoomData getRooms() {return rooms;}
 
     public String getOrientation() {
         return orientation;
@@ -108,4 +100,6 @@ public class PurchasablePropertyReadModel {
     public double getEstimationCostEnergy() {
         return estimationCostEnergy;
     }
+
+    public SubscriptionFrequency getSubscriptionFrequency() {return subscriptionFrequency;}
 }

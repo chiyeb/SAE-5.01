@@ -1,9 +1,8 @@
 package com.example.saebackend.services.property;
 
-import com.example.saebackend.model.id.Id;
-import com.example.saebackend.model.property.Property;
-import com.example.saebackend.repositories.InMemoryPropertyRepository;
-import com.example.saebackend.repositories.MariaDBPropertyRepository;
+import com.example.saebackend.domain.id.Id;
+import com.example.saebackend.domain.properties.Property;
+import com.example.saebackend.data.InMemoryPropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

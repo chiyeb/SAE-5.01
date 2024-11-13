@@ -1,6 +1,6 @@
-package com.example.saebackend.model.property;
+package com.example.saebackend.domain.properties;
 
-import com.example.saebackend.model.id.Id;
+import com.example.saebackend.domain.id.Id;
 
 public class RoomType {
     private final Id id;

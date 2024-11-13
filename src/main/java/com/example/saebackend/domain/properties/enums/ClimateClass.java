@@ -1,6 +1,6 @@
-package com.example.saebackend.model.property.enums;
+package com.example.saebackend.domain.properties.enums;
 
-public enum EnergyClass {
+public enum ClimateClass {
 
     A,
     B,
@@ -10,8 +10,8 @@ public enum EnergyClass {
     F,
     G;
 
-    public static EnergyClass fromString(String energyClass) {
-        return switch (energyClass) {
+    public static ClimateClass fromString(String climateClass) {
+        return switch (climateClass) {
             case "A" -> A;
             case "B" -> B;
             case "C" -> C;
@@ -23,8 +23,8 @@ public enum EnergyClass {
         };
     }
 
-    public static String toString(EnergyClass energyClass) {
-        return switch (energyClass) {
+    public static String toString(ClimateClass climateClass) {
+        return switch (climateClass) {
             case A -> "A";
             case B -> "B";
             case C -> "C";
