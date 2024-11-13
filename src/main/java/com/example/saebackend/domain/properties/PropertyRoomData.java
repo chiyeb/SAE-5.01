@@ -1,12 +1,10 @@
-package com.example.saebackend.model.property;
+package com.example.saebackend.domain.properties;
 
-import com.example.saebackend.model.id.Id;
-import com.fasterxml.jackson.annotation.JsonCreator;
+import com.example.saebackend.domain.properties.RoomType;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+
 
 public class PropertyRoomData {
     private final HashMap<RoomType, Integer> rooms;
