@@ -1,6 +1,5 @@
 package com.example.saebackend.domain.properties;
 
-import com.example.saebackend.domain.properties.RoomType;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
