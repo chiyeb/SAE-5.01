@@ -1,4 +1,4 @@
-package com.example.saebackend.repositories;
+package com.example.saebackend.repositories.temp;
 
 import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.properties.Property;

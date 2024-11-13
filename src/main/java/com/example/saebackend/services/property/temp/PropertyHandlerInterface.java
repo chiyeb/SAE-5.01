@@ -1,4 +1,4 @@
-package com.example.saebackend.services.property;
+package com.example.saebackend.services.property.temp;
 
 import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.properties.Property;

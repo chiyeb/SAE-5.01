@@ -1,8 +1,8 @@
-package com.example.saebackend.data;
+package com.example.saebackend.data.temp;
 
 import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.properties.Property;
-import com.example.saebackend.repositories.PropertyRepository;
+import com.example.saebackend.repositories.temp.PropertyRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
