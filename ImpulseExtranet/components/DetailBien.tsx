@@ -42,24 +42,27 @@ const Detail: React.FC<DetailProps> = ({
   onDelete,
 }) => {
   // États pour chaque variable
+  const [type, setType] = useState<string>(""); // type du bien
   const [title, setTitle] = useState<string>(initialTitle);
   const [description, setDescription] = useState<string>(initialDescription);
   const [price, setPrice] = useState<string>(initialPrice?.toString());
   const [location, setLocation] = useState<Location>(initialLocation);  // Utilisation de l'objet location
   const [photo, setPhoto] = useState<string>("");
-  const [livingArea, setlivingArea] = useState<string>(initiallivingArea?.toString() ?? "");
-  const [landArea, setlandArea] = useState<string>(initiallandArea?.toString());
+  const [livingArea, setLivingArea] = useState<string>(initiallivingArea?.toString() ?? "");
+  const [landArea, setLandArea] = useState<string>(initiallandArea?.toString());
   const [orientation, setOrientation] = useState<string>(initialOrientation);
   const [view, setView] = useState<string>(initialView);
-  const [performance, setPerformance] = useState<string>(""); // Classe de performance énergétique
+  const [energyClass, setEnergyClass] = useState<string>(""); // Classe de performance énergétique
+  const [climateClass, setClimateClass] = useState<string>(""); // Classe climat énergétique
   const [estimationCostEnergy, setestimationCostEnergy] = useState<string>(initialestimationCostEnergy);
-  const [proprietaire, setProprietaire] = useState<string>("Sélectionnez un propriétaire"); // Propriétaire
+  
   // In Detail component
 const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
 
   // État pour gérer l'onglet sélectionné dans la modal
   const [selectedTab, setSelectedTab] = useState('details');
   const getBienData = () => ({
+    type,
     title,
     description,
     price: parseFloat(price),
@@ -69,9 +72,9 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
     rooms,
     orientation,
     view,
-    performance,
+    energyClass,
     estimationCostEnergy,
-    proprietaire,
+    climateClass,
   });
 
   const handleSave = () => {
@@ -100,6 +103,18 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
         <View style={styles.textContainer}>
           {/* Sélecteur d'onglets */}
           <TabSelector selectedTab={selectedTab} onTabSelect={setSelectedTab} />
+
+          <ThemedText type="defaultSemiBold">Performance énergétique</ThemedText>
+          <RNPickerSelect
+            style={pickerSelectStyles}
+            onValueChange={setType}
+            value={type}
+            placeholder={{ label: 'Sélectionnez le type du bien', value: null }}
+            items={[
+              { label: 'Maison', value: 'Maison' },
+              { label: 'Appartement', value: 'Appartement' },
+            ]}
+          />
 
           <ThemedText type="defaultSemiBold">Titre du bien</ThemedText>
           <TextInput style={styles.input} value={title} onChangeText={setTitle} placeholder="Titre" />
@@ -158,7 +173,7 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
           <TextInput
             style={styles.input}
             value={livingArea}
-            onChangeText={setlivingArea}
+            onChangeText={setLivingArea}
             placeholder="Surface Habitable (m²)"
             keyboardType="numeric"
           />
@@ -167,7 +182,7 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
           <TextInput
             style={styles.input}
             value={landArea}
-            onChangeText={setlandArea}
+            onChangeText={setLandArea}
             placeholder="Surface Terrain (m²)"
             keyboardType="numeric"
           />
@@ -186,28 +201,49 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
           <ThemedText type="defaultSemiBold">Performance énergétique</ThemedText>
           <RNPickerSelect
             style={pickerSelectStyles}
-            onValueChange={setPerformance}
-            value={performance}
+            onValueChange={setEnergyClass}
+            value={energyClass}
+            placeholder={{ label: 'Sélectionnez une classe énergétique', value: null }}
             items={[
               { label: 'Classe A', value: 'A' },
               { label: 'Classe B', value: 'B' },
               { label: 'Classe C', value: 'C' },
+              { label: 'Classe D', value: 'D' },
+              { label: 'Classe E', value: 'E' },
+              { label: 'Classe F', value: 'F' },
+              { label: 'Classe G', value: 'G' },
             ]}
           />
+          {/* Affichage de la classe énergétique sélectionnée */}
+          <Text >
+            Classe énergétique sélectionnée : {energyClass ? energyClass : 'Aucune classe sélectionnée'}
+          </Text>
+          <ThemedText type="defaultSemiBold">Propriétaire</ThemedText>
+          <RNPickerSelect
+            style={pickerSelectStyles}
+            onValueChange={setClimateClass}
+            value={climateClass}
+            placeholder={{ label: 'Sélectionnez une classe climatique...', value: null }}
+            items={[
+              { label: 'Classe A', value: 'A' },
+              { label: 'Classe B', value: 'B' },
+              { label: 'Classe C', value: 'C' },
+              { label: 'Classe D', value: 'D' },
+              { label: 'Classe E', value: 'E' },
+              { label: 'Classe F', value: 'F' },
+              { label: 'Classe G', value: 'G' },
+            ]}
+          />
+          {/* Affichage de la classe énergétique sélectionnée */}
+      <Text >
+        Classe énergétique sélectionnée : {climateClass ? climateClass : 'Aucune classe sélectionnée'}
+      </Text>
+          
 
           <ThemedText type="defaultSemiBold">Estimation des coûts annuels d'énergie</ThemedText>
           <TextInput style={styles.input} value={estimationCostEnergy} onChangeText={setestimationCostEnergy} placeholder="Estimation des coûts" />
 
-          <ThemedText type="defaultSemiBold">Propriétaire</ThemedText>
-          <RNPickerSelect
-            style={pickerSelectStyles}
-            onValueChange={setProprietaire}
-            value={proprietaire}
-            items={[
-              { label: 'Jean Dupont', value: 'jean' },
-              { label: 'Marie Durand', value: 'marie' },
-            ]}
-          />
+          
         </View>
         {/* Boutons Enregistrer et Supprimer */}
         <TouchableOpacity onPress={handleSave} style={styles.button}>

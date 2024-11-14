@@ -25,7 +25,8 @@ interface BienProps {
   view: string;
   estimationCostEnergy: string;  // Estimation des coûts annuels d'énergie
   rooms: { roomType: string; count: number }[];  // Liste des pièces et leur nombre
-  energyClass:string
+  energyClass:string,
+  climateClass:string,
 }
 
 export default function Bien({
@@ -44,7 +45,8 @@ export default function Bien({
   view,
   estimationCostEnergy,
   rooms = [], // Valeur par défaut pour rooms (vide si non fourni)
-  energyClass
+  energyClass,
+  climateClass
 }: BienProps) {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -111,16 +113,15 @@ export default function Bien({
             <Text style={styles.modalText}>Code Postal: {location?.postalCode}</Text>
             <Text style={styles.modalText}>Surface Habitable: {livingArea} m²</Text>
             <Text style={styles.modalText}>Surface Terrain: {landArea} m²</Text>
+            {/* Affichage des pièces */}
+            
+              <ThemedText type="defaultSemiBold">Pièces : </ThemedText>{renderRooms()}  
+            
             <Text style={styles.modalText}>Orientation: {orientation}</Text>
             <Text style={styles.modalText}>Vue: {view}</Text>
             <Text style={styles.modalText}>Estimation des coûts annuels d'énergie: {estimationCostEnergy} €</Text>
-
-            {/* Affichage des pièces */}
-            <View style={styles.roomsContainer}>
-              <ThemedText type="defaultSemiBold">Pièces :</ThemedText>
-              {renderRooms()}
-            </View>
             <Text style={styles.modalText}>Performance énergétique: {energyClass} </Text>
+            <Text style={styles.modalText}>Classe climat : {climateClass} </Text>
 
             <TouchableOpacity onPress={closeModal} style={styles.buttonClose}>
               <Text style={styles.buttonText}>Fermer</Text>
@@ -209,9 +210,5 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 16,
-  },
-  roomsContainer: {
-    marginTop: 10,
-    paddingLeft: 10,
   },
 });
