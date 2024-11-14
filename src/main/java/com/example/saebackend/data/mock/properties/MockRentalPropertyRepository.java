@@ -9,6 +9,7 @@ import com.example.saebackend.domain.properties.enums.EnergyClass;
 import com.example.saebackend.domain.properties.enums.PropertyType;
 import com.example.saebackend.domain.properties.rental.RentalProperty;
 import com.example.saebackend.domain.properties.rental.SubscriptionFrequency;
+import com.example.saebackend.domain.properties.rental.models.RentalPropertyInputModel;
 import com.example.saebackend.repositories.RentalPropertyRepository;
 import org.springframework.stereotype.Repository;
 
@@ -109,13 +110,10 @@ public class MockRentalPropertyRepository implements RentalPropertyRepository {
     }
 
     @Override
-    public RentalProperty update(Id id, RentalProperty RentalProperty) {
-        final int index = properties.indexOf(getById(id));
-        if (index == -1) {
-            return null;
-        }
-        properties.set(index, RentalProperty);
-        return RentalProperty;
+    public RentalProperty update(Id id, RentalPropertyInputModel updateData) {
+        RentalProperty propertyToUpdate = getById(id);
+        if (propertyToUpdate == null) return null;
+        return propertyToUpdate.updateFromModel(updateData);
     }
 
     @Override

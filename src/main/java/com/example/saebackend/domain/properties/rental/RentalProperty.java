@@ -13,8 +13,8 @@ import java.util.List;
 
 public class RentalProperty extends Property {
     //    private final Id idRenter; TODO("Au lieu de stocker seulement l'id renter, on devrait stocker un objet User qui contient l'id et le nom de locataire")
-    private final SubscriptionFrequency subscriptionFrequency;
-    private final double subscriptionPrice;
+    private SubscriptionFrequency subscriptionFrequency;
+    private double subscriptionPrice;
 
     private RentalProperty(Id id, PropertyType type, String title, String description, PropertyLocation location, List<String> images, double livingArea, double landArea, PropertyRoomData rooms, String orientation, EnergyClass energyClass, ClimateClass climateClass, String view, double estimationCostEnergy, SubscriptionFrequency subscriptionFrequency, double subscriptionPrice) {
         super(id, type, title, description, location, images, livingArea, landArea, rooms, orientation, energyClass, climateClass, view, estimationCostEnergy);
@@ -53,6 +53,25 @@ public class RentalProperty extends Property {
     // Methods
     //================================================================================
 
+    public RentalProperty updateFromModel(RentalPropertyInputModel model) {
+        setType(PropertyType.fromString(model.type()));
+        setTitle(model.title());
+        setDescription(model.description());
+        setLocation(PropertyLocation.createFromModel(model.location()));
+        setImages(model.images());
+        setLivingArea(model.livingArea());
+        setLandArea(model.landArea());
+        setRooms(PropertyRoomData.createFromModel(model.rooms()));
+        setOrientation(model.orientation());
+        setEnergyClass(EnergyClass.fromString(model.energyClass()));
+        setClimateClass(ClimateClass.fromString(model.climateClass()));
+        setView(model.view());
+        setEstimationCostEnergy(model.estimationCostEnergy());
+        setPriceOrSubscriptionPrice(model.price());
+        setSubscriptionFrequency(SubscriptionFrequency.fromString(model.subscriptionFrequency()));
+        return this;
+    }
+
     @Override
     public PropertyReadModel readModel() {
         return new RentalPropertyReadModel(
@@ -62,8 +81,8 @@ public class RentalProperty extends Property {
                 getDescription(),
                 getLocation().readModel(),
                 getImages(),
-                getSubscriptionPrice(),
-                subscriptionFrequency.toString(),
+                getPriceOrSubscriptionPrice(),
+                getSubscriptionFrequency().toString(),
                 getLivingArea(),
                 getLandArea(),
                 getRooms().readModel(),
@@ -80,6 +99,11 @@ public class RentalProperty extends Property {
         return subscriptionPrice;
     }
 
+    @Override
+    public void setPriceOrSubscriptionPrice(double priceOrSubscriptionPrice) {
+        this.subscriptionPrice = priceOrSubscriptionPrice;
+    }
+
     //================================================================================
     // Getters
     //================================================================================
@@ -88,6 +112,7 @@ public class RentalProperty extends Property {
 
     public SubscriptionFrequency getSubscriptionFrequency() {return subscriptionFrequency;}
 
-    public double getSubscriptionPrice() {return subscriptionPrice;}
-
+    public void setSubscriptionFrequency(SubscriptionFrequency subscriptionFrequency) {
+        this.subscriptionFrequency = subscriptionFrequency;
+    }
 }

@@ -2,6 +2,7 @@ package com.example.saebackend.repositories;
 
 import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.properties.purchasable.PurchasableProperty;
+import com.example.saebackend.domain.properties.purchasable.models.PurchasablePropertyInputModel;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface PurchasablePropertyRepository { // TODO(y a t-il besoin de deux
 
     List<PurchasableProperty> getAll();
 
-    PurchasableProperty update(Id id, PurchasableProperty purchasableProperty);
+    PurchasableProperty update(Id id, PurchasablePropertyInputModel propertyModel);
 
     boolean deleteById(Id id);
 }

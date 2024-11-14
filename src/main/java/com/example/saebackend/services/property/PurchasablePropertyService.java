@@ -32,8 +32,8 @@ public class PurchasablePropertyService { // TODO(Les deux classes propertyservi
         return purchasablePropertyRepository.getAll().stream().map(PurchasableProperty::readModel).toList();
     }
 
-    public PropertyReadModel update(String id, PurchasablePropertyInputModel propertyModel) {
-        PurchasableProperty purchasableProperty = purchasablePropertyRepository.update(Id.fromString(id), PurchasableProperty.createFromModel(propertyModel));
+    public PropertyReadModel update(String id, PurchasablePropertyInputModel propertyModel) { //
+        PurchasableProperty purchasableProperty = purchasablePropertyRepository.update(Id.fromString(id), propertyModel);
         if (purchasableProperty == null) throw NotFoundException.propertyNotFound(id);
         return purchasableProperty.readModel();
     }

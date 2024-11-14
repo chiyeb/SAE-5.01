@@ -2,6 +2,7 @@ package com.example.saebackend.repositories;
 
 import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.properties.rental.RentalProperty;
+import com.example.saebackend.domain.properties.rental.models.RentalPropertyInputModel;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface RentalPropertyRepository { // TODO(y a t-il besoin de deux repo
 
     List<RentalProperty> getAll();
 
-    RentalProperty update(Id id, RentalProperty rentalProperty);
+    RentalProperty update(Id id, RentalPropertyInputModel propertyModel);
 
     boolean deleteById(Id id);
 }

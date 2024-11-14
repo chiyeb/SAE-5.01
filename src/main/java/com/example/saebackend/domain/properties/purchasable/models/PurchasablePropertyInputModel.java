@@ -1,5 +1,6 @@
 package com.example.saebackend.domain.properties.purchasable.models;
 
+import com.example.saebackend.domain.properties.models.PropertyInputModel;
 import com.example.saebackend.domain.properties.models.PropertyLocationModel;
 import com.example.saebackend.domain.properties.models.RoomCountModel;
 
@@ -19,4 +20,4 @@ public record PurchasablePropertyInputModel(
         String energyClass,
         String climateClass,
         String view,
-        double estimationCostEnergy) {}
+        double estimationCostEnergy) implements PropertyInputModel {}

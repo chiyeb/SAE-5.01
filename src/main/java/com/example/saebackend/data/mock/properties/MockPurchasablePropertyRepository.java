@@ -8,6 +8,7 @@ import com.example.saebackend.domain.properties.enums.ClimateClass;
 import com.example.saebackend.domain.properties.enums.EnergyClass;
 import com.example.saebackend.domain.properties.enums.PropertyType;
 import com.example.saebackend.domain.properties.purchasable.PurchasableProperty;
+import com.example.saebackend.domain.properties.purchasable.models.PurchasablePropertyInputModel;
 import com.example.saebackend.repositories.PurchasablePropertyRepository;
 import org.springframework.stereotype.Repository;
 
@@ -104,14 +105,12 @@ public class MockPurchasablePropertyRepository implements PurchasablePropertyRep
         return properties;
     }
 
+
     @Override
-    public PurchasableProperty update(Id id, PurchasableProperty purchasableProperty) {
-        final int index = properties.indexOf(getById(id));
-        if (index == -1) {
-            return null;
-        }
-        properties.set(index, purchasableProperty);
-        return purchasableProperty;
+    public PurchasableProperty update(Id id, PurchasablePropertyInputModel updateData) {
+        PurchasableProperty propertyToUpdate = getById(id);
+        if (propertyToUpdate == null) return null;
+        return propertyToUpdate.updateFromModel(updateData);
     }
 
     @Override

@@ -12,7 +12,7 @@ import com.example.saebackend.domain.properties.purchasable.models.PurchasablePr
 import java.util.List;
 
 public class PurchasableProperty extends Property {
-    private final double price;
+    private double price;
 
     private PurchasableProperty(Id id, PropertyType type, String title, String description, PropertyLocation location, List<String> images, double livingArea, double landArea, PropertyRoomData roomData, String orientation, EnergyClass energyClass, ClimateClass climateClass, String view, double estimationCostEnergy, double price) {
         super(id, type, title, description, location, images, livingArea, landArea, roomData, orientation, energyClass, climateClass, view, estimationCostEnergy);
@@ -43,6 +43,24 @@ public class PurchasableProperty extends Property {
         );
     }
 
+    public PurchasableProperty updateFromModel(PurchasablePropertyInputModel model) {
+        setType(PropertyType.fromString(model.type()));
+        setTitle(model.title());
+        setDescription(model.description());
+        setLocation(PropertyLocation.createFromModel(model.location()));
+        setImages(model.images());
+        setLivingArea(model.livingArea());
+        setLandArea(model.landArea());
+        setRooms(PropertyRoomData.createFromModel(model.rooms()));
+        setOrientation(model.orientation());
+        setEnergyClass(EnergyClass.fromString(model.energyClass()));
+        setClimateClass(ClimateClass.fromString(model.climateClass()));
+        setView(model.view());
+        setEstimationCostEnergy(model.estimationCostEnergy());
+        setPriceOrSubscriptionPrice(model.price());
+        return this;
+    }
+
     @Override
     public PropertyReadModel readModel() {
         return new PurchasablePropertyReadModel(
@@ -67,5 +85,10 @@ public class PurchasableProperty extends Property {
     @Override
     public double getPriceOrSubscriptionPrice() {
         return price;
+    }
+
+    @Override
+    public void setPriceOrSubscriptionPrice(double priceOrSubscriptionPrice) {
+        this.price = priceOrSubscriptionPrice;
     }
 }

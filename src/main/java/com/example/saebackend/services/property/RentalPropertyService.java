@@ -33,7 +33,7 @@ public class RentalPropertyService { // TODO(Les deux classes propertyservice se
     }
 
     public PropertyReadModel update(String id, RentalPropertyInputModel propertyModel) {
-        RentalProperty rentalProperty = rentalPropertyRepository.update(Id.fromString(id), RentalProperty.createFromModel(propertyModel));
+        RentalProperty rentalProperty = rentalPropertyRepository.update(Id.fromString(id), propertyModel);
         if (rentalProperty == null) throw NotFoundException.propertyNotFound(id);
         return rentalProperty.readModel();
     }
