@@ -7,34 +7,24 @@ import Profil from '@/components/Profil';
 import DetailBien from '@/components/DetailBien';
 import { getAllRentals, createRental, updateRental, deleteRental } from '@/components/Api';
 
-
-
 export default function HomeScreen() {
-  
-  const newBien = {
-    id: new Date().getTime().toString(),
-    title: `Bien `,
-    description: "Ceci est une description d'exemple pour un nouveau bien.",
-    prix: 11,
-    adress: "564 Avenue Gaston Berger",
-    pays:'bienDetails.pays}',
-    ville:'{bienDetails.ville}',
-    codePostal:123312,
-    surfaceHabitable:234,
-    surfaceTerrain:123,
-    orientation:'{bienDetails.orientation',
-    vue:'{bienDetails.vue}',
-    estimate:'{bienDetails.estimate}'
-  };
-  const [biens, setBiens] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState(false); 
-  const [selectedBien, setSelectedBien] = useState
-  (null);
+  const [biens, setBiens] = useState([]); // Initialiser biens avec un tableau vide
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedBien, setSelectedBien] = useState(null);
+
+  // Effect pour charger les biens via l'API
   useEffect(() => {
     const fetchBiens = async () => {
       try {
         const data = await getAllRentals();
-        setBiens(data);  // Charger les biens obtenus de l'API
+
+        // Vérification que les données reçues sont bien un tableau
+        if (Array.isArray(data)) {
+          setBiens(data);  // Mettre à jour biens seulement si data est un tableau
+        } else {
+          console.error('Données invalides reçues:', data);
+          setBiens([]); // Si ce n'est pas un tableau, réinitialiser biens
+        }
       } catch (error) {
         console.error("Erreur lors de la récupération des biens :", error);
       }
@@ -42,19 +32,17 @@ export default function HomeScreen() {
     
     fetchBiens();
   }, []);
-  
 
   // Fonction pour ajouter un bien et afficher la popup
   const handleAddBien = async () => {
+    const newBien = {
+      title: `Bien ${biens.length + 1}`,
+      description: "Description pour un nouveau bien.",
+      prix: 1200,
+      address: "564 Avenue Gaston Berger",
+    };
+
     try {
-      const newBien = {
-        title: `Bien ${biens.length + 1}`,
-        description: "Description pour un nouveau bien.",
-        prix: 1200,
-        address: "564 Avenue Gaston Berger",
-        // Ajoutez d'autres propriétés requises par l'API ici
-      };
-      
       const createdBien = await createRental(newBien);
       setBiens([...biens, createdBien]);  // Ajouter le bien à la liste locale
       setIsModalVisible(false);
@@ -64,42 +52,41 @@ export default function HomeScreen() {
       Alert.alert('Erreur', 'Impossible d\'ajouter le bien.');
     }
   };
-  
-const closeModal = () => {
-  setIsModalVisible(false);
-  setSelectedBien(null
-  );
-};
 
+  // Fermer le modal
+  const closeModal = () => {
+    setIsModalVisible(false);
+    setSelectedBien(null);  // Remise à zéro de selectedBien
+  };
 
-const handleSave = async () => {
-  if (selectedBien) {
-    try {
-      await updateRental(selectedBien.id, selectedBien);
-      setBiens(biens.map(bien => bien.id === selectedBien.id ? selectedBien : bien));
-      Alert.alert('Succès', 'Le bien a été mis à jour.');
-      closeModal();
-    } catch (error) {
-      console.error("Erreur lors de la mise à jour du bien :", error);
-      Alert.alert('Erreur', 'Impossible de mettre à jour le bien.');
+  // Fonction de sauvegarde des modifications du bien sélectionné
+  const handleSave = async () => {
+    if (selectedBien) {
+      try {
+        await updateRental(selectedBien.id, selectedBien);
+        setBiens(biens.map(bien => bien.id === selectedBien.id ? selectedBien : bien));
+        Alert.alert('Succès', 'Le bien a été mis à jour.');
+        closeModal();
+      } catch (error) {
+        console.error("Erreur lors de la mise à jour du bien :", error);
+        Alert.alert('Erreur', 'Impossible de mettre à jour le bien.');
+      }
+    } else {
+      Alert.alert('Erreur', 'Aucun bien sélectionné pour mise à jour.');
     }
-  } else {
-    Alert.alert('Erreur', 'Aucun bien sélectionné pour mise à jour.');
-  }
-};
+  };
 
-const handleDeleteBien = async (id: string) => {
-  try {
-    await deleteRental(id);
-    setBiens(biens.filter(bien => bien.id !== id));
-    Alert.alert('Succès', 'Le bien a été supprimé.');
-  } catch (error) {
-    console.error("Erreur lors de la suppression du bien :", error);
-    Alert.alert('Erreur', 'Impossible de supprimer le bien.');
-  }
-};
-
-  
+  // Fonction de suppression d'un bien
+  const handleDeleteBien = async (id: string) => {
+    try {
+      await deleteRental(id);
+      setBiens(biens.filter(bien => bien.id !== id));
+      Alert.alert('Succès', 'Le bien a été supprimé.');
+    } catch (error) {
+      console.error("Erreur lors de la suppression du bien :", error);
+      Alert.alert('Erreur', 'Impossible de supprimer le bien.');
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -112,14 +99,18 @@ const handleDeleteBien = async (id: string) => {
         </View>
         <View style={styles.stepContainer}>
           <ThemedText type="h2">Mes annonces</ThemedText>
-          {biens.map((bien) => (
-    <View key={bien.id}>
-      <Bien {...bien} />
-      <TouchableOpacity onPress={() => handleDeleteBien(bien.id)} style={styles.deleteButton}>
-        <Text style={styles.buttonText}>Supprimer</Text>
-      </TouchableOpacity>
-    </View>
-  ))}
+          {biens.length > 0 ? (
+            biens.map((bien) => (
+              <View key={bien.id}>
+                <Bien {...bien} onPress={() => setSelectedBien(bien)} />
+                <TouchableOpacity onPress={() => handleDeleteBien(bien.id)} style={styles.deleteButton}>
+                  <Text style={styles.buttonText}>Supprimer</Text>
+                </TouchableOpacity>
+              </View>
+            ))
+          ) : (
+            <Text>Aucun bien trouvé</Text> // Affiche ce message si biens est vide
+          )}
           <Buttons onPress={handleAddBien} />
         </View>
       </ScrollView>
@@ -134,8 +125,19 @@ const handleDeleteBien = async (id: string) => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             {selectedBien ? (
-              <><DetailBien title={''} description={''} prix={0} pays={''} ville={''} codePostal={0} surfaceHabitable={0} surfaceTerrain={0} orientation={''} vue={''} estimate={''} />
-            </>
+              <DetailBien 
+                title={selectedBien.title} 
+                description={selectedBien.description} 
+                prix={selectedBien.prix} 
+                pays={selectedBien.pays} 
+                ville={selectedBien.ville} 
+                codePostal={selectedBien.codePostal} 
+                surfaceHabitable={selectedBien.surfaceHabitable} 
+                surfaceTerrain={selectedBien.surfaceTerrain} 
+                orientation={selectedBien.orientation} 
+                vue={selectedBien.vue} 
+                estimate={selectedBien.estimate} 
+              />
             ) : (
               <Text>Aucun bien sélectionné</Text> // Message d'erreur si selectedBien est null
             )}
