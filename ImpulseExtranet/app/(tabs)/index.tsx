@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, StyleSheet, Modal, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, ScrollView, StyleSheet, Modal, Text, TouchableOpacity, Alert , } from 'react-native';
 import Bien from '@/components/Bien';
 import { ThemedText } from '@/components/ThemedText';
 import Buttons from '@/components/navigation/Buttons';
@@ -7,10 +7,11 @@ import Profil from '@/components/Profil';
 import DetailBien from '@/components/DetailBien';
 import { getAllRentals, createRental, updateRental, deleteRental } from '@/components/Api';
 
+
 export default function HomeScreen() {
-  const [biens, setBiens] = useState([]); // Initialiser biens avec un tableau vide
+  const [biens, setBiens] = useState<any[]>([]); // Initialiser biens avec un tableau vide
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedBien, setSelectedBien] = useState(null);
+  const [selectedBien, setSelectedBien] = useState<any | null>(null);
 
   // Effect pour charger les biens via l'API
   useEffect(() => {
@@ -33,49 +34,60 @@ export default function HomeScreen() {
     fetchBiens();
   }, []);
 
-  // Fonction pour ajouter un bien et afficher la popup
+  // Fonction pour ajouter un bien
   const handleAddBien = async () => {
     const newBien = {
-      title: `Bien ${biens.length + 1}`,
-      description: "Description pour un nouveau bien.",
-      prix: 1200,
-      address: "564 Avenue Gaston Berger",
+      type: "APARTMENT",
+      title: "Nouvel appartement",
+      description: "Un appartement spacieux avec 2 chambres, cuisine équipée et balcon donnant sur la ville.",
+      location: {
+        address: "12 rue de l'eau",
+        city: "Paris",
+        postalCode: "70123",
+        country: "France",
+        latitude: 48.866667,
+        longitude: 2.333333
+      },
+      images: [],
+      price: 200000.0,
+      subscriptionFrequency: "MONTHLY",
+      livingArea: 75.0,
+      landArea: 0.0,
+      rooms: [
+        { roomType: "Cuisine", count: 1 },
+        { roomType: "Salle de bain", count: 1 },
+        { roomType: "Chambre", count: 2 }
+      ],
+      orientation: "Sud",
+      energyClass: "B",
+      climateClass: "A",
+      view: "Vue sur la ville",
+      estimationCostEnergy: 120.0
     };
 
-    try {
-      const createdBien = await createRental(newBien);
-      setBiens([...biens, createdBien]);  // Ajouter le bien à la liste locale
-      setIsModalVisible(false);
-      Alert.alert('Succès', 'Le bien a été ajouté.');
-    } catch (error) {
-      console.error("Erreur lors de l'ajout du bien :", error);
-      Alert.alert('Erreur', 'Impossible d\'ajouter le bien.');
-    }
+    setSelectedBien(newBien);
+    console.log(selectedBien);
+    setIsModalVisible(true);
   };
-
+  
   // Fermer le modal
   const closeModal = () => {
     setIsModalVisible(false);
     setSelectedBien(null);  // Remise à zéro de selectedBien
   };
 
-  // Fonction de sauvegarde des modifications du bien sélectionné
-  const handleSave = async () => {
-    if (selectedBien) {
-      try {
-        await updateRental(selectedBien.id, selectedBien);
-        setBiens(biens.map(bien => bien.id === selectedBien.id ? selectedBien : bien));
-        Alert.alert('Succès', 'Le bien a été mis à jour.');
-        closeModal();
-      } catch (error) {
-        console.error("Erreur lors de la mise à jour du bien :", error);
-        Alert.alert('Erreur', 'Impossible de mettre à jour le bien.');
-      }
-    } else {
-      Alert.alert('Erreur', 'Aucun bien sélectionné pour mise à jour.');
+  const handleSaveBien = async (bienData) => {
+    try {
+      const createdBien = await createRental(bienData);
+      Alert.alert('Succès', 'Le bien a été ajouté avec succès.');
+      setBiens([...biens, createdBien]);  // Ajouter le bien à la liste locale
+      closeModal();
+      
+    } catch (error) {
+      console.error("Erreur lors de l'ajout du bien :", error);
+      Alert.alert('Erreur', 'Impossible d\'ajouter le bien.');
     }
   };
-
   // Fonction de suppression d'un bien
   const handleDeleteBien = async (id: string) => {
     try {
@@ -125,30 +137,22 @@ export default function HomeScreen() {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             {selectedBien ? (
-              <DetailBien 
-                title={selectedBien.title} 
-                description={selectedBien.description} 
-                prix={selectedBien.prix} 
-                pays={selectedBien.pays} 
-                ville={selectedBien.ville} 
-                codePostal={selectedBien.codePostal} 
-                surfaceHabitable={selectedBien.surfaceHabitable} 
-                surfaceTerrain={selectedBien.surfaceTerrain} 
-                orientation={selectedBien.orientation} 
-                vue={selectedBien.vue} 
-                estimate={selectedBien.estimate} 
-              />
+             <DetailBien 
+             title={selectedBien.title} 
+             description={selectedBien.description} 
+             price={selectedBien.price} 
+             location={selectedBien.location}
+             livingArea={selectedBien.livingArea} 
+             landArea={selectedBien.landArea} 
+             orientation={selectedBien.orientation} 
+             view={selectedBien.view} 
+             estimationCostEnergy={selectedBien.estimationCostEnergy} 
+             onSaveBien={handleSaveBien}
+             onDelete={closeModal}
+           />
             ) : (
               <Text>Aucun bien sélectionné</Text> // Message d'erreur si selectedBien est null
             )}
-            <View style={styles.buttonSaveAndClose}>
-              <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
-                <Text style={styles.buttonText}>Enregistrer</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
-                <Text style={styles.buttonText}>Annuler</Text>
-              </TouchableOpacity>
-            </View>
           </View>
         </View>
       </Modal>
@@ -188,36 +192,17 @@ const styles = StyleSheet.create({
     height: '80%',
     alignItems: 'center',
   },
-  buttonSaveAndClose: {
-    marginTop: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    paddingHorizontal: 20,
-  },
-  saveButton: {
-    backgroundColor: '#28a745',
-    padding: 10,
-    borderRadius: 5,
-    width: '48%',
-    alignItems: 'center',
-  },
-  closeButton: {
-    backgroundColor: '#dc3545',
-    padding: 10,
-    borderRadius: 5,
-    width: '48%',
-    alignItems: 'center',
-  },
+
   buttonText: {
     color: '#fff',
     fontSize: 16,
+    textAlign:'center',
   },
   deleteButton: {
     backgroundColor: '#dc3545',
-    padding: 8,
+    padding: 10,
     borderRadius: 5,
-    marginTop: 5,
-    alignItems: 'center',
+    width: '30%',
+    alignSelf: 'center'
   },
 });

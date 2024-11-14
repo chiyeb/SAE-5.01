@@ -58,7 +58,7 @@ let biens = [
        "country":"France"
     },
     "images" : [],
-    "price":200000.0,
+    "price":20324234.0,
     "subscriptionFrequency":"MONTHLY",
     "livingArea":75.0,
     "landArea":0.0,

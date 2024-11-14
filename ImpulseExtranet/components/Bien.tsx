@@ -2,45 +2,50 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Modal } from 'react-native';
 import { ThemedText } from './ThemedText';
 
-// Définition du type pour les props, avec les nouvelles variables ajoutées
 interface BienProps {
+  type: string;
   title: string;
   description: string;
-  prix: number;
-  adress: string;
+  price: number;
+  location: {  // L'adresse se trouve maintenant dans l'objet location
+    address: string;
+    city: string;
+    postalCode: string;
+    country: string;
+    latitude: number;
+    longitude: number;
+  };
   imageUri: string;  // Ajout d'une prop pour l'image dynamique
   visites: number;
   clics: number;
   appels: number;
-  pays: string;
-  ville: string;
-  codePostal: number;
-  surfaceHabitable: number;
-  surfaceTerrain: number;
+  livingArea: number;
+  landArea: number;
   orientation: string;
-  vue: string;
-  estimate: string;  // Estimation des coûts annuels d'énergie
+  view: string;
+  estimationCostEnergy: string;  // Estimation des coûts annuels d'énergie
+  rooms: { roomType: string; count: number }[];  // Liste des pièces et leur nombre
+  energyClass:string
 }
 
 export default function Bien({
+  type,
   title,
   description,
-  prix,
-  adress,
+  price,
+  location,
   imageUri,
   visites,
   clics,
   appels,
-  pays,
-  ville,
-  codePostal,
-  surfaceHabitable,
-  surfaceTerrain,
+  livingArea,
+  landArea,
   orientation,
-  vue,
-  estimate,
+  view,
+  estimationCostEnergy,
+  rooms = [], // Valeur par défaut pour rooms (vide si non fourni)
+  energyClass
 }: BienProps) {
-  // État pour contrôler la visibilité du Modal
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Fonction pour afficher le Modal
@@ -53,17 +58,31 @@ export default function Bien({
     setIsModalVisible(false);
   };
 
+  // Fonction pour afficher les pièces dans une liste
+  const renderRooms = () => {
+    if (rooms.length > 0) {
+      return rooms.map((room, index) => (
+        <Text key={index} style={styles.modalText}>
+          {room.roomType.charAt(0).toUpperCase() + room.roomType.slice(1)}: {room.count} {room.count > 1 ? 'pièces' : 'pièce'}
+        </Text>
+      ));
+    } else {
+      return <Text style={styles.modalText}>Aucune pièce ajoutée.</Text>;
+    }
+  };
+
   return (
     <TouchableOpacity onPress={showBienDetails} style={styles.container}>
       <ImageBackground
-        source={{uri: ''}}
+        source={{ uri: imageUri }}
         style={styles.image}
         imageStyle={styles.imageStyle}
       />
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>{adress}</Text>
-        <ThemedText type="defaultSemiBold">{prix} €</ThemedText>
+        <Text style={styles.description}>{type}</Text>
+        <Text style={styles.description}>{location?.address}</Text>
+        <ThemedText type="defaultSemiBold">{price} €</ThemedText>
         <Text style={styles.description}>{description}</Text>
       </View>
       <View style={styles.infoContainer}>
@@ -83,17 +102,25 @@ export default function Bien({
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>{title}</Text>
+            <Text style={styles.modalText}>{type}</Text>
             <Text style={styles.modalText}>{description}</Text>
-            <Text style={styles.modalText}>Prix: {prix} €</Text>
-            <Text style={styles.modalText}>Adresse: {adress}</Text>
-            <Text style={styles.modalText}>Pays: {pays}</Text>
-            <Text style={styles.modalText}>Ville: {ville}</Text>
-            <Text style={styles.modalText}>Code Postal: {codePostal}</Text>
-            <Text style={styles.modalText}>Surface Habitable: {surfaceHabitable} m²</Text>
-            <Text style={styles.modalText}>Surface Terrain: {surfaceTerrain} m²</Text>
+            <Text style={styles.modalText}>Prix: {price} €</Text>
+            <Text style={styles.modalText}>Adresse: {location?.address}</Text>
+            <Text style={styles.modalText}>Pays: {location?.country}</Text>
+            <Text style={styles.modalText}>Ville: {location?.city}</Text>
+            <Text style={styles.modalText}>Code Postal: {location?.postalCode}</Text>
+            <Text style={styles.modalText}>Surface Habitable: {livingArea} m²</Text>
+            <Text style={styles.modalText}>Surface Terrain: {landArea} m²</Text>
             <Text style={styles.modalText}>Orientation: {orientation}</Text>
-            <Text style={styles.modalText}>Vue: {vue}</Text>
-            <Text style={styles.modalText}>Estimation des coûts annuels d'énergie: {estimate} €</Text>
+            <Text style={styles.modalText}>Vue: {view}</Text>
+            <Text style={styles.modalText}>Estimation des coûts annuels d'énergie: {estimationCostEnergy} €</Text>
+
+            {/* Affichage des pièces */}
+            <View style={styles.roomsContainer}>
+              <ThemedText type="defaultSemiBold">Pièces :</ThemedText>
+              {renderRooms()}
+            </View>
+            <Text style={styles.modalText}>Performance énergétique: {energyClass} </Text>
 
             <TouchableOpacity onPress={closeModal} style={styles.buttonClose}>
               <Text style={styles.buttonText}>Fermer</Text>
@@ -151,7 +178,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingLeft: 10,
   },
-  // Modal styles
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -183,5 +209,9 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 16,
+  },
+  roomsContainer: {
+    marginTop: 10,
+    paddingLeft: 10,
   },
 });

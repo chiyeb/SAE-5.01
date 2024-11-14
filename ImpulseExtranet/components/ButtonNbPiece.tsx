@@ -1,30 +1,27 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import { ThemedText } from './ThemedText';
+import { ThemedText } from './ThemedText'; // Import the ThemedText component if available
 
-interface Piece {
-  label: string;
-  value: string;
+interface NbPieceProps {
+  rooms: { roomType: string; count: number }[]; // Prop to hold room data
+  addRoom: (roomType: string, count: number) => void; // Function to add room
+  removeRoom: (index: number) => void; // Function to remove room
 }
 
-export default function NbPiece() {
-  // Types de données pour les états
-  const [pieces, setPieces] = useState<Piece[]>([]); // Liste des pièces ajoutées
-  const [selectedPiece, setSelectedPiece] = useState<string | null>(null); // Pièce actuellement sélectionnée
-
-  // Fonction pour ajouter une pièce sélectionnée
-  const addPiece = () => {
-    if (selectedPiece) {
-      // Ajoute la pièce sélectionnée à la liste
-      const pieceLabel = piecesOptions.find(option => option.value === selectedPiece)?.label || selectedPiece;
-      setPieces([...pieces, { label: pieceLabel, value: selectedPiece }]);
-      setSelectedPiece(null); // Réinitialise la sélection
-    }
+const NbPiece: React.FC<NbPieceProps> = ({ rooms, addRoom, removeRoom }) => {
+  const [selectedRoomType, setSelectedRoomType] = useState<string | null>(null); // Room type selected in the Picker
+  const [roomCount, setRoomCount] = useState<number>(1); // Number of rooms to add
+  
+  const handleAddRoom = () => {
+    if (!selectedRoomType) return; // Exit if no room type is selected
+    
+    // Increment count for the selected room type
+    addRoom(selectedRoomType, roomCount); // Call the addRoom function passed as prop
+    
   };
 
-  // Options pour les pièces disponibles dans le picker
-  const piecesOptions: Piece[] = [
+  const roomOptions: { label: string; value: string }[] = [
     { label: 'Chambre', value: 'chambre' },
     { label: 'Salle de Bain', value: 'salle_de_bain' },
     { label: 'Cuisine', value: 'cuisine' },
@@ -35,37 +32,94 @@ export default function NbPiece() {
     <View style={styles.container}>
       <ThemedText type="defaultSemiBold">Nombre de Pièces</ThemedText>
 
-      {/* Picker pour sélectionner le type de pièce */}
+      {/* Picker for selecting room type */}
       <RNPickerSelect
-        onValueChange={(value) => setSelectedPiece(value)}
-        value={selectedPiece}
-        items={piecesOptions}
+        onValueChange={(value) => setSelectedRoomType(value)}
+        value={selectedRoomType}
+        items={roomOptions}
         placeholder={{ label: 'Sélectionnez une pièce...', value: null }}
       />
 
-      {/* Bouton pour ajouter la pièce sélectionnée */}
-      <TouchableOpacity onPress={addPiece} style={styles.addButton}>
+      {/* Control for selecting the number of rooms */}
+      <View style={styles.countContainer}>
+        <Text style={styles.label}>Nombre de pièces</Text>
+        <TouchableOpacity
+          onPress={() => setRoomCount(roomCount + 1)}
+          style={styles.incrementButton}
+        >
+          <Text style={styles.buttonText}>+</Text>
+        </TouchableOpacity>
+        <Text style={styles.count}>{roomCount}</Text>
+        <TouchableOpacity
+          onPress={() => setRoomCount(roomCount > 1 ? roomCount - 1 : 1)}
+          style={styles.decrementButton}
+        >
+          <Text style={styles.buttonText}>-</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Button to add room */}
+      <TouchableOpacity onPress={handleAddRoom} style={styles.addButton}>
         <Text style={styles.addButtonText}>Ajouter une pièce</Text>
       </TouchableOpacity>
 
-      {/* Affichage du nombre total de pièces */}
-      <Text style={styles.pieceCount}>Nombre total de pièces : {pieces.length}</Text>
+      {/* Display total number of rooms */}
+      <Text style={styles.pieceCount}>
+        Nombre total de pièces : {rooms.reduce((total, room) => total + room.count, 0)}
+      </Text>
 
-      {/* Affichage de la liste des pièces ajoutées */}
+      {/* Display the list of added rooms */}
       <FlatList
-        data={pieces}
+        data={rooms}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item}) => (
-          <Text style={styles.pieceItem}> - {item.label}</Text>
+        renderItem={({ item, index }) => (
+          <View style={styles.roomItem}>
+            <Text>
+            <Text>
+              {item.roomType.charAt(0).toUpperCase() + item.roomType.slice(1)} : {item.count} {item.count > 1 ? 'pièces' : 'pièce'}
+            </Text>
+
+            </Text>
+            <TouchableOpacity onPress={() => removeRoom(index)} style={styles.button}>
+              <Text style={styles.buttonText}>Supprimer</Text>
+            </TouchableOpacity>
+          </View>
         )}
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    marginVertical: 20,
+    paddingHorizontal: 10,
+  },
+  countContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginRight: 10,
+  },
+  incrementButton: {
+    backgroundColor: '#007BFF',
+    padding: 10,
+    borderRadius: 5,
+    marginRight: 10,
+  },
+  decrementButton: {
+    backgroundColor: '#007BFF',
+    padding: 10,
+    borderRadius: 5,
+    marginLeft: 10,
+  },
+  count: {
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   addButton: {
     backgroundColor: '#007BFF',
@@ -73,8 +127,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginVertical: 15,
     alignItems: 'center',
-    width:'50%',
-    alignSelf:'center',
+    width: '50%',
+    alignSelf: 'center',
   },
   addButtonText: {
     color: '#fff',
@@ -85,8 +139,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginVertical: 10,
   },
-  pieceItem: {
-    fontSize: 16,
-    paddingVertical: 5,
+  roomItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+  },
+  button: {
+    backgroundColor: '#FF5733',
+    padding: 5,
+    borderRadius: 5,
+    marginVertical: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
   },
 });
+
+export default NbPiece;
