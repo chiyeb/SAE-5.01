@@ -12,8 +12,8 @@ interface BienProps {
     city: string;
     postalCode: string;
     country: string;
-    latitude: number;
-    longitude: number;
+    latitude: number; // Utiliser "number" au lieu de "Float"
+  longitude: number; // Utiliser "number" au lieu de "Float"
   };
   imageUri: string;  // Ajout d'une prop pour l'image dynamique
   visites: number;
@@ -76,7 +76,7 @@ export default function Bien({
   return (
     <TouchableOpacity onPress={showBienDetails} style={styles.container}>
       <ImageBackground
-        source={{ uri: imageUri }}
+        source={require('@/assets/images/favicon.png' )}
         style={styles.image}
         imageStyle={styles.imageStyle}
       />

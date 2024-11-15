@@ -5,22 +5,26 @@ import NbPiece from './ButtonNbPiece';
 import { pickImage } from './SelectImage';
 import { ThemedText } from './ThemedText';
 import TabSelector from '@/components/navigation/ButtonVenteLocation';  // Import du composant d'onglet
+import { Float } from 'react-native/Libraries/Types/CodegenTypes';
 
 // Définition du type pour les props
-interface Location {
+interface Localisation {
   address: string;
   city: string;
   postalCode: string;
   country: string;
+  latitude: number; // Utiliser "number" au lieu de "Float"
+  longitude: number; // Utiliser "number" au lieu de "Float"
 }
 
 interface DetailProps {
   title: string;
   description: string;
   price: number;
-  location: Location;
+  localisation: Localisation;
   livingArea: number;
   landArea: number;
+  images: string,
   orientation: string;
   view: string;
   estimationCostEnergy: string;
@@ -32,7 +36,7 @@ const Detail: React.FC<DetailProps> = ({
   title: initialTitle,
   description: initialDescription,
   price: initialPrice,
-  location: initialLocation,
+  localisation: initiallocalisation,
   livingArea: initiallivingArea,
   landArea: initiallandArea,
   orientation: initialOrientation,
@@ -46,8 +50,8 @@ const Detail: React.FC<DetailProps> = ({
   const [title, setTitle] = useState<string>(initialTitle);
   const [description, setDescription] = useState<string>(initialDescription);
   const [price, setPrice] = useState<string>(initialPrice?.toString());
-  const [location, setLocation] = useState<Location>(initialLocation);  // Utilisation de l'objet location
-  const [photo, setPhoto] = useState<string>("");
+  const [localisation, setlocalisation] = useState<Localisation>(initiallocalisation);  // Utilisation de l'objet localisation
+  const [image, setImage] = useState<string>("");
   const [livingArea, setLivingArea] = useState<string>(initiallivingArea?.toString() ?? "");
   const [landArea, setLandArea] = useState<string>(initiallandArea?.toString());
   const [orientation, setOrientation] = useState<string>(initialOrientation);
@@ -66,10 +70,18 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
     title,
     description,
     price: parseFloat(price),
-    location,
+    localisation: {
+      address: localisation.address,
+      city: localisation.city,
+      postalCode: localisation.postalCode,
+      country: localisation.country,
+      latitude: localisation.latitude,  // Assurez-vous que latitude et longitude sont envoyés correctement
+      longitude: localisation.longitude,
+    },
     livingArea: parseFloat(livingArea),
     landArea: parseFloat(landArea),
     rooms,
+    image,
     orientation,
     view,
     energyClass,
@@ -79,10 +91,11 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
 
   const handleSave = () => {
     onSaveBien(getBienData());
+    
   };
   const handleDelete = () => {
     // Demander une confirmation avant de supprimer le bien
-    onDelete(getBienData());
+    onDelete(localisation.longitude);
   };
     // Initialize the rooms state
 
@@ -125,47 +138,65 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
           <ThemedText type="defaultSemiBold">Prix</ThemedText>
           <TextInput style={styles.input} value={price} onChangeText={setPrice} placeholder="Prix" keyboardType="numeric" />
 
-          {/* Mise à jour de l'affichage de location */}
+          {/* Mise à jour de l'affichage de localisation */}
           <ThemedText type="defaultSemiBold">Adresse</ThemedText>
           <TextInput
             style={styles.input}
-            value={location?.address}
-            onChangeText={(text) => setLocation({ ...location, address: text })}
+            value={localisation?.address}
+            onChangeText={(text) => setlocalisation({ ...localisation, address: text })}
             placeholder="Adresse"
           />
 
           <ThemedText type="defaultSemiBold">Ville</ThemedText>
           <TextInput
             style={styles.input}
-            value={location?.city}
-            onChangeText={(text) => setLocation({ ...location, city: text })}
+            value={localisation?.city}
+            onChangeText={(text) => setlocalisation({ ...localisation, city: text })}
             placeholder="Ville"
           />
 
           <ThemedText type="defaultSemiBold">Code Postal</ThemedText>
           <TextInput
             style={styles.input}
-            value={location?.postalCode}
-            onChangeText={(text) => setLocation({ ...location, postalCode: text })}
+            value={localisation?.postalCode.toString()}
+            onChangeText={(text) => setlocalisation({ ...localisation, postalCode: text })}
             placeholder="Code Postal"
+            keyboardType="numeric"
+          />
+
+          <ThemedText type="defaultSemiBold">Latitude</ThemedText>
+          <TextInput
+            style={styles.input}
+            value={localisation?.latitude.toString()}
+            onChangeText={(text) => setlocalisation({ ...localisation, latitude: parseFloat(text) })}
+            placeholder="Latitude"
+            keyboardType="numeric"
+          />
+
+          <ThemedText type="defaultSemiBold">Longitude</ThemedText>
+          <TextInput
+            style={styles.input}
+            value={localisation?.longitude.toString()}
+            onChangeText={(text) => setlocalisation({ ...localisation, longitude:parseFloat(text) })}
+            placeholder="Longitude"
             keyboardType="numeric"
           />
 
           <ThemedText type="defaultSemiBold">Pays</ThemedText>
           <TextInput
             style={styles.input}
-            value={location?.country}
-            onChangeText={(text) => setLocation({ ...location, country: text })}
+            value={localisation?.country}
+            onChangeText={(text) => setlocalisation({ ...localisation, country: text })}
             placeholder="Pays"
           />
 
           <ThemedText type="defaultSemiBold">Photo</ThemedText>
-          {photo ? (
-            <Image source={{ uri: photo }} style={styles.imagePreview} />
+          {image ? (
+            <Image source={{ uri: image }} style={styles.imagePreview} />
           ) : (
             <Text style={styles.noImageText}>Aucune photo sélectionnée</Text>
           )}
-          <TouchableOpacity onPress={() => pickImage(setPhoto)} style={styles.button}>
+          <TouchableOpacity onPress={() => pickImage(setImage)} style={styles.button}>
             <Text style={styles.buttonText}>Choisir une image</Text>
           </TouchableOpacity>
 

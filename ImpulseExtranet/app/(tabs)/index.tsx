@@ -6,6 +6,7 @@ import Buttons from '@/components/navigation/Buttons';
 import Profil from '@/components/Profil';
 import DetailBien from '@/components/DetailBien';
 import { getAllRentals, createRental, updateRental, deleteRental } from '@/components/Api';
+import { Float } from 'react-native/Libraries/Types/CodegenTypes';
 
 
 export default function HomeScreen() {
@@ -40,7 +41,7 @@ export default function HomeScreen() {
       type: "APARTMENT",
       title: "Nouvel appartement",
       description: "Un appartement spacieux avec 2 chambres, cuisine équipée et balcon donnant sur la ville.",
-      location: {
+      localisation: {
         address: "12 rue de l'eau",
         city: "Paris",
         postalCode: "70123",
@@ -50,7 +51,7 @@ export default function HomeScreen() {
       },
       images: [],
       price: 200000.0,
-      subscriptionFrequency: "MONTHLY",
+      //subscriptionFrequency: "MONTHLY",
       livingArea: 75.0,
       landArea: 0.0,
       rooms: [
@@ -66,7 +67,6 @@ export default function HomeScreen() {
     };
 
     setSelectedBien(newBien);
-    console.log(selectedBien);
     setIsModalVisible(true);
   };
   
@@ -76,18 +76,50 @@ export default function HomeScreen() {
     setSelectedBien(null);  // Remise à zéro de selectedBien
   };
 
-  const handleSaveBien = async (bienData) => {
-    try {
-      const createdBien = await createRental(bienData);
-      Alert.alert('Succès', 'Le bien a été ajouté avec succès.');
-      setBiens([...biens, createdBien]);  // Ajouter le bien à la liste locale
-      closeModal();
-      
-    } catch (error) {
-      console.error("Erreur lors de l'ajout du bien :", error);
-      Alert.alert('Erreur', 'Impossible d\'ajouter le bien.');
-    }
+// Fonction pour sauvegarder un bien
+const handleSaveBien = async (bienData: {
+  type: string;
+  title: string;
+  description: string;
+  localisation: {
+    address: string;
+    city: string;
+    postalCode: string;
+    country: string;
+    latitude: number; // Utiliser "number" au lieu de "Float"
+  longitude: number; // Utiliser "number" au lieu de "Float"
   };
+  images: string[];
+  price: number;
+  livingArea: number;
+  landArea: number;
+  rooms: { roomType: string; count: number }[];
+  orientation: string;
+  energyClass: string;
+  climateClass: string;
+  view: string;
+  estimationCostEnergy: number;
+}) => {
+  
+  // Validation des données de localisation (latitude et longitude)
+  if (!bienData.localisation.latitude || !bienData.localisation.longitude) {
+    console.log('Erreur', 'La latitude et la longitude doivent être renseignées');
+    return;
+  }
+
+  // Si les données sont valides, on envoie la requête à l'API
+  try {
+    const createdBien = await createRental(bienData);
+    console.log(bienData.localisation.latitude);
+    Alert.alert('Succès', 'Le bien a été ajouté avec succès.');
+    setBiens([...biens, createdBien]);  // Ajouter le bien à la liste locale
+    closeModal();
+  } catch (error) {
+    console.error('Erreur lors de l\'ajout du bien :', error);
+    Alert.alert('Erreur', 'Impossible d\'ajouter le bien.');
+  }
+};
+
   // Fonction de suppression d'un bien
   const handleDeleteBien = async (id: string) => {
     try {
@@ -112,17 +144,19 @@ export default function HomeScreen() {
         <View style={styles.stepContainer}>
           <ThemedText type="h2">Mes annonces</ThemedText>
           {biens.length > 0 ? (
-            biens.map((bien) => (
-              <View key={bien.id}>
-                <Bien {...bien} onPress={() => setSelectedBien(bien)} />
-                <TouchableOpacity onPress={() => handleDeleteBien(bien.id)} style={styles.deleteButton}>
-                  <Text style={styles.buttonText}>Supprimer</Text>
-                </TouchableOpacity>
-              </View>
-            ))
-          ) : (
-            <Text>Aucun bien trouvé</Text> // Affiche ce message si biens est vide
-          )}
+  biens.map((bien) => (
+    bien ? (
+      <View key={bien.id}>
+        <Bien {...bien} onPress={() => setSelectedBien(bien)} />
+        <TouchableOpacity onPress={() => handleDeleteBien(bien.id)} style={styles.deleteButton}>
+          <Text style={styles.buttonText}>Supprimer</Text>
+        </TouchableOpacity>
+      </View>
+    ) : null // Si 'bien' est undefined ou null, rien ne sera rendu
+  ))
+) : (
+  <Text>Aucun bien trouvé</Text>
+)}
           <Buttons onPress={handleAddBien} />
         </View>
       </ScrollView>
@@ -138,18 +172,18 @@ export default function HomeScreen() {
           <View style={styles.modalContent}>
             {selectedBien ? (
              <DetailBien 
-             title={selectedBien.title} 
-             description={selectedBien.description} 
-             price={selectedBien.price} 
-             location={selectedBien.location}
-             livingArea={selectedBien.livingArea} 
-             landArea={selectedBien.landArea} 
-             orientation={selectedBien.orientation} 
-             view={selectedBien.view} 
-             estimationCostEnergy={selectedBien.estimationCostEnergy} 
-             onSaveBien={handleSaveBien}
-             onDelete={closeModal}
-           />
+                title={selectedBien.title}
+                description={selectedBien.description}
+                price={selectedBien.price}
+                localisation={selectedBien.localisation}
+                livingArea={selectedBien.livingArea}
+                landArea={selectedBien.landArea}
+                orientation={selectedBien.orientation}
+                view={selectedBien.view}
+                estimationCostEnergy={selectedBien.estimationCostEnergy}
+                onSaveBien={handleSaveBien}
+                onDelete={closeModal} 
+                images={''}           />
             ) : (
               <Text>Aucun bien sélectionné</Text> // Message d'erreur si selectedBien est null
             )}
