@@ -137,7 +137,7 @@ const handleSaveBien = async (bienData: {
       <View style={styles.profil}>
         <Profil />
       </View>
-      <ScrollView showsHorizontalScrollIndicator={false}>
+      <ScrollView showsHorizontalScrollIndicator={true}>
         <View style={styles.titleContainer}>
           <ThemedText type="title">Administrateur</ThemedText>
         </View>
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 20,
     width: '90%',
-    height: '80%',
+    height: '90%',
     alignItems: 'center',
   },
 

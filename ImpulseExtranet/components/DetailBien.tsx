@@ -293,41 +293,55 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
 export default Detail;
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
-    backgroundColor: 'white',
-    width: '90%',
-    height: '100%',
-    margin: 10,
-  },
+ // Style principal du conteneur
+ container: {
+  padding: 20,
+  borderRadius: 15,
+  backgroundColor: '#fafafa', // Un fond légèrement gris clair pour un look moderne
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 3 },
+  shadowOpacity: 0.2,
+  shadowRadius: 5,
+  elevation: 8, // Ombre plus douce pour un effet plus subtil
+  width: '90%',
+  height:'100%',
+  marginVertical: 15,
+  marginHorizontal: '5%',
+},
+
+  // Conteneur pour les textes
   textContainer: {
-    paddingHorizontal: 10,
+    marginTop: 15,
+    marginBottom: 10,
   },
+
+  // Style pour les champs de saisie
   input: {
-    borderBottomWidth: 1,
-    borderColor: '#ccc',
-    paddingVertical: 5,
-    marginBottom: 15,
-    fontSize: 16,
-    color: 'black',
+    borderBottomWidth: 2,
+    borderColor: '#ddd',
+    paddingVertical: 12,
+    fontSize: 18,
+    marginBottom: 20,
+    color: '#333', // Texte légèrement plus sombre pour un meilleur contraste
+    fontFamily: 'Roboto', // Utilisation d'une police moderne et lisible
   },
+
+  // Aperçu de l'image
   imagePreview: {
     width: 100,
     height: 100,
     borderRadius: 10,
     marginTop: 10,
   },
+
+  // Texte affiché quand il n'y a pas d'image
   noImageText: {
     fontSize: 16,
     color: '#888',
     marginTop: 10,
   },
+
+  // Style du bouton principal
   button: {
     backgroundColor: '#007BFF',
     padding: 10,
@@ -336,7 +350,6 @@ const styles = StyleSheet.create({
     width: '50%',
     alignSelf: 'center',
     justifyContent: 'center',
-    
   },
   buttonText: {
     color: '#fff',
@@ -345,23 +358,29 @@ const styles = StyleSheet.create({
   },
 });
 
+// Styles pour les sélecteurs de plateforme
 const pickerSelectStyles = {
   inputIOS: {
-    fontSize: 16,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 4,
-    color: 'black',
+    fontSize: 18,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderWidth: 2,
+    borderColor: '#ddd',
+    borderRadius: 10,
+    color: '#333',
+    backgroundColor: '#fff', // Fond blanc pour bien faire ressortir le texte
+    marginBottom: 20,
   },
   inputAndroid: {
-    fontSize: 16,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 4,
-    color: 'black',
+      fontSize: 18,
+      paddingVertical: 12,
+      paddingHorizontal: 20,
+      borderWidth: 2,
+      borderColor: '#ddd',
+      borderRadius: 10,
+      color: '#333',
+      backgroundColor: '#fff',
+      marginBottom: 20,
   },
 };
+

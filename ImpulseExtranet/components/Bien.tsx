@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import { ThemedText } from './ThemedText';
 
 interface BienProps {
@@ -102,53 +102,57 @@ export default function Bien({
         onRequestClose={closeModal}
       >
         <View style={styles.modalContainer}>
+          <ScrollView showsHorizontalScrollIndicator={false}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>{title}</Text>
-            <Text style={styles.modalText}>{type}</Text>
+            <ThemedText type='title' style={styles.modalTitle}>{title}</ThemedText>
+            <Text style={styles.modalText}><ThemedText type='defaultSemiBold'> Type: </ThemedText>{type}</Text>
             <Text style={styles.modalText}>{description}</Text>
-            <Text style={styles.modalText}>Prix: {price} €</Text>
-            <Text style={styles.modalText}>Adresse: {location?.address}</Text>
-            <Text style={styles.modalText}>Pays: {location?.country}</Text>
-            <Text style={styles.modalText}>Ville: {location?.city}</Text>
-            <Text style={styles.modalText}>Code Postal: {location?.postalCode}</Text>
-            <Text style={styles.modalText}>Surface Habitable: {livingArea} m²</Text>
-            <Text style={styles.modalText}>Surface Terrain: {landArea} m²</Text>
+            <Text style={styles.modalText}><ThemedText type='defaultSemiBold'> Prix: </ThemedText>{price} €</Text>
+            <Text style={styles.modalText}><ThemedText type='defaultSemiBold'>Adresse: </ThemedText>{location?.address}</Text>
+            <Text style={styles.modalText}><ThemedText type='defaultSemiBold'>Pays:</ThemedText> {location?.country}</Text>
+            <Text style={styles.modalText}><ThemedText type='defaultSemiBold'>Ville: </ThemedText>{location?.city}</Text>
+            <Text style={styles.modalText}><ThemedText type='defaultSemiBold'>Code Postal: </ThemedText>{location?.postalCode}</Text>
+            <Text style={styles.modalText}><ThemedText type='defaultSemiBold'>Surface Habitable: </ThemedText>{livingArea} m²</Text>
+            <Text style={styles.modalText}><ThemedText type='defaultSemiBold'>Surface Terrain:</ThemedText> {landArea} m²</Text>
             {/* Affichage des pièces */}
             
               <ThemedText type="defaultSemiBold">Pièces : </ThemedText>{renderRooms()}  
             
-            <Text style={styles.modalText}>Orientation: {orientation}</Text>
-            <Text style={styles.modalText}>Vue: {view}</Text>
-            <Text style={styles.modalText}>Estimation des coûts annuels d'énergie: {estimationCostEnergy} €</Text>
-            <Text style={styles.modalText}>Performance énergétique: {energyClass} </Text>
-            <Text style={styles.modalText}>Classe climat : {climateClass} </Text>
+            <Text style={styles.modalText}><ThemedText type='defaultSemiBold'>Orientation:</ThemedText> {orientation}</Text>
+            <Text style={styles.modalText}><ThemedText type='defaultSemiBold'>Vue:</ThemedText>{view}</Text>
+            <Text style={styles.modalText}><ThemedText type='defaultSemiBold'>Estimation des coûts annuels d'énergie: </ThemedText>{estimationCostEnergy} €</Text>
+            <Text style={styles.modalText}><ThemedText type='defaultSemiBold'>Performance énergétique: </ThemedText>{energyClass} </Text>
+            <Text style={styles.modalText}><ThemedText type='defaultSemiBold'>Classe climat : </ThemedText>{climateClass} </Text>
 
             <TouchableOpacity onPress={closeModal} style={styles.buttonClose}>
               <Text style={styles.buttonText}>Fermer</Text>
             </TouchableOpacity>
           </View>
+          </ScrollView>
         </View>
       </Modal>
     </TouchableOpacity>
   );
 }
-
 const styles = StyleSheet.create({
+  // Styles du conteneur principal
   container: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
     borderRadius: 10,
-    overflow: 'hidden',
+    backgroundColor: '#fff',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
-    backgroundColor: '#fff',
     width: '80%',
     margin: 10,
+    overflow: 'hidden',
   },
+
+  // Styles de l'image
   image: {
     width: 300,
     height: 220,
@@ -157,6 +161,8 @@ const styles = StyleSheet.create({
   imageStyle: {
     borderRadius: 10,
   },
+
+  // Styles du conteneur de texte
   textContainer: {
     flex: 1,
     paddingLeft: 10,
@@ -172,43 +178,109 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'black',
     textAlign: 'left',
-    paddingBottom: 10,
-    paddingTop: 10,
+    paddingVertical: 10,
   },
+
+  // Styles du conteneur d'informations
   infoContainer: {
     marginTop: 10,
     paddingLeft: 10,
   },
+
+  // Styles du conteneur modal
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+    backgroundColor: 'rgba(0, 0, 0, 0.7)', // Fond semi-transparent pour la modal
+    paddingHorizontal: 20,
   },
+  
   modalContent: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 20,
-    width: '80%',
-    alignItems: 'center',
+    backgroundColor: '#fff', // Fond blanc pour la modal
+    borderRadius: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 30,
+    width: '85%',
+    height:'95%',
+    alignItems: 'flex-start',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 15,
   },
+
   modalTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    alignSelf:'center'
+  },
+
+  modalSection: {
+    marginBottom: 20,
+  },
+
+  modalSectionTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#007BFF', // Bleu pour les titres de section
     marginBottom: 10,
   },
+
   modalText: {
     fontSize: 16,
+    lineHeight: 24,
+    color: '#333', // Texte sombre pour une bonne lisibilité
     marginBottom: 10,
   },
+
+  modalInfo: {
+    fontSize: 16,
+    color: '#555',
+    marginBottom: 5,
+  },
+// Styles du bouton de fermeture
   buttonClose: {
     backgroundColor: '#007BFF',
-    padding: 10,
-    borderRadius: 5,
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    borderRadius: 30,
     marginTop: 20,
+    alignSelf: 'center',
+    elevation: 5,
   },
+
   buttonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
+
+  modalRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: 10,
+  },
+
+  modalRowText: {
+    fontSize: 16,
+    color: '#555',
+  },
+
+  modalSubText: {
+    fontSize: 14,
+    color: '#888',
+  },
+
+  modalLine: {
+    height: 1,
+    backgroundColor: '#ddd',
+    marginVertical: 15,
+    width: '100%',
+  },
+
+  
 });
+
+
