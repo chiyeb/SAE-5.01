@@ -11,6 +11,7 @@ import com.example.saebackend.domain.properties.purchasable.models.PurchasablePr
 
 import java.util.List;
 
+
 public class PurchasableProperty extends Property {
     private double price;
 
