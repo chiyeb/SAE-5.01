@@ -41,7 +41,10 @@ public class MockPurchasablePropertyRepository implements PurchasablePropertyRep
                         "Appartement moderne en centre-ville",
                         "Un appartement spacieux avec 2 chambres, cuisine équipée et balcon donnant sur la ville.",
                         new PropertyLocation(48.866667, 2.333333,"12 rue de l'eau","Paris", "70123" ,"France"), // Location
-                        new ArrayList<>(), // Images
+                        List.of(
+                                "https://picsum.photos/500/500",
+                                "https://picsum.photos/500/500"
+                        ), // Images
                         75.0, // Living area in square meters
                         0.0,  // Land area in square meters
                         propertyRoomData,

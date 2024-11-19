@@ -1,8 +1,5 @@
 package com.example.saebackend.services.property.temp;
 
-import com.example.saebackend.domain.id.Id;
-import com.example.saebackend.domain.properties.Property;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
