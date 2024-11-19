@@ -1,0 +1,18 @@
+[
+  {
+    "id": "a9544f22-3f85-42f1-b47a-4b51fdfd9a16",
+    "name": "John",
+    "email": "zizi@caca.fr",
+    "age": "25",
+    "phoneNumber": "0123456789",
+    "moreInformations": "I'm a real estate agent"
+  },
+  {
+    "id": "4de1330e-efd7-43ea-8f51-4bb1ca5a57cd",
+    "name": "John",
+    "email": "zizi@caca.fr",
+    "age": "25",
+    "phoneNumber": "0123456789",
+    "moreInformations": "I'm a real estate agent"
+  }
+]
