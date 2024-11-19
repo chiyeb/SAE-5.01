@@ -16,7 +16,7 @@ public class RentalProperty extends Property {
     private SubscriptionFrequency subscriptionFrequency;
     private double subscriptionPrice;
 
-    private RentalProperty(Id id, PropertyType type, String title, String description, PropertyLocation location, List<String> images, double livingArea, double landArea, PropertyRoomData rooms, String orientation, EnergyClass energyClass, ClimateClass climateClass, String view, double estimationCostEnergy, SubscriptionFrequency subscriptionFrequency, double subscriptionPrice) {
+    public RentalProperty(Id id, PropertyType type, String title, String description, PropertyLocation location, List<String> images, double livingArea, double landArea, PropertyRoomData rooms, String orientation, EnergyClass energyClass, ClimateClass climateClass, String view, double estimationCostEnergy, SubscriptionFrequency subscriptionFrequency, double subscriptionPrice) {
         super(id, type, title, description, location, images, livingArea, landArea, rooms, orientation, energyClass, climateClass, view, estimationCostEnergy);
 //        this.idRenter = idRenter;
         this.subscriptionFrequency = subscriptionFrequency;

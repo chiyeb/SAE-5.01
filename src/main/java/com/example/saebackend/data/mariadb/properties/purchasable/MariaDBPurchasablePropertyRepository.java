@@ -18,24 +18,24 @@ import java.util.List;
 @Repository
 public class MariaDBPurchasablePropertyRepository implements PurchasablePropertyRepository {
     private final JpaPurchasablePropertyRepository jpaPurchasablePropertyRepository;
-    private final PurchasablePropertyMapper purchasablePropertyMapper;
+    private final PurchasablePropertyMapper mapper;
 
     @Autowired
     public MariaDBPurchasablePropertyRepository(JpaPurchasablePropertyRepository jpaPurchasablePropertyRepository, JpaRoomTypeRepository jpaRoomTypeRepository, JpaPropertyLocationRepository jpaPropertyLocationRepository) {
         this.jpaPurchasablePropertyRepository = jpaPurchasablePropertyRepository;
-        this.purchasablePropertyMapper = new PurchasablePropertyMapper(jpaPurchasablePropertyRepository,jpaPropertyLocationRepository, jpaRoomTypeRepository);
+        this.mapper = new PurchasablePropertyMapper(jpaPurchasablePropertyRepository,jpaPropertyLocationRepository, jpaRoomTypeRepository);
     }
 
     @Override
     public PurchasableProperty create(PurchasableProperty purchasableProperty) {
-        PurchasablePropertyEntity entity = purchasablePropertyMapper.mapFrom(purchasableProperty);
-        return purchasablePropertyMapper.mapTo(entity);
+        PurchasablePropertyEntity entity = mapper.mapFrom(purchasableProperty);
+        return mapper.mapTo(entity);
     }
 
     @Override
     public PurchasableProperty getById(Id id) {
         try {
-            return purchasablePropertyMapper.mapTo(jpaPurchasablePropertyRepository.getReferenceById(id.toString()));
+            return mapper.mapTo(jpaPurchasablePropertyRepository.getReferenceById(id.toString()));
         }
         catch(EntityNotFoundException e) {
             throw NotFoundException.propertyNotFound(id.toString());
@@ -45,15 +45,15 @@ public class MariaDBPurchasablePropertyRepository implements PurchasableProperty
     @Override
     public List<PurchasableProperty> getAll() {
         List<PurchasablePropertyEntity> purchasablePropertyEntities = jpaPurchasablePropertyRepository.findAll();
-        return purchasablePropertyEntities.stream().map(purchasablePropertyMapper::mapTo).toList();
+        return purchasablePropertyEntities.stream().map(mapper::mapTo).toList();
     }
 
     @Override
     public PurchasableProperty update(Id id, PurchasablePropertyInputModel propertyModel) {
         PurchasableProperty propertyToUpdate = getById(id);
         propertyToUpdate.updateFromModel(propertyModel);
-        PurchasablePropertyEntity entity = purchasablePropertyMapper.mapFrom(propertyToUpdate);
-        return purchasablePropertyMapper.mapTo(entity);
+        PurchasablePropertyEntity entity = mapper.mapFrom(propertyToUpdate);
+        return mapper.mapTo(entity);
     }
 
     @Override
