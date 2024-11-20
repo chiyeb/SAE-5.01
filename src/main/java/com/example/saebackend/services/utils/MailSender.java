@@ -8,10 +8,10 @@ import java.util.Properties;
 
 public class MailSender {
 
-    private static final String SMTP_HOST = "smtp.gmail.com";
+    private static final String SMTP_HOST = "smtp-impulsewordpresssae.alwaysdata.net";
     private static final String SMTP_PORT = "587";
-    private static final String SMTP_USERNAME = "chihebbradai@gmail.com";
-    private static final String SMTP_PASSWORD = "korx pbim rixi bqnp";
+    private static final String SMTP_USERNAME = "impulsewordpresssae@alwaysdata.net";
+    private static final String SMTP_PASSWORD = "nasdas40000eurosparjour!";
 
     private static Session getSession() {
         Properties props = new Properties();
@@ -31,8 +31,18 @@ public class MailSender {
     public static void sendPasswordEmail(String recipientEmail, String username, String password) {
         String subject = "Votre mot de passe - IMPULSE";
         String body = String.format(
-                "Bonjour %s,\n\nVotre mot de passe est : %s\n\nMerci de garder ces informations confidentielles.\n\nCordialement,\nL'équipe IMPULSE",
-                username, password
+                """
+                <html>
+                    <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+                        <h2 style="color: #4CAF50;">Bonjour %s,</h2>
+                        <p>Votre mot de passe est :</p>
+                        <p style="font-size: 18px; font-weight: bold; color: #333;">%s</p>
+                        <p>Merci de garder ces informations confidentielles.</p>
+                        <p>Cordialement,</p>
+                        <p><strong>L'équipe IMPULSE</strong></p>
+                    </body>
+                </html>
+                """, username, password
         );
 
         sendEmail(recipientEmail, subject, body);
@@ -41,8 +51,17 @@ public class MailSender {
     public static void sendAccountDeletionConfirmation(String recipientEmail, String name) {
         String subject = "Confirmation de suppression de compte";
         String body = String.format(
-                "Bonjour %s,\n\nVotre compte a été supprimé avec succès. Si vous n'êtes pas à l'origine de cette action, veuillez contacter le support.\n\nCordialement,\nL'équipe IMPULSE",
-                name
+                """
+                <html>
+                    <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+                        <h2 style="color: #4CAF50;">Bonjour %s,</h2>
+                        <p>Votre compte a été supprimé avec succès.</p>
+                        <p>Si vous n'êtes pas à l'origine de cette action, veuillez contacter notre support.</p>
+                        <p>Cordialement,</p>
+                        <p><strong>L'équipe IMPULSE</strong></p>
+                    </body>
+                </html>
+                """, name
         );
 
         sendEmail(recipientEmail, subject, body);
@@ -55,7 +74,7 @@ public class MailSender {
             message.setFrom(new InternetAddress(SMTP_USERNAME));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
             message.setSubject(subject);
-            message.setText(body);
+            message.setContent(body, "text/html"); // Envoi en format HTML
             Transport.send(message);
         } catch (MessagingException e) {
             System.err.println("Échec de l'envoi de l'e-mail : " + e.getMessage());
