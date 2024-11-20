@@ -12,6 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/user")
@@ -33,16 +36,17 @@ public class UserController {
         return ResponseEntity.ok(gson.toJson(userService.create(userInputModel)));
     }
 
-
     @GetMapping(value = "/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getUserById(@PathVariable String id) {
+    public ResponseEntity<?> getUserById(@PathVariable String id) {
         try {
             return ResponseEntity.ok(gson.toJson(userService.getById(id)));
         } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found", e);
+            Map<String, String> response = new HashMap<>();
+            response.put("error", "User not found");
+            response.put("message", "No user found with ID: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
-
 
     @PostMapping(value = "/get/all", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getAllUsers() {
@@ -58,13 +62,16 @@ public class UserController {
         }
     }
 
-    @DeleteMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> deleteUser(@RequestBody String id) {
+    @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> deleteUser(@PathVariable String id) {
         try {
             userService.deleteById(id);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("User with ID: " + id + " deleted successfully");
         } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found", e);
+            Map<String, String> response = new HashMap<>();
+            response.put("error", "User not found");
+            response.put("message", "No user found with ID: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
 }

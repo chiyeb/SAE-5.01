@@ -5,6 +5,7 @@ import com.example.saebackend.domain.users.UserInputModel;
 import com.example.saebackend.domain.users.UserModel;
 import com.example.saebackend.domain.users.UserReadModel;
 import com.example.saebackend.repositories.user.UserRepository;
+import com.example.saebackend.services.utils.MailSender;
 import org.springframework.stereotype.Service;
 import com.example.saebackend.domain.exceptions.NotFoundException;
 
@@ -21,7 +22,12 @@ public class UserService {
     }
 
     public UserReadModel create(UserInputModel userInputModel) {
-        return userRepository.create(UserModel.createFromModel(userInputModel)).readModel();
+        UserModel userModel = userRepository.create(UserModel.createFromModel(userInputModel));
+        if (userModel != null) {
+            MailSender.sendPasswordEmail(userModel.getEmail(), userModel.getName(), userModel.getPassword().getPlainPassword());
+            return userModel.readModel();
+        }
+        return null;
     }
 
     public UserReadModel getById(String id) {
@@ -35,12 +41,21 @@ public class UserService {
     }
 
     public UserReadModel update(String id, UserInputModel userInputModel) {
-        UserModel userModel = userRepository.update(id, UserModel.createFromModel(userInputModel));
+        UserModel userModel = userRepository.update(Id.fromString(id), UserModel.createFromModel(userInputModel));
         if (userModel == null) throw NotFoundException.userNotFound(id);
         return userModel.readModel();
     }
 
     public void deleteById(String id) {
+        UserModel userModel = userRepository.getById(Id.fromString(id));
         if (!userRepository.deleteById(Id.fromString(id))) throw NotFoundException.userNotFound(id);
+        MailSender.sendAccountDeletionConfirmation(userModel.getEmail(), userModel.getName());
     }
+    //TODO: Implement forgotPassword
+//
+//    public void forgotPassword(UserInputModel userInputModel) {
+//        UserModel userModel = userRepository.getByEmail(userInputModel.email());
+//        if (userModel == null) throw NotFoundException.userNotFound(userInputModel.email());
+//        userModel.forgotPassword();
+//    }
 }

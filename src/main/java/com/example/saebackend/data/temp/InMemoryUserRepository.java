@@ -4,9 +4,11 @@ import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.users.UserModel;
 import com.example.saebackend.repositories.user.UserRepository;
 import org.springframework.stereotype.Repository;
+import com.example.saebackend.domain.exceptions.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class InMemoryUserRepository implements UserRepository {
@@ -20,12 +22,12 @@ public class InMemoryUserRepository implements UserRepository {
 
     @Override
     public UserModel getById(Id id) {
-        for (UserModel user : users) {
-            if (user.getId().equals(id)) {
+        for(UserModel user : users) {
+            if (Objects.equals(user.getId(), id)) {
                 return user;
             }
         }
-        return null;
+        throw NotFoundException.userNotFound(id.toString());
     }
 
     @Override
@@ -34,24 +36,19 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
-    public UserModel update(String id, UserModel userModel) {
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getId().toString().equals(id)) {
-                users.set(i, userModel);
-                return userModel;
+    public UserModel update(Id id, UserModel userModel) {
+        for(UserModel user : users) {
+            if (user.getId().equals(id)) {
+                return users.set(users.indexOf(user), userModel);
             }
         }
-        return null;
+        throw NotFoundException.userNotFound(id.toString());
     }
 
     @Override
     public boolean deleteById(Id id) {
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getId().equals(id)) {
-                users.remove(i);
-                return true;
-            }
-        }
-        return false;
+        boolean userif = users.removeIf(userModel -> userModel.getId().equals(id));
+        System.out.println(userif);
+        return userif;
     }
 }

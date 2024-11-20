@@ -11,6 +11,6 @@ public interface UserRepository {
     UserModel create(UserModel userModel);
     UserModel getById(Id id);
     List<UserModel> getAll();
-    UserModel update(String id, UserModel userModel);
+    UserModel update(Id id, UserModel userModel);
     boolean deleteById(Id id);
 }

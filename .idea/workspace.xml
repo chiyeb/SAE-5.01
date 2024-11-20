@@ -42,11 +42,13 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Gradle.Build SAE-5.01.executor": "Run",
+    "HTTP Request.SaeBackEndApplication | #10.executor": "Run",
     "HTTP Request.SaeBackEndApplication | #4.executor": "Run",
     "HTTP Request.SaeBackEndApplication | #5.executor": "Run",
     "HTTP Request.SaeBackEndApplication | #6.executor": "Run",
     "HTTP Request.SaeBackEndApplication | #7.executor": "Run",
     "HTTP Request.SaeBackEndApplication | #8.executor": "Run",
+    "HTTP Request.SaeBackEndApplication | #9.executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -60,6 +62,9 @@
   }
 }]]></component>
   <component name="RunManager" selected="Spring Boot.SaeBackEndApplication">
+    <configuration name="SaeBackEndApplication | #10" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/SaeBackEndApplication.http" index="10" requestIdentifier="#10" runType="Run single request">
+      <method v="2" />
+    </configuration>
     <configuration name="SaeBackEndApplication | #4" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/SaeBackEndApplication.http" index="4" requestIdentifier="#4" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -72,9 +77,6 @@
     <configuration name="SaeBackEndApplication | #7" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/SaeBackEndApplication.http" index="7" requestIdentifier="#7" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="SaeBackEndApplication | #8" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/SaeBackEndApplication.http" index="8" requestIdentifier="#8" runType="Run single request">
-      <method v="2" />
-    </configuration>
     <configuration name="SaeBackEndApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="SAE-Back-End.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.saebackend.SaeBackEndApplication" />
@@ -84,11 +86,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.SaeBackEndApplication | #8" />
-        <item itemvalue="HTTP Request.SaeBackEndApplication | #4" />
         <item itemvalue="HTTP Request.SaeBackEndApplication | #5" />
-        <item itemvalue="HTTP Request.SaeBackEndApplication | #6" />
+        <item itemvalue="HTTP Request.SaeBackEndApplication | #4" />
         <item itemvalue="HTTP Request.SaeBackEndApplication | #7" />
+        <item itemvalue="HTTP Request.SaeBackEndApplication | #6" />
+        <item itemvalue="HTTP Request.SaeBackEndApplication | #10" />
       </list>
     </recent_temporary>
   </component>
