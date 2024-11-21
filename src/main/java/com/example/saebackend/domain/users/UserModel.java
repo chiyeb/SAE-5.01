@@ -8,7 +8,7 @@ public class UserModel {
     private Id id;
     private String name;
     private String lastname;
-    private String email;
+    private String mail;
     private String age;
     private String phoneNumber;
     private String moreInformations;
@@ -17,15 +17,16 @@ public class UserModel {
     //================================================================================
     // Constructor
     //================================================================================
-    private UserModel(String name, String lastname, String email, String age, String phoneNumber, String moreInformations) {
-        this.id = Id.generate();
+    public UserModel(Id id, String name, String lastname, String mail, String age, String phoneNumber, String moreInformations, Password password) {
+        this.id = id;
+        System.out.println("UserModel: " + id);
         this.name = name;
         this.lastname = lastname;
-        this.email = email;
+        this.mail = mail;
         this.age = age;
         this.phoneNumber = phoneNumber;
         this.moreInformations = moreInformations;
-        this.password = Password.generate();
+        this.password = password;
     }
 
     //================================================================================
@@ -33,11 +34,21 @@ public class UserModel {
     //================================================================================
 
     public static UserModel createFromModel(UserInputModel userInputModel){
-        return new UserModel(userInputModel.name(), userInputModel.lastname(), userInputModel.email(), userInputModel.age(), userInputModel.phoneNumber(), userInputModel.moreInformations());
+        return new UserModel(Id.generate(), userInputModel.name(), userInputModel.lastname(), userInputModel.email(), userInputModel.age(), userInputModel.phoneNumber(), userInputModel.moreInformations(), Password.generate());
     }
 
     public UserReadModel readModel() {
-        return new UserReadModel(id.toString(), name, lastname, email, age, phoneNumber, moreInformations);
+        return new UserReadModel(id.toString(), name, lastname, mail, age, phoneNumber, moreInformations);
+    }
+
+    public UserModel updateFromModel(UserInputModel userInputModel){
+        setName(userInputModel.name());
+        setLastname(userInputModel.lastname());
+        setMail(userInputModel.email());
+        setAge(userInputModel.age());
+        setPhoneNumber(userInputModel.phoneNumber());
+        setMoreInformations(userInputModel.moreInformations());
+        return this;
     }
 
     //================================================================================
@@ -56,8 +67,8 @@ public class UserModel {
         return lastname;
     }
 
-    public String getEmail() {
-        return email;
+    public String getMail() {
+        return mail;
     }
 
     public String getAge() {
@@ -74,5 +85,37 @@ public class UserModel {
 
     public Password getPassword() {
         return password;
+    }
+
+    public void setId(Id id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setMoreInformations(String moreInformations) {
+        this.moreInformations = moreInformations;
+    }
+
+    public void setPassword(Password password) {
+        this.password = password;
     }
 }

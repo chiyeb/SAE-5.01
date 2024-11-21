@@ -74,4 +74,17 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
+
+    @PostMapping(value = "/forgotPassword/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> forgotPassword(@PathVariable String email){
+        try {
+            userService.forgotPassword(email);
+            return ResponseEntity.ok("Password reset successfully");
+        } catch (NotFoundException e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("error", "User not found");
+            response.put("message", "No user found with this mail address: " + email);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
 }

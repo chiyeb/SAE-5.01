@@ -11,7 +11,6 @@ import com.example.saebackend.domain.exceptions.NotFoundException;
 
 import java.util.List;
 
-//TODO: Implement UserService
 @Service
 public class UserService {
 
@@ -24,7 +23,7 @@ public class UserService {
     public UserReadModel create(UserInputModel userInputModel) {
         UserModel userModel = userRepository.create(UserModel.createFromModel(userInputModel));
         if (userModel != null) {
-            MailSender.sendPasswordEmail(userModel.getEmail(), userModel.getName(), userModel.getPassword().getPlainPassword());
+            MailSender.sendPasswordEmail(userModel.getMail(), userModel.getName(), userModel.getPassword().getPlainPassword());
             return userModel.readModel();
         }
         return null;
@@ -41,7 +40,7 @@ public class UserService {
     }
 
     public UserReadModel update(String id, UserInputModel userInputModel) {
-        UserModel userModel = userRepository.update(Id.fromString(id), UserModel.createFromModel(userInputModel));
+        UserModel userModel = userRepository.update(Id.fromString(id), userInputModel);
         if (userModel == null) throw NotFoundException.userNotFound(id);
         return userModel.readModel();
     }
@@ -49,13 +48,12 @@ public class UserService {
     public void deleteById(String id) {
         UserModel userModel = userRepository.getById(Id.fromString(id));
         if (!userRepository.deleteById(Id.fromString(id))) throw NotFoundException.userNotFound(id);
-        MailSender.sendAccountDeletionConfirmation(userModel.getEmail(), userModel.getName());
+        MailSender.sendAccountDeletionConfirmation(userModel.getMail(), userModel.getName());
     }
-    //TODO: Implement forgotPassword
-//
-//    public void forgotPassword(UserInputModel userInputModel) {
-//        UserModel userModel = userRepository.getByEmail(userInputModel.email());
-//        if (userModel == null) throw NotFoundException.userNotFound(userInputModel.email());
-//        userModel.forgotPassword();
-//    }
+
+    public void forgotPassword(String email) {
+        UserModel userModel = userRepository.getByEmail(email);
+        if (userModel == null) throw NotFoundException.userNotFound(email);
+        MailSender.sendPasswordEmail(userModel.getMail(), userModel.getName(), userModel.getPassword().getPlainPassword());
+    }
 }

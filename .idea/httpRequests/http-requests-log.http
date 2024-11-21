@@ -1,3 +1,183 @@
+POST http://127.0.0.1:8080/user/create
+Accept: application/json
+Content-Type: application/json
+Content-Length: 162
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.2.4
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+{
+"name": "John",
+"lastname": "Doe",
+"email": "chihebprivate@gmail.com",
+"age": "25",
+"phoneNumber": "0123456789",
+"moreInformations": "I'm a real estate agent"
+}
+
+<> 2024-11-21T135746.200.json
+
+###
+
+POST http://127.0.0.1:8080/user/create
+Accept: application/json
+Content-Type: application/json
+Content-Length: 162
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.2.4
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+{
+"name": "John",
+"lastname": "Doe",
+"email": "chihebprivate@gmail.com",
+"age": "25",
+"phoneNumber": "0123456789",
+"moreInformations": "I'm a real estate agent"
+}
+
+<> 2024-11-21T135525.500.json
+
+###
+
+POST http://127.0.0.1:8080/user/create
+Accept: application/json
+Content-Type: application/json
+Content-Length: 162
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.2.4
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+{
+"name": "John",
+"lastname": "Doe",
+"email": "chihebprivate@gmail.com",
+"age": "25",
+"phoneNumber": "0123456789",
+"moreInformations": "I'm a real estate agent"
+}
+
+<> 2024-11-21T135413.500.json
+
+###
+
+POST http://127.0.0.1:8080/user/create
+Accept: application/json
+Content-Type: application/json
+Content-Length: 162
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.2.4
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+{
+"name": "John",
+"lastName": "Doe",
+"email": "chihebprivate@gmail.com",
+"age": "25",
+"phoneNumber": "0123456789",
+"moreInformations": "I'm a real estate agent"
+}
+
+<> 2024-11-21T135316.500.json
+
+###
+
+POST http://127.0.0.1:8080/user/create
+Accept: application/json
+Content-Type: application/json
+Content-Length: 162
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.2.4
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+{
+"name": "John",
+"lastName": "Doe",
+"email": "chihebprivate@gmail.com",
+"age": "25",
+"phoneNumber": "0123456789",
+"moreInformations": "I'm a real estate agent"
+}
+
+<> 2024-11-21T135254.500.json
+
+###
+
+POST http://127.0.0.1:8080/user/create
+Accept: application/json
+Content-Type: application/json
+Content-Length: 162
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.2.4
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+{
+"name": "John",
+"lastName": "Doe",
+"email": "chihebprivate@gmail.com",
+"age": "25",
+"phoneNumber": "0123456789",
+"moreInformations": "I'm a real estate agent"
+}
+
+<> 2024-11-21T135043.500.json
+
+###
+
+POST http://127.0.0.1:8080/user/create
+Accept: application/json
+Content-Type: application/json
+Content-Length: 162
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.2.4
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+{
+"name": "John",
+"lastName": "Doe",
+"email": "chihebprivate@gmail.com",
+"age": "25",
+"phoneNumber": "0123456789",
+"moreInformations": "I'm a real estate agent"
+}
+
+<> 2024-11-21T132838.500.json
+
+###
+
+POST http://127.0.0.1:8080/user/create
+Accept: application/json
+Content-Type: application/json
+Content-Length: 162
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.2.4
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+{
+"name": "John",
+"lastName": "Doe",
+"email": "chihebprivate@gmail.com",
+"age": "25",
+"phoneNumber": "0123456789",
+"moreInformations": "I'm a real estate agent"
+}
+
+<> 2024-11-21T132611.500.json
+
+###
+
+POST http://127.0.0.1:8080/user/create
+Accept: application/json
+Content-Type: application/json
+Content-Length: 162
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.2.4
+Accept-Encoding: br, deflate, gzip, x-gzip
+
+{
+"name": "John",
+"lastName": "Doe",
+"email": "chihebprivate@gmail.com",
+"age": "25",
+"phoneNumber": "0123456789",
+"moreInformations": "I'm a real estate agent"
+}
+
+<> 2024-11-21T132222.500.json
+
+###
+
 DELETE http://127.0.0.1:8080/user/delete/17ceb566-98db-46c6-9ba0-5c8b11882642
 Accept: application/json
 Content-Type: application/json
@@ -529,128 +709,6 @@ Accept-Encoding: br, deflate, gzip, x-gzip
 }
 
 <> 2024-11-20T191317.200.json
-
-###
-
-DELETE http://127.0.0.1:8080/user/delete/71a146df-ab25-4b09-a36a-02a7b3cd2f7e
-Accept: application/json
-Content-Type: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.2.4
-Accept-Encoding: br, deflate, gzip, x-gzip
-content-length: 0
-
-###
-
-POST http://127.0.0.1:8080/user/create
-Accept: application/json
-Content-Type: application/json
-Content-Length: 162
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.2.4
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-{
-"name": "John",
-"lastName": "Doe",
-"email": "chihebprivate@gmail.com",
-"age": "25",
-"phoneNumber": "0123456789",
-"moreInformations": "I'm a real estate agent"
-}
-
-<> 2024-11-20T191206.200.json
-
-###
-
-DELETE http://127.0.0.1:8080/user/delete/6524a118-0157-4730-bbac-40c1cc6c2d37
-Accept: application/json
-Content-Type: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.2.4
-Accept-Encoding: br, deflate, gzip, x-gzip
-content-length: 0
-
-###
-
-POST http://127.0.0.1:8080/user/create
-Accept: application/json
-Content-Type: application/json
-Content-Length: 162
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.2.4
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-{
-"name": "John",
-"lastName": "Doe",
-"email": "chihebprivate@gmail.com",
-"age": "25",
-"phoneNumber": "0123456789",
-"moreInformations": "I'm a real estate agent"
-}
-
-<> 2024-11-20T191104.200.json
-
-###
-
-DELETE http://127.0.0.1:8080/user/delete/65d884cf-eac0-48a2-9b01-f615dfadb3e9
-Accept: application/json
-Content-Type: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.2.4
-Accept-Encoding: br, deflate, gzip, x-gzip
-content-length: 0
-
-<> 2024-11-20T191013.404.json
-
-###
-
-DELETE http://127.0.0.1:8080/user/delete/65d884cf-eac0-48a2-9b01-f615dfadb3e9
-Accept: application/json
-Content-Type: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.2.4
-Accept-Encoding: br, deflate, gzip, x-gzip
-content-length: 0
-
-<> 2024-11-20T190914.404.json
-
-###
-
-POST http://127.0.0.1:8080/user/create
-Accept: application/json
-Content-Type: application/json
-Content-Length: 162
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.2.4
-Accept-Encoding: br, deflate, gzip, x-gzip
-
-{
-"name": "John",
-"lastName": "Doe",
-"email": "chihebprivate@gmail.com",
-"age": "25",
-"phoneNumber": "0123456789",
-"moreInformations": "I'm a real estate agent"
-}
-
-<> 2024-11-20T190846.200.json
-
-###
-
-DELETE http://127.0.0.1:8080/user/delete/4ed0c094-7738-4eff-b24f-9cf71618ee57
-Accept: application/json
-Content-Type: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.2.4
-Accept-Encoding: br, deflate, gzip, x-gzip
-content-length: 0
-
-<> 2024-11-20T190835.404.json
-
-###
-
-DELETE http://127.0.0.1:8080/user/delete/4ed0c094-7738-4eff-b24f-9cf71618ee57
-Accept: application/json
-Content-Type: application/json
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.2.4
-Accept-Encoding: br, deflate, gzip, x-gzip
-content-length: 0
-
-<> 2024-11-20T190744.404.json
 
 ###
 

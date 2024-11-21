@@ -1,12 +1,14 @@
 package com.example.saebackend.domain.users;
 
-import java.security.SecureRandom;
-import java.util.Base64;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-//TODO: IMPLEMENT CRYPTED PASSWORD
+import java.security.SecureRandom;
+
 public class Password {
 
     private static final int PASSWORD_LENGTH = 12;
+    private static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
     private final String encryptedPassword;
     private final String plainPassword;
 
@@ -57,8 +59,12 @@ public class Password {
     }
 
     private static String encryptPassword(String plainPassword) {
-        //TODO: Replace this with a real encryption algorithm (?)
-        return Base64.getEncoder().encodeToString(plainPassword.getBytes());
+        return PASSWORD_ENCODER.encode(plainPassword);
+    }
+
+    public static Password fromString(String encryptedPassword) {
+        // Since we don't know the plain password, it's set to null here.
+        return new Password(encryptedPassword, null);
     }
 
     public String getEncryptedPassword() {
@@ -69,4 +75,7 @@ public class Password {
         return plainPassword;
     }
 
+    public boolean matches(String plainPasswordToCheck) {
+        return PASSWORD_ENCODER.matches(plainPasswordToCheck, encryptedPassword);
+    }
 }
