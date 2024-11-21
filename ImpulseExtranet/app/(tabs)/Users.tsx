@@ -9,8 +9,8 @@ import { createUser, getAllUsers, updateUser, deleteUser } from '@/components/Us
 export default function Users() {
   const [users, setUsers] = useState<any[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalUpdate, setIsModalUpdate] = useState(false);
   const [selectedUser, setSelectedUser] = useState<any | null>(null);
-  
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -31,7 +31,6 @@ export default function Users() {
   }, []);
 
   const handleAddUser = async () => {
-    // Exemple de création d'utilisateur
     const newUser = {
       name: 'John',
       email: 'john.doe@example.com',
@@ -41,10 +40,11 @@ export default function Users() {
     };
     setSelectedUser(newUser);
     setIsModalVisible(true);
-    
   };
+
   const closeModal = () => {
     setIsModalVisible(false);
+    setIsModalUpdate(false);
     setSelectedUser(null);
   };
 
@@ -55,7 +55,7 @@ export default function Users() {
     }
     try {
       const createdUser = await createUser(userData);
-      setUsers([...users, createdUser]); // Ajoute le nouvel utilisateur à la liste
+      setUsers([...users, createdUser]);
       console.log('Succès', 'Le User a été ajouté.');
       closeModal();
     } catch (error) {
@@ -64,7 +64,30 @@ export default function Users() {
     }
   };
 
+  // Fonction pour afficher le modal avec l'utilisateur sélectionné pour mise à jour
+  const openModalForUpdate = (id: string, userData: any) => {
+    setSelectedUser(userData);
+    setIsModalUpdate(true); // Ouvrir le modal pour mise à jour
+  };
 
+  const handleUpdateUser = async (userData: any) => {
+    if (!userData || !userData.id) {
+      console.error('ID de l\'utilisateur est  manquant', userData);
+      return;
+    }
+  
+    // Continuer avec la mise à jour
+    try {
+      const updatedUser = await updateUser(userData.id, userData);
+      setUsers(prevUsers =>
+        prevUsers.map(user => (user.id === userData.id ? updatedUser : user))
+      );
+      console.log('Utilisateur mis à jour', updatedUser);
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour', error);
+    }
+    closeModal();
+  };
 
   const handleDeleteUser = async (id: string) => {
     try {
@@ -95,6 +118,12 @@ export default function Users() {
                 >
                   <Text style={styles.buttonText}>Supprimer</Text>
                 </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => openModalForUpdate(user.id, user)}
+                  style={styles.updateButton}
+                >
+                  <Text style={styles.buttonText}>Modifier</Text>
+                </TouchableOpacity>
               </View>
             ))
           ) : (
@@ -104,13 +133,31 @@ export default function Users() {
         </View>
       </ScrollView>
 
+      {/* Modal pour ajouter un utilisateur */}
       <Modal visible={isModalVisible} animationType="slide" transparent={true} onRequestClose={closeModal}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             {selectedUser ? (
               <DetailUser
                 {...selectedUser}
-                onSaveUser={handleSaveUser}
+                onSaveUser={handleSaveUser} // Save for new user
+                onDeleteUser={closeModal}
+              />
+            ) : (
+              <Text>Aucun utilisateur sélectionné</Text>
+            )}
+          </View>
+        </View>
+      </Modal>
+
+      {/* Modal pour mettre à jour un utilisateur */}
+      <Modal visible={isModalUpdate} animationType="slide" transparent={true} onRequestClose={closeModal}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            {selectedUser ? (
+              <DetailUser
+                {...selectedUser}
+                onSaveUser={(userData) => handleUpdateUser( userData)} // Save for updating user
                 onDeleteUser={closeModal}
               />
             ) : (
@@ -161,6 +208,13 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     backgroundColor: '#dc3545',
+    padding: 10,
+    borderRadius: 5,
+    width: '30%',
+    alignSelf: 'center',
+  },
+  updateButton: {
+    backgroundColor: 'cyan',
     padding: 10,
     borderRadius: 5,
     width: '30%',

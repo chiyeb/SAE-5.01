@@ -35,23 +35,40 @@ export const createUser = async (user: any) => {
 };
 
 // Mettre à jour un utilisateur
-export const updateUser = async (id: any, updatedUser: any) => {
+export const updateUser = async (id: string, updatedUser: any) => {
+  if (!id) {
+    console.error('ID manquant lors de la mise à jour de l\'utilisateur');
+    return;
+  }
   try {
     const response = await fetch(`${API_BASE_URL}/user/update/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedUser),
+      
     });
-    
+    console.log(response);
+    // Vérifier si la réponse est OK (status 200-299)
     if (!response.ok) {
-      throw new Error('Erreur HTTP lors de la mise à jour de l\'utilisateur');
+      console.error('Erreur du serveur :', response.statusText);
+      throw new Error(`Erreur lors de la mise à jour: ${response.statusText}`);
     }
-    
-    return await response.json();
+
+    // Vérifier si la réponse n'est pas vide
+    const responseData = await response.text();
+    if (responseData === '') {
+      console.error('La réponse du serveur est vide');
+      throw new Error('La réponse du serveur est vide');
+    }
+
+    // Si la réponse n'est pas vide, la parser en JSON
+    return JSON.parse(responseData);
   } catch (error) {
     console.error('Erreur lors de la mise à jour de l\'utilisateur :', error);
+    throw error;
   }
 };
+
 
 // Supprimer un utilisateur
 export const deleteUser = async (id: string) => {
@@ -70,15 +87,3 @@ export const deleteUser = async (id: string) => {
   }
 };
 
-// Récupérer un utilisateur par ID
-export const getUserById = async (id: any) => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/user/get/${id}`);
-    if (!response.ok) {
-      throw new Error('Erreur lors de la récupération de l\'utilisateur');
-    }
-    return await response.json();
-  } catch (error) {
-    console.error('Erreur lors de la récupération de l\'utilisateur :', error);
-  }
-};

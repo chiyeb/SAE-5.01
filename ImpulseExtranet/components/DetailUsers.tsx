@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 
 import { ThemedText } from './ThemedText';
 
 interface UserProps {
+  id:string
   name: string;
   email: string;
   phoneNumber: number;
@@ -13,6 +14,7 @@ interface UserProps {
 }
 
 const UserDetail: React.FC<UserProps> = ({
+  id:initialId,
   name: initialName,
   email: initialEmail,
   phoneNumber: initialPhoneNumber,
@@ -22,6 +24,7 @@ const UserDetail: React.FC<UserProps> = ({
   onDeleteUser,
 }) => {
   // États pour chaque variable utilisateur
+  const [id, setID] = useState<string>(initialId);
   const [name, setName] = useState<string>(initialName);
   const [email, setEmail] = useState<string>(initialEmail);
   const [phoneNumber, setPhoneNumber] = useState<string>(initialPhoneNumber?.toString());
@@ -30,6 +33,7 @@ const UserDetail: React.FC<UserProps> = ({
 
 
   const getUserData = () => ({
+    id,
     name,
     email,
     phoneNumber,

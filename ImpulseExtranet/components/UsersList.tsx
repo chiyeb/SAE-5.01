@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Modal, ScrollView } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, } from 'react-native';
 import { ThemedText } from './ThemedText';
 
 interface UserProps {
@@ -20,17 +20,17 @@ export default function User({
 }: UserProps) {
   
 
-
-
   return (
     <View  style={styles.container}>
       <View style={styles.textContainer}>
+        
         <Text style={styles.name}>{name} </Text>
         <Text style={styles.description}>{email}</Text>
         <Text style={styles.description}>{phoneNumber}</Text>
         <ThemedText type="defaultSemiBold">Age: {age}</ThemedText>
         <Text style={styles.description}>{moreInformations}</Text>
       </View>
+      {/* Modal pour afficher les détails du user */}
     </View>
   );
 }
@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
     color: '#333', // Texte sombre pour une bonne lisibilité
     marginBottom: 10,
   },
+  
 
   // Styles du bouton de fermeture
   buttonClose: {

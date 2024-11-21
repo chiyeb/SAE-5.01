@@ -20,8 +20,8 @@ let users = [ {
   "id": "10ceb567-98db-46c6-9ba0-5c8b11882642",
   "name": "Richard",
   "email": "raoul@gmail.com",
-  "age": "21",
-  "phoneNumber": "0123456789",
+  "age": 21,
+  "phoneNumber": 123456789,
   "moreInformations": "I'm a real estate agent"
 }];
 
