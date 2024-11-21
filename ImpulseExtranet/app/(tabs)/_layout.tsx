@@ -10,7 +10,7 @@ export default function AppLayout() {
   return (
     <Stack
       screenOptions={{
-        headerShown: true, // Activer l'en-tête
+        headerShown: false, // Activer l'en-tête
         headerRight: () => <MenuHamburger />, // Placer uniquement le menu hamburger dans l'en-tête
         headerStyle: {
           backgroundColor: 'white',

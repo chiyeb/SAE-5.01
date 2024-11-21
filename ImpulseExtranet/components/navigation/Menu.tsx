@@ -47,15 +47,15 @@ export default function MenuHamburger() {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    right: 20
+    
   },
   overlay: {
     flex: 1,
   },
   menu: {
     position: 'absolute',
-    top: 50,
-    right: 16,
+    top: 'auto',
+    right: 'auto',
     backgroundColor: 'black',
     borderRadius: 8,
     paddingVertical: 10,
