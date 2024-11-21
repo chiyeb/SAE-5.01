@@ -63,7 +63,7 @@ public class Password {
     }
 
     public static Password fromString(String encryptedPassword) {
-        // Since we don't know the plain password, it's set to null here.
+        // Since we don't know the plain password, it's set to null here. 
         return new Password(encryptedPassword, null);
     }
 
