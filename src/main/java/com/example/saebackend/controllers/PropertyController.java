@@ -6,6 +6,7 @@ import com.example.saebackend.domain.properties.rental.models.RentalPropertyInpu
 import com.example.saebackend.services.property.PurchasablePropertyService;
 import com.example.saebackend.services.property.RentalPropertyService;
 import com.google.gson.Gson;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,8 +28,8 @@ public class PropertyController {
         this.gson = new Gson();
     }
 
-    @PostMapping(value = "/create/purchasable", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE) // TODO(Mettre des ResponseEntity et des tests pour vérifier que le json est correct)
-    public ResponseEntity<String> createPurchasableProperty(@RequestBody PurchasablePropertyInputModel propertyModel) {
+    @PostMapping(value = "/create/purchasable", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> createPurchasableProperty(@Valid @RequestBody PurchasablePropertyInputModel propertyModel) {
         if (propertyModel == null) {
             return ResponseEntity.badRequest().body("Property is null");
         }
