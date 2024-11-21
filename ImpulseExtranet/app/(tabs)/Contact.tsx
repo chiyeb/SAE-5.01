@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View,  StyleSheet, } from 'react-native';
 import Profil from '@/components/Profil';
 import ContactForm from '@/components/ContactForm';
 import MenuHamburger from '@/components/navigation/Menu';
@@ -8,55 +8,59 @@ import { ThemedText } from '@/components/ThemedText';
 import email from 'react-native-email';
 
 // Fonction pour envoyer un email
-const sendEmail = (contactData: { name: any; message: any; }) => {
-  const { name, message } = contactData;
+const sendEmail = (contactData: { name: any; subject :any; message: any; }) => {
+  const { name, subject,message } = contactData;
   const to = ['example@example.com']; // Email du destinataire
   email(to, {
-    subject: `Soumission du formulaire de contact de ${name}`,
+    subject: `${subject}`,
     body: `Nom: ${name}\nMessage: ${message}`,
   }).catch(console.error);
 };
 
 export default function Contact() {
+
   return (
     <View style={styles.container}>
-      <MenuHamburger />
+      
+      <MenuHamburger/>
       <ScrollView showsHorizontalScrollIndicator={false}>
-        <View style={styles.formContainer}>
+
+      <View style={styles.formContainer}>
           <ThemedText type="title" style={styles.title}>Contacter mon agence</ThemedText>
           <ThemedText type="defaultSemiBold" style={styles.contactInfo}>
-            Numéro : 06 06 06 06 06
+            Numero : 06 06 06 06 06
           </ThemedText>
           <ThemedText type="defaultSemiBold" style={styles.contactInfo}>
-            Email de l'agence : example@example.com
+            Mail de agence : example@example.com
           </ThemedText>
-
-          {/* Formulaire de contact avec soumission */}
-          <ContactForm onSubmit={sendEmail} />
-        </View>
+        <ContactForm onSubmit={(sendEmail)} />
+      </View>
       </ScrollView>
-      <Profil />
+      <Profil/>
+      
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center', // Centrer horizontalement
-    justifyContent: 'center', // Centrer verticalement
+    flexDirection:'row',
+    justifyContent:'space-between',
   },
   formContainer: {
-    width: '80%', // Taille du formulaire (ajustez selon votre besoin)
-    alignItems: 'center', // Centrer les éléments à l'intérieur
+    width: '50%',
+    height: '80%',
+    marginLeft:'20%',
+    alignSelf: 'center', // This will center the ContactForm if there is space
   },
   title: {
-    marginBottom: 10, // Espacement entre le titre et les autres textes
-    textAlign: 'center',
+    marginBottom: 10, // Space between title and other text
   },
   contactInfo: {
-    textAlign: 'center', // Centrer les informations de contact
-    marginBottom: 5, // Espacement entre chaque ligne de texte
+    textAlign: 'center', // Center contact information text
+    marginBottom: 5, // Space between lines of text
   },
 });
