@@ -1,68 +1,37 @@
-import { useState } from "react";
+const API_BASE_URL = 'http://127.0.0.1:8080';// http://localhost:3000
 
-const API_BASE_URL = 'http://127.0.0.1:8080'; // Pour un émulateur iOS ou un navigateur
-
-
-export const getAllRentals = async () => {
+// Récupérer tous les biens (vente/location)
+export const getAllProperties = async (selectedTab: string) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/property/get/rental`);
+    const response = await fetch(`${API_BASE_URL}/property/get/${selectedTab}`);
     return await response.json();
   } catch (error) {
     console.error('Erreur lors de la récupération des biens :', error);
   }
 };
 
-export const createRental = async (bien: {
-  type: string;
-  title: string;
-  description: string;
-  location: {
-    address: string;
-    city: string;
-    postalCode: string;
-    country: string;
-    latitude: number;
-    longitude: number;
-
-  };
-  images: string[];
-  price: number;
-  //subscriptionFrequency: string;
-  livingArea: number;
-  landArea: number;
-  rooms: Array<{ roomType: string; count: number }>;
-  orientation: string;
-  energyClass: string;
-  climateClass: string;
-  view: string;
-  estimationCostEnergy: number;
-}) => {
+// Créer un bien
+export const createProperty = async (bien: any, selectedTab: string) => {
   try {
-    console.log(bien.type);
-    const response = await fetch(`${API_BASE_URL}/property/create/rental`, {
+    const endpoint = selectedTab === 'purchasable' ? 'purchasable' : 'rental';
+    const response = await fetch(`${API_BASE_URL}/property/create/${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(bien),
     });
-
-    // Vérifiez si la réponse est OK, puis retournez-la
-    if (response.ok) {
-      const result = await response.json();
-      return result;
-    } else {
-      console.error('Erreur HTTP lors de la création du bien', response.status);
-    }
+    return response.ok ? await response.json() : console.error('Erreur HTTP', response.status);
   } catch (error) {
     console.error('Erreur lors de la création du bien :', error);
   }
 };
 
-
-export const updateRental = async (id: any, updatedBien: never) => {
+// Mettre à jour un bien
+export const updateProperty = async (id: string, updatedBien: any, selectedTab: string) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/property/update/rental/${id}`, {
+    const endpoint = selectedTab === 'purchasable' ? 'purchasable' : 'rental';
+    const response = await fetch(`${API_BASE_URL}/property/update/${endpoint}/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedBien),
@@ -73,11 +42,11 @@ export const updateRental = async (id: any, updatedBien: never) => {
   }
 };
 
-export const deleteRental = async (id: string) => {
+// Supprimer un bien
+export const deleteProperty = async (id: string, selectedTab: string) => {
   try {
-    await fetch(`${API_BASE_URL}/property/delete/rental/${id}`, {
-      method: 'DELETE',
-    });
+    const endpoint = selectedTab === 'purchasable' ? 'purchasable' : 'rental';
+    await fetch(`${API_BASE_URL}/property/delete/${endpoint}/${id}`, { method: 'DELETE' });
   } catch (error) {
     console.error('Erreur lors de la suppression du bien :', error);
   }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-// Définition du type pour les props
 interface TabSelectorProps {
   selectedTab: string;
   onTabSelect: (tab: string) => void;
@@ -11,14 +10,18 @@ const TabSelector: React.FC<TabSelectorProps> = ({ selectedTab, onTabSelect }) =
   return (
     <View style={styles.tabs}>
       <TouchableOpacity
-        onPress={() => onTabSelect('vente')}
-        style={[styles.tab, selectedTab === 'vente' && styles.activeTab]}>
-        <Text style={styles.tabText}>Vente</Text>
+        onPress={() => onTabSelect('purchasable')}
+        style={[styles.tab, selectedTab === 'purchasable' && styles.activeTab]}>
+        <Text style={[styles.tabText, selectedTab === 'purchasable' && styles.activeTabText]}>
+          Vente
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => onTabSelect('location')}
-        style={[styles.tab, selectedTab === 'location' && styles.activeTab]}>
-        <Text style={styles.tabText}>Location</Text>
+        onPress={() => onTabSelect('rental')}
+        style={[styles.tab, selectedTab === 'rental' && styles.activeTab]}>
+        <Text style={[styles.tabText, selectedTab === 'rental' && styles.activeTabText]}>
+          Location
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -27,21 +30,24 @@ const TabSelector: React.FC<TabSelectorProps> = ({ selectedTab, onTabSelect }) =
 const styles = StyleSheet.create({
   tabs: {
     flexDirection: 'row',
-    marginBottom: 20,
-    alignSelf: 'center',
+    justifyContent: 'center',
+    marginVertical: 20,
   },
   tab: {
-    padding: 10,
+    padding: 12,
+    borderRadius: 8,
+    backgroundColor: '#f0f0f0',
     marginHorizontal: 5,
-    borderRadius: 5,
-    
   },
   activeTab: {
-    backgroundColor: '#ddd',
+    backgroundColor: '#007BFF',
   },
   tabText: {
     fontSize: 16,
-    color: '#333',
+    color: '#555',
+  },
+  activeTabText: {
+    color: 'white',
   },
 });
 

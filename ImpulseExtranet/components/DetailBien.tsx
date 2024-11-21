@@ -18,6 +18,7 @@ interface Location {
 }
 
 interface DetailProps {
+  selectedTab:  'rental';
   title: string;
   description: string;
   price: number;
@@ -33,6 +34,7 @@ interface DetailProps {
 }
 
 const Detail: React.FC<DetailProps> = ({
+  selectedTab,
   title: initialTitle,
   description: initialDescription,
   price: initialPrice,
@@ -50,6 +52,7 @@ const Detail: React.FC<DetailProps> = ({
   const [title, setTitle] = useState<string>(initialTitle);
   const [description, setDescription] = useState<string>(initialDescription);
   const [price, setPrice] = useState<string>(initialPrice?.toString());
+  const [subscriptionFrequency, setSubscriptionFrequency] = useState<string | null>(null);
   const [location, setLocation] = useState<Location>(initialLocation);  // Utilisation de l'objet localisation
   const [image, setImage] = useState<string>("");
   const [livingArea, setLivingArea] = useState<string>(initiallivingArea?.toString() ?? "");
@@ -64,13 +67,13 @@ const Detail: React.FC<DetailProps> = ({
 const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
 
   // État pour gérer l'onglet sélectionné dans la modal
-  const [selectedTab, setSelectedTab] = useState('details');
-  
+
   const getBienData = () => ({
     type,
     title,
     description,
     price: parseFloat(price),
+    ...(selectedTab === 'rental' && { subscriptionFrequency: "YEARLY" }), // Ajoute uniquement pour location
     location: {
       address: location.address,
       city: location.city,
@@ -116,9 +119,8 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
         <ThemedText type="title">Détails du bien</ThemedText>
         <View style={styles.textContainer}>
           {/* Sélecteur d'onglets */}
-          <TabSelector selectedTab={selectedTab} onTabSelect={setSelectedTab} />
 
-          <ThemedText type="defaultSemiBold">Performance énergétique</ThemedText>
+          <ThemedText type="defaultSemiBold">Type de bien</ThemedText>
           <RNPickerSelect
             style={pickerSelectStyles}
             onValueChange={setType}
@@ -138,6 +140,23 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
 
           <ThemedText type="defaultSemiBold">Prix</ThemedText>
           <TextInput style={styles.input} value={price} onChangeText={setPrice} placeholder="Prix" keyboardType="numeric" />
+          {selectedTab === 'rental' && (
+            <>
+              <ThemedText type="defaultSemiBold">Fréquence de souscription</ThemedText>
+              <RNPickerSelect
+                style={pickerSelectStyles}
+                onValueChange={setSubscriptionFrequency}
+                value={subscriptionFrequency}
+                placeholder={{ label: 'Sélectionnez la fréquence', value: null }}
+                items={[
+                  { label: 'Hebdomadaire', value: 'WEEKLY' },
+                  { label: 'Mensuelle', value: 'MONTHLY' },
+                  { label: 'Annuellement', value: 'YEARLY' },
+                ]}
+              />
+
+            </>
+          )}
 
           {/* Mise à jour de l'affichage de localisation */}
           <ThemedText type="defaultSemiBold">Adresse</ThemedText>
