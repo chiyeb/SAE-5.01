@@ -34,14 +34,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5, // Ombre pour Android
-    width:'100%',
-    height:'auto',
-    justifyContent:'center',
-
-
+    width:'20%',
+    height:'30%',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
   },
   textContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
     padding: 10,
   },
   title: {

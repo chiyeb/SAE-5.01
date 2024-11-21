@@ -9,7 +9,7 @@ export default function Buttons({ onPress }: ButtonsProps) {
   return (
     <View style={styles.buttonContainer}>
       <Button
-        title="Ajout d'un bien"
+        title="Ajouter"
         color="gray"
         onPress={onPress} // Appelle la fonction passée en prop
       />
@@ -22,6 +22,6 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 5,
     overflow: 'hidden',
-    width: '15%',
+    
   },
 });

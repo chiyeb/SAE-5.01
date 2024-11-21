@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import { ThemedText } from './ThemedText'; // Import the ThemedText component if available
+import { ThemedText } from '../ThemedText'; // Import the ThemedText component if available
 
 interface NbPieceProps {
   rooms: { roomType: string; count: number }[]; // Prop to hold room data

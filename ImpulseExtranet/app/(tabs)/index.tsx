@@ -76,9 +76,7 @@ export default function HomeScreen() {
       Alert.alert('Erreur', 'Veuillez remplir tous les champs obligatoires.');
       return;
     }
-
     try {
-
       const createdBien = await createProperty(bienData, selectedTab);
       setBiens([...biens, createdBien]);
       Alert.alert('Succès', 'Le bien a été ajouté.');

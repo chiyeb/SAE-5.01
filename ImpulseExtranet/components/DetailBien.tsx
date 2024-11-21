@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import NbPiece from './ButtonNbPiece';
+import NbPiece from './navigation/ButtonNbPiece';
 import { pickImage } from './SelectImage';
 import { ThemedText } from './ThemedText';
 import TabSelector from '@/components/navigation/ButtonVenteLocation';  // Import du composant d'onglet
@@ -136,7 +136,7 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
           <TextInput style={styles.input} value={title} onChangeText={setTitle} placeholder="Titre" />
 
           <ThemedText type="defaultSemiBold">Description</ThemedText>
-          <TextInput style={styles.input} value={description} onChangeText={setDescription} placeholder="Description" />
+          <TextInput style={styles.input} value={description} onChangeText={setDescription} placeholder="Description" multiline/>
 
           <ThemedText type="defaultSemiBold">Prix</ThemedText>
           <TextInput style={styles.input} value={price} onChangeText={setPrice} placeholder="Prix" keyboardType="numeric" />
