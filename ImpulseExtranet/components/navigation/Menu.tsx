@@ -18,6 +18,7 @@ export default function MenuHamburger() {
         <Ionicons name="menu" size={28} color="black" />
       </TouchableOpacity>
       <Modal
+      
       //Menu 
         visible={isVisible}
         transparent={true}
