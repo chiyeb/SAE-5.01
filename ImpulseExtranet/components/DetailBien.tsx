@@ -5,10 +5,10 @@ import NbPiece from './ButtonNbPiece';
 import { pickImage } from './SelectImage';
 import { ThemedText } from './ThemedText';
 import TabSelector from '@/components/navigation/ButtonVenteLocation';  // Import du composant d'onglet
-import { Float } from 'react-native/Libraries/Types/CodegenTypes';
+
 
 // Définition du type pour les props
-interface Localisation {
+interface Location {
   address: string;
   city: string;
   postalCode: string;
@@ -21,7 +21,7 @@ interface DetailProps {
   title: string;
   description: string;
   price: number;
-  localisation: Localisation;
+  location: Location;
   livingArea: number;
   landArea: number;
   images: string,
@@ -36,7 +36,7 @@ const Detail: React.FC<DetailProps> = ({
   title: initialTitle,
   description: initialDescription,
   price: initialPrice,
-  localisation: initiallocalisation,
+  location: initialLocation,
   livingArea: initiallivingArea,
   landArea: initiallandArea,
   orientation: initialOrientation,
@@ -50,7 +50,7 @@ const Detail: React.FC<DetailProps> = ({
   const [title, setTitle] = useState<string>(initialTitle);
   const [description, setDescription] = useState<string>(initialDescription);
   const [price, setPrice] = useState<string>(initialPrice?.toString());
-  const [localisation, setlocalisation] = useState<Localisation>(initiallocalisation);  // Utilisation de l'objet localisation
+  const [location, setLocation] = useState<Location>(initialLocation);  // Utilisation de l'objet localisation
   const [image, setImage] = useState<string>("");
   const [livingArea, setLivingArea] = useState<string>(initiallivingArea?.toString() ?? "");
   const [landArea, setLandArea] = useState<string>(initiallandArea?.toString());
@@ -65,18 +65,19 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
 
   // État pour gérer l'onglet sélectionné dans la modal
   const [selectedTab, setSelectedTab] = useState('details');
+  
   const getBienData = () => ({
     type,
     title,
     description,
     price: parseFloat(price),
-    localisation: {
-      address: localisation.address,
-      city: localisation.city,
-      postalCode: localisation.postalCode,
-      country: localisation.country,
-      latitude: localisation.latitude,  // Assurez-vous que latitude et longitude sont envoyés correctement
-      longitude: localisation.longitude,
+    location: {
+      address: location.address,
+      city: location.city,
+      postalCode: location.postalCode,
+      country: location.country,
+      latitude: location.latitude,  // Assurez-vous que latitude et longitude sont envoyés correctement
+      longitude: location.longitude,
     },
     livingArea: parseFloat(livingArea),
     landArea: parseFloat(landArea),
@@ -95,7 +96,7 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
   };
   const handleDelete = () => {
     // Demander une confirmation avant de supprimer le bien
-    onDelete(localisation.longitude);
+    onDelete(location.longitude);
   };
     // Initialize the rooms state
 
@@ -124,8 +125,8 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
             value={type}
             placeholder={{ label: 'Sélectionnez le type du bien', value: null }}
             items={[
-              { label: 'Maison', value: 'Maison' },
-              { label: 'Appartement', value: 'Appartement' },
+              { label: 'Maison', value: 'HOUSE' },
+              { label: 'Appartement', value: 'APARTMENT' },
             ]}
           />
 
@@ -142,24 +143,24 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
           <ThemedText type="defaultSemiBold">Adresse</ThemedText>
           <TextInput
             style={styles.input}
-            value={localisation?.address}
-            onChangeText={(text) => setlocalisation({ ...localisation, address: text })}
+            value={location?.address}
+            onChangeText={(text) => setLocation({ ...location, address: text })}
             placeholder="Adresse"
           />
 
           <ThemedText type="defaultSemiBold">Ville</ThemedText>
           <TextInput
             style={styles.input}
-            value={localisation?.city}
-            onChangeText={(text) => setlocalisation({ ...localisation, city: text })}
+            value={location?.city}
+            onChangeText={(text) => setLocation({ ...location, city: text })}
             placeholder="Ville"
           />
 
           <ThemedText type="defaultSemiBold">Code Postal</ThemedText>
           <TextInput
             style={styles.input}
-            value={localisation?.postalCode.toString()}
-            onChangeText={(text) => setlocalisation({ ...localisation, postalCode: text })}
+            value={location?.postalCode.toString()}
+            onChangeText={(text) => setLocation({ ...location, postalCode: text })}
             placeholder="Code Postal"
             keyboardType="numeric"
           />
@@ -167,8 +168,8 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
           <ThemedText type="defaultSemiBold">Latitude</ThemedText>
           <TextInput
             style={styles.input}
-            value={localisation?.latitude.toString()}
-            onChangeText={(text) => setlocalisation({ ...localisation, latitude: parseFloat(text) })}
+            value={location?.latitude.toString()}
+            onChangeText={(text) => setLocation({ ...location, latitude: parseFloat(text) })}
             placeholder="Latitude"
             keyboardType="numeric"
           />
@@ -176,8 +177,8 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
           <ThemedText type="defaultSemiBold">Longitude</ThemedText>
           <TextInput
             style={styles.input}
-            value={localisation?.longitude.toString()}
-            onChangeText={(text) => setlocalisation({ ...localisation, longitude:parseFloat(text) })}
+            value={location?.longitude.toString()}
+            onChangeText={(text) => setLocation({ ...location, longitude:parseFloat(text) })}
             placeholder="Longitude"
             keyboardType="numeric"
           />
@@ -185,8 +186,8 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
           <ThemedText type="defaultSemiBold">Pays</ThemedText>
           <TextInput
             style={styles.input}
-            value={localisation?.country}
-            onChangeText={(text) => setlocalisation({ ...localisation, country: text })}
+            value={location?.country}
+            onChangeText={(text) => setLocation({ ...location, country: text })}
             placeholder="Pays"
           />
 

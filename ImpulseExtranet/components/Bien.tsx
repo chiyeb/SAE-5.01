@@ -76,7 +76,7 @@ export default function Bien({
   return (
     <TouchableOpacity onPress={showBienDetails} style={styles.container}>
       <ImageBackground
-        source={require('@/assets/images/favicon.png' )}
+        source={require('@/assets/images/Maison-Tassin-BD-1.jpg' )}
         style={styles.image}
         imageStyle={styles.imageStyle}
       />

@@ -6,7 +6,7 @@ import Buttons from '@/components/navigation/Buttons';
 import Profil from '@/components/Profil';
 import DetailBien from '@/components/DetailBien';
 import { getAllRentals, createRental, updateRental, deleteRental } from '@/components/Api';
-import { Float } from 'react-native/Libraries/Types/CodegenTypes';
+
 
 
 export default function HomeScreen() {
@@ -41,7 +41,7 @@ export default function HomeScreen() {
       type: "APARTMENT",
       title: "Nouvel appartement",
       description: "Un appartement spacieux avec 2 chambres, cuisine équipée et balcon donnant sur la ville.",
-      localisation: {
+      location: {
         address: "12 rue de l'eau",
         city: "Paris",
         postalCode: "70123",
@@ -81,7 +81,7 @@ const handleSaveBien = async (bienData: {
   type: string;
   title: string;
   description: string;
-  localisation: {
+  location: {
     address: string;
     city: string;
     postalCode: string;
@@ -102,7 +102,7 @@ const handleSaveBien = async (bienData: {
 }) => {
   
   // Validation des données de localisation (latitude et longitude)
-  if (!bienData.localisation.latitude || !bienData.localisation.longitude) {
+  if (!bienData.location.latitude || !bienData.location.longitude) {
     console.log('Erreur', 'La latitude et la longitude doivent être renseignées');
     return;
   }
@@ -110,7 +110,7 @@ const handleSaveBien = async (bienData: {
   // Si les données sont valides, on envoie la requête à l'API
   try {
     const createdBien = await createRental(bienData);
-    console.log(bienData.localisation.latitude);
+    console.log(bienData.location.latitude);
     Alert.alert('Succès', 'Le bien a été ajouté avec succès.');
     setBiens([...biens, createdBien]);  // Ajouter le bien à la liste locale
     closeModal();
@@ -134,9 +134,6 @@ const handleSaveBien = async (bienData: {
 
   return (
     <View style={styles.container}>
-      <View style={styles.profil}>
-        <Profil />
-      </View>
       <ScrollView showsHorizontalScrollIndicator={true}>
         <View style={styles.titleContainer}>
           <ThemedText type="title">Administrateur</ThemedText>
@@ -152,11 +149,11 @@ const handleSaveBien = async (bienData: {
           <Text style={styles.buttonText}>Supprimer</Text>
         </TouchableOpacity>
       </View>
-    ) : null // Si 'bien' est undefined ou null, rien ne sera rendu
-  ))
-) : (
-  <Text>Aucun bien trouvé</Text>
-)}
+            ) : null // Si 'bien' est undefined ou null, rien ne sera rendu
+          ))
+        ) : (
+          <Text>Aucun bien trouvé</Text>
+        )}
           <Buttons onPress={handleAddBien} />
         </View>
       </ScrollView>
@@ -175,7 +172,7 @@ const handleSaveBien = async (bienData: {
                 title={selectedBien.title}
                 description={selectedBien.description}
                 price={selectedBien.price}
-                localisation={selectedBien.localisation}
+                location={selectedBien.location}
                 livingArea={selectedBien.livingArea}
                 landArea={selectedBien.landArea}
                 orientation={selectedBien.orientation}
@@ -197,9 +194,9 @@ const handleSaveBien = async (bienData: {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
+    alignItems:'center',
     backgroundColor: '#fff',
-    flexDirection: 'row',
+    
   },
   titleContainer: {
     alignItems: 'center',

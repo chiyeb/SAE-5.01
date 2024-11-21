@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 let biens = [
   {
     "id": "e707560e-0e17-43e4-8747-987cab1afb60",
-    "type": "APARTMENT",
+    "type": "Apartement",
     "title": "Appartement moderne en centre-ville",
     "description": "Un appartement spacieux avec 2 chambres, cuisine équipée et balcon donnant sur la ville.",
     "location": {
@@ -28,15 +28,15 @@ let biens = [
     "landArea": 0,
     "rooms": [
       {
-        "roomType": "bathroom",
+        "roomType": "Salle_de_bain",
         "count": 1
       },
       {
-        "roomType": "bedroom",
+        "roomType": "Chnambre",
         "count": 2
       },
       {
-        "roomType": "kitchen",
+        "roomType": "Cuisine",
         "count": 1
       }
     ],
@@ -46,29 +46,29 @@ let biens = [
     "view": "Vue sur la ville",
     "estimationCostEnergy": 120
   },{
-    "type":"APARTMENT",
-    "title":"Nouvel appartement",
-    "description":"Un appartement spacieux avec 2 chambres, cuisine équipée et balcon donnant sur la ville.",
+    "type":"Maison",
+    "title":"Maison de campagne",
+    "description":"Charmante maison de campagne avec un grand jardin, une terrasse et vue sur les montagnes.",
     "location":{
-       "latitude":48.866667,
-       "longitude":2.333333,
-       "address":"12 rue de l'eau",
-       "city":"Paris",
+       "latitude":45.234242,
+       "longitude":7.333333,
+       "address":"564 Avenue Gaston Berger",
+       "city":"Mézos",
        "postalCode":"70123",
        "country":"France"
     },
     "images" : [],
-    "price":20324234.0,
+    "price":2340000.0,
     "subscriptionFrequency":"MONTHLY",
     "livingArea":75.0,
-    "landArea":0.0,
+    "landArea":25.0,
     "rooms":[
        {
-          "roomType":"kitchen",
+          "roomType":"Cuisine",
           "count":1
        },
        {
-          "roomType":"bathroom",
+          "roomType":"Salle_de_bain",
           "count":1
        },
        {
@@ -77,10 +77,10 @@ let biens = [
        }
     ],
     "orientation":"Sud",
-    "energyClass":"B",
-    "climateClass":"A",
+    "energyClass":"D",
+    "climateClass":"C",
     "view":"Vue sur la ville",
-    "estimationCostEnergy":120.0
+    "estimationCostEnergy":90.0
 }
 
 ];

@@ -1,10 +1,11 @@
-const API_BASE_URL = 'http://localhost:3000'; // Pour un émulateur iOS ou un navigateur
+import { useState } from "react";
+
+const API_BASE_URL = 'http://127.0.0.1:8080'; // Pour un émulateur iOS ou un navigateur
 
 
 export const getAllRentals = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/property/get/rental`);
-    
     return await response.json();
   } catch (error) {
     console.error('Erreur lors de la récupération des biens :', error);
@@ -15,13 +16,13 @@ export const createRental = async (bien: {
   type: string;
   title: string;
   description: string;
-  localisation: {
-    latitude: number;
-    longitude: number;
+  location: {
     address: string;
     city: string;
     postalCode: string;
     country: string;
+    latitude: number;
+    longitude: number;
 
   };
   images: string[];
@@ -37,7 +38,7 @@ export const createRental = async (bien: {
   estimationCostEnergy: number;
 }) => {
   try {
-    console.log(bien.images);
+    console.log(bien.type);
     const response = await fetch(`${API_BASE_URL}/property/create/rental`, {
       method: 'POST',
       headers: {
