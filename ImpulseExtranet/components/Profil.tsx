@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5, // Ombre pour Android
     width:'20%',
-    height:'35%',
+    height:'40%',
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
   },
   textContainer: {

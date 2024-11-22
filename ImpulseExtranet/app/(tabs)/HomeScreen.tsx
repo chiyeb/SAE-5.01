@@ -6,6 +6,7 @@ import Buttons from '@/components/navigation/Buttons';
 import TabSelector from '@/components/navigation/ButtonVenteLocation'; 
 import DetailBien from '@/components/DetailBien';
 import { createProperty, getAllProperties, updateProperty, deleteProperty } from '@/components/Api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function HomeScreen() {
   const [biens, setBiens] = useState<any[]>([]);
@@ -13,27 +14,45 @@ export default function HomeScreen() {
   const [isModalUpdate, setIsModalUpdate] = useState(false);
   const [selectedBien, setSelectedBien] = useState<any | null>(null);
   const [selectedTab, setSelectedTab] = useState('purchasable');
+  const [token, setToken] = useState<string | null>(null);  // Stocker le token ici
   const scrollY = new Animated.Value(0); // Suivi du défilement
 
   useEffect(() => {
-    const fetchBiens = async () => {
-      try {
-        const data = await getAllProperties(selectedTab);
-        if (Array.isArray(data)) {
-          setBiens(data);
-        } else {
-          console.error('Données invalides reçues:', data);
-          setBiens([]);
-        }
-      } catch (error) {
-        console.error('Erreur lors de la récupération des biens :', error);
-      }
+    // Récupérer le token depuis AsyncStorage
+    const fetchToken = async () => {
+      const storedToken = await AsyncStorage.getItem('auth_token');
+      setToken(storedToken);
     };
 
-    fetchBiens();
+    fetchToken();
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      const fetchBiens = async () => {
+        try {
+          const data = await getAllProperties(selectedTab);
+          if (Array.isArray(data)) {
+            setBiens(data);
+          } else {
+            console.error('Données invalides reçues:', data);
+            setBiens([]);
+          }
+        } catch (error) {
+          console.error('Erreur lors de la récupération des biens :', error);
+        }
+      };
+
+      fetchBiens();
+    }
   }, [selectedTab]);
 
   const handleAddBien = async () => {
+    if (!token) {
+      Alert.alert('Erreur', 'Token d\'authentification manquant.');
+      return;
+    }
+    
     const newBien = {
       type: 'APARTMENT',
       title: 'Nouvel appartement',
@@ -77,8 +96,13 @@ export default function HomeScreen() {
       Alert.alert('Erreur', 'Veuillez remplir tous les champs obligatoires.');
       return;
     }
+    if (!token) {
+      Alert.alert('Erreur', 'Token d\'authentification manquant.');
+      return;
+    }
+
     try {
-      const createdBien = await createProperty(bienData, selectedTab);
+      const createdBien = await createProperty(bienData, selectedTab, token);
       setBiens([...biens, createdBien]);
       Alert.alert('Succès', 'Le bien a été ajouté.');
       closeModal();
@@ -95,25 +119,34 @@ export default function HomeScreen() {
 
   const handleUpdateBien = async (bienData: any) => {
     if (!bienData || !bienData.id) {
-      console.error('ID de l\'utilisateur est manquant', bienData);
+      console.error('ID du bien est manquant', bienData);
+      return;
+    }
+    if (!token) {
+      Alert.alert('Erreur', 'Token d\'authentification manquant.');
       return;
     }
 
     try {
-      const updatedBien = await updateProperty(bienData.id, bienData, selectedTab);
+      const updatedBien = await updateProperty(bienData.id, bienData, selectedTab, token);
       setBiens(prevBiens =>
         prevBiens.map(bien => (bien.id === bienData.id ? updatedBien : bien))
       );
-      console.log('Utilisateur mis à jour', updatedBien);
+      Alert.alert('Succès', 'Le bien a été mis à jour.');
     } catch (error) {
       console.error('Erreur lors de la mise à jour', error);
+      Alert.alert('Erreur', 'Impossible de mettre à jour le bien.');
     }
     closeModal();
   };
 
   const handleDeleteBien = async (id: string) => {
+    if (!token) {
+      Alert.alert('Erreur', 'Token d\'authentification manquant.');
+      return;
+    }
     try {
-      await deleteProperty(id, selectedTab);
+      await deleteProperty(id, selectedTab, token);
       setBiens(biens.filter((bien) => bien.id !== id));
       Alert.alert('Succès', 'Le bien a été supprimé.');
     } catch (error) {
@@ -121,7 +154,6 @@ export default function HomeScreen() {
       Alert.alert('Erreur', 'Impossible de supprimer le bien.');
     }
   };
-
   // Couleur d'arrière-plan qui change en fonction du défilement
   const getBackgroundColor = scrollY.interpolate({
     inputRange: [0, 200],  // Plage de défilement
@@ -154,7 +186,7 @@ export default function HomeScreen() {
                   <TouchableOpacity onPress={() => openModalForUpdate(bien.id, bien)} style={styles.updateButton}>
                     <Text style={styles.buttonText}>Modifier</Text>
                   </TouchableOpacity>
-                  
+
                   <TouchableOpacity onPress={() => handleDeleteBien(bien.id)} style={styles.deleteButton}>
                     <Text style={styles.buttonText}>Supprimer</Text>
                   </TouchableOpacity>

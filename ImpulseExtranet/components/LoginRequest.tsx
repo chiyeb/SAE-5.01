@@ -2,12 +2,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const API_BASE_URL = 'http://127.0.0.1:8080'; // Ou http://localhost:3000 selon votre configuration
 
-// Fonction de login (authentification)
-export const login = async (email: string, password: string): Promise<string | null> => {
-  // Validation de l'email et du mot de passe avant de tenter une connexion
+// Fonction de login
+export const login = async (
+  email: string,
+  password: string
+): Promise<{ success: boolean; token?: string; error?: string }> => {
   if (!email || !password) {
-    console.error('Veuillez entrer un email et un mot de passe.');
-    return null;
+    return { success: false, error: 'Veuillez entrer un email et un mot de passe.' };
   }
 
   try {
@@ -15,34 +16,29 @@ export const login = async (email: string, password: string): Promise<string | n
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Basic ${btoa(`${email}:${password}`)}`,
       },
+      body: JSON.stringify({ email, password }), // JSON envoyé au backend
     });
 
     if (!response.ok) {
-      // Améliorer l'affichage d'erreur pour l'utilisateur
-      console.error('Erreur lors de la connexion :', response.status, response.statusText);
-      return null;
+      const errorMessage = await response.text();
+      return { success: false, error: errorMessage || 'Erreur inconnue.' };
     }
 
-    // Récupération du token depuis la réponse
-    const token = await response.text();
-
-    // Stockage du token dans AsyncStorage pour une utilisation ultérieure
-    await AsyncStorage.setItem('auth_token', token);
-
-    return token;
+    const token = await response.text(); // Supposons que le token est renvoyé sous forme de texte
+    await AsyncStorage.setItem('auth_token', token); // Stockage du token localement
+    return { success: true, token };
   } catch (error) {
-    console.error('Erreur lors de la connexion :', error);
-    return null;
+    console.error('Erreur réseau ou serveur :', error);
+    return { success: false, error: 'Erreur réseau ou serveur.' };
   }
 };
+
 
 // Fonction pour récupérer le token depuis AsyncStorage
 export const getStoredToken = async (): Promise<string | null> => {
   try {
-    const token = await AsyncStorage.getItem('auth_token');
-    return token;
+    return await AsyncStorage.getItem('auth_token');
   } catch (error) {
     console.error('Erreur lors de la récupération du token depuis AsyncStorage :', error);
     return null;
@@ -57,35 +53,42 @@ export const isLoggedIn = async (): Promise<boolean> => {
 
 // Fonction pour récupérer les informations utilisateur
 export const getUserInfo = async (): Promise<any | null> => {
-  try {
-    // Récupérer le token stocké dans AsyncStorage
-    const token = await AsyncStorage.getItem('auth_token');
-    if (!token) {
-      console.error('Token non trouvé.');
-      return null;
-    }
+  const token = await getStoredToken();
 
-    // Effectuer la requête GET pour récupérer les informations de l'utilisateur
+  if (!token) {
+    console.error('Token non trouvé.');
+    return null;
+  }
+
+  try {
     const response = await fetch(`${API_BASE_URL}/user/current`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`, // Ajouter le token dans les headers
+        'Authorization': `Bearer ${token}`, // Ajouter le token dans les headers
       },
     });
 
-    // Vérifier si la réponse est correcte
     if (!response.ok) {
       console.error('Erreur lors de la récupération des informations utilisateur:', response.status, response.statusText);
       return null;
     }
 
-    // Retourner les informations utilisateur sous forme de JSON
     const userInfo = await response.json();
     return userInfo;
 
   } catch (error) {
     console.error('Erreur lors de la récupération des informations utilisateur :', error);
     return null;
+  }
+};
+
+// Fonction pour déconnecter l'utilisateur
+export const logout = async (): Promise<void> => {
+  try {
+    await AsyncStorage.removeItem('auth_token');
+    console.log('Utilisateur déconnecté avec succès');
+  } catch (error) {
+    console.error('Erreur lors de la déconnexion :', error);
   }
 };

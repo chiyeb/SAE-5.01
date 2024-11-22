@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TextInput, Button, Text, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router'; // Importer le useRouter de Next.js
 import { login, getUserInfo } from '@/components/LoginRequest'; // Remplacez par le bon chemin
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -14,15 +15,21 @@ const LoginScreen = () => {
 
   const handleLogin = async () => {
     setError(null); // Réinitialiser les erreurs
-
-    const result = await login(email, password);
-
-    if (result) {
-      setToken(result);
-      setError(null); // Réinitialiser les erreurs
-      router.push('/HomeScreen'); // Rediriger vers la page d'accueil après la connexion réussie
-    } else {
-      setError('Échec de la connexion. Vérifiez vos identifiants.');
+  
+    try {
+      const result = await login(email, password);
+      console.log('Résultat de login:', result);
+  
+      if (result.success) {
+        const token = await AsyncStorage.getItem('auth_token');
+        setToken(token);
+        router.push('/HomeScreen'); // Rediriger si succès
+      } else {
+        setError(result.error || 'Erreur inconnue.');
+      }
+    } catch (err) {
+      console.error('Erreur réseau ou serveur:', err);
+      setError('Impossible de se connecter au serveur.');
     }
   };
 
@@ -69,6 +76,7 @@ const LoginScreen = () => {
 
       {token && (
         <View style={styles.infoBox}>
+            
           <Button title="Get User Info" onPress={fetchUserInfo} color="#4169e1" />
         </View>
       )}
