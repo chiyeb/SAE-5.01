@@ -12,14 +12,13 @@ public class UserModel {
     private String age;
     private String phoneNumber;
     private String moreInformations;
-    private Password password;
+    private String password;
 
     //================================================================================
     // Constructor
     //================================================================================
-    public UserModel(Id id, String name, String lastname, String mail, String age, String phoneNumber, String moreInformations, Password password) {
+    public UserModel(Id id, String name, String lastname, String mail, String age, String phoneNumber, String moreInformations, String password) {
         this.id = id;
-        System.out.println("UserModel: " + id);
         this.name = name;
         this.lastname = lastname;
         this.mail = mail;
@@ -33,8 +32,8 @@ public class UserModel {
     // Methods
     //================================================================================
 
-    public static UserModel createFromModel(UserInputModel userInputModel){
-        return new UserModel(Id.generate(), userInputModel.name(), userInputModel.lastname(), userInputModel.email(), userInputModel.age(), userInputModel.phoneNumber(), userInputModel.moreInformations(), Password.generate());
+    public static UserModel createFromModel(UserInputModel userInputModel, String plainPassword) {
+        return new UserModel(Id.generate(), userInputModel.name(), userInputModel.lastname(), userInputModel.email(), userInputModel.age(), userInputModel.phoneNumber(), userInputModel.moreInformations(), Password.encryptPassword(plainPassword));
     }
 
     public UserReadModel readModel() {
@@ -83,7 +82,7 @@ public class UserModel {
         return moreInformations;
     }
 
-    public Password getPassword() {
+    public String getPassword() {
         return password;
     }
 
@@ -115,7 +114,4 @@ public class UserModel {
         this.moreInformations = moreInformations;
     }
 
-    public void setPassword(Password password) {
-        this.password = password;
-    }
 }

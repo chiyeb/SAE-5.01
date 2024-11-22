@@ -16,11 +16,12 @@ public class UserModelMapper implements Mapper<UserModelEntity, UserModel> {
 
     @Override
     public UserModel mapTo(UserModelEntity input) {
-        return new UserModel(Id.fromString(input.getId()), input.getName(), input.getLastname(), input.getMail(), input.getLastname(), input.getPhoneNumber(), input.getMoreInformations(), Password.fromString(input.getPassword()));
+        return new UserModel(Id.fromString(input.getId()), input.getName(), input.getLastname(), input.getMail(), input.getLastname(), input.getPhoneNumber(), input.getMoreInformations(), input.getPassword());
     }
 
     @Override
     public UserModelEntity mapFrom(UserModel input) {
-        return jpaUserRepository.saveAndFlush(new UserModelEntity(input.getId().toString(), input.getName(), input.getLastname(), input.getMail(), input.getAge(), input.getPhoneNumber(), input.getMoreInformations(), input.getPassword().getEncryptedPassword()));
+        System.out.println(input.getPassword());
+        return jpaUserRepository.saveAndFlush(new UserModelEntity(input.getId().toString(), input.getName(), input.getLastname(), input.getMail(), input.getAge(), input.getPhoneNumber(), input.getMoreInformations(), input.getPassword()));
     }
 }
