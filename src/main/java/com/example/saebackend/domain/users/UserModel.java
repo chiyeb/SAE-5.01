@@ -2,14 +2,13 @@ package com.example.saebackend.domain.users;
 
 import com.example.saebackend.domain.id.Id;
 
-//TODO: Implement UserModel
 public class UserModel {
 
-    private Id id;
+    private final Id id;
     private String name;
     private String lastname;
     private String mail;
-    private String age;
+    private int age;
     private String phoneNumber;
     private String moreInformations;
     private String password;
@@ -17,7 +16,7 @@ public class UserModel {
     //================================================================================
     // Constructor
     //================================================================================
-    public UserModel(Id id, String name, String lastname, String mail, String age, String phoneNumber, String moreInformations, String password) {
+    public UserModel(Id id, String name, String lastname, String mail, int age, String phoneNumber, String moreInformations, String password) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
@@ -70,7 +69,7 @@ public class UserModel {
         return mail;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
@@ -86,10 +85,6 @@ public class UserModel {
         return password;
     }
 
-    public void setId(Id id) {
-        this.id = id;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -102,7 +97,7 @@ public class UserModel {
         this.mail = mail;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
@@ -112,6 +107,10 @@ public class UserModel {
 
     public void setMoreInformations(String moreInformations) {
         this.moreInformations = moreInformations;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }

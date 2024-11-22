@@ -13,7 +13,7 @@ public class UserModelEntity {
     private String name;
     private String lastname;
     private String mail;
-    private String age;
+    private int age;
     private String phoneNumber;
     private String moreInformations;
     private String password;
@@ -21,7 +21,7 @@ public class UserModelEntity {
     public UserModelEntity() {
     }
 
-    public UserModelEntity(String id, String name, String lastname, String mail, String age, String phoneNumber, String moreInformations, String password) {
+    public UserModelEntity(String id, String name, String lastname, String mail, int age, String phoneNumber, String moreInformations, String password) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
@@ -48,7 +48,7 @@ public class UserModelEntity {
         return mail;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 

@@ -4,6 +4,6 @@ public record UserInputModel(
         String name,
         String lastname,
         String email,
-        String age,
+        int age,
         String phoneNumber,
         String moreInformations) {}

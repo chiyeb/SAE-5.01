@@ -16,7 +16,7 @@ public class UserModelMapper implements Mapper<UserModelEntity, UserModel> {
 
     @Override
     public UserModel mapTo(UserModelEntity input) {
-        return new UserModel(Id.fromString(input.getId()), input.getName(), input.getLastname(), input.getMail(), input.getLastname(), input.getPhoneNumber(), input.getMoreInformations(), input.getPassword());
+        return new UserModel(Id.fromString(input.getId()), input.getName(), input.getLastname(), input.getMail(), input.getAge(), input.getPhoneNumber(), input.getMoreInformations(), input.getPassword());
     }
 
     @Override

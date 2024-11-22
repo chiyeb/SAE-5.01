@@ -15,4 +15,5 @@ public interface UserRepository {
     UserModel update(Id id, UserInputModel user);
     boolean deleteById(Id id);
     UserModel getByEmail(String email);
+    void forgotPassword(UserModel userModel);
 }

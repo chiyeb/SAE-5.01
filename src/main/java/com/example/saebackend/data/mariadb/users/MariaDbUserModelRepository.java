@@ -70,4 +70,10 @@ public class MariaDbUserModelRepository implements UserRepository {
         }
         return userModelMapper.mapTo(userModelEntity);
     }
+
+    @Override
+    public void forgotPassword(UserModel userModel) {
+        UserModelEntity entity = userModelMapper.mapFrom(userModel);
+        jpaUserRepository.save(entity);
+    }
 }

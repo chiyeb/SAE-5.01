@@ -33,7 +33,13 @@ public class UserController {
         if (userInputModel == null) {
             return ResponseEntity.badRequest().body("User is null");
         }
-        return ResponseEntity.ok(gson.toJson(userService.create(userInputModel)));
+        try{
+            return ResponseEntity.ok(gson.toJson(userService.create(userInputModel)));
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User could not be created : " + e);
+        }
+
     }
 
     @GetMapping(value = "/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,7 +54,7 @@ public class UserController {
         }
     }
 
-    @PostMapping(value = "/get/all", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/get/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getAllUsers() {
         return ResponseEntity.ok(gson.toJson(userService.getAll()));
     }

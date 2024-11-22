@@ -24,10 +24,15 @@ public class UserService {
     public UserReadModel create(UserInputModel userInputModel) {
         String plainPassword = Password.generatePassword();
         UserModel userModelToCreate = UserModel.createFromModel(userInputModel, plainPassword);
-        UserModel userModel = userRepository.create(userModelToCreate);
-        if (userModel != null) {
-            MailSender.sendPasswordEmail(userModel.getMail(), userModel.getName(), plainPassword);
-            return userModel.readModel();
+        try {
+            UserModel userModel = userRepository.create(userModelToCreate);
+            if (userModel != null) {
+                MailSender.sendPasswordEmail(userModel.getMail(), userModel.getName(), plainPassword);
+                return userModel.readModel();
+            }
+        }
+        catch (Exception e) {
+            throw new RuntimeException("User could not be created");
         }
         return null;
     }
@@ -55,9 +60,11 @@ public class UserService {
     }
 
     public void forgotPassword(String email) {
-        //TODO: LA FONCTION NE MARCHE PAS, IL FAUT UPDATE LE MDP DANS LA DB + ENVOYER UN MAIL
         UserModel userModel = userRepository.getByEmail(email);
         if (userModel == null) throw NotFoundException.userNotFound(email);
-        MailSender.sendPasswordEmail(userModel.getMail(), userModel.getName(), userModel.getPassword());
+        String newPassword = Password.generatePassword();
+        userModel.setPassword(Password.encryptPassword(newPassword));
+        userRepository.forgotPassword(userModel);
+        MailSender.sendResetPassword(userModel.getMail(), userModel.getName(), newPassword);
     }
 }
