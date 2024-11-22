@@ -4,7 +4,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import NbPiece from './navigation/ButtonNbPiece';
 import { pickImage } from './SelectImage';
 import { ThemedText } from './ThemedText';
-import TabSelector from '@/components/navigation/ButtonVenteLocation';  // Import du composant d'onglet
+
 
 
 // Définition du type pour les props
@@ -19,15 +19,21 @@ interface Location {
 
 interface DetailProps {
   selectedTab:  'rental';
+  id:string;
+  type: string;
   title: string;
   description: string;
   price: number;
+  subscriptionFrequency:string;
   location: Location;
   livingArea: number;
   landArea: number;
   images: string,
   orientation: string;
   view: string;
+  rooms: { roomType: string; count: number }[];
+  energyClass: string;
+  climateClass: string;
   estimationCostEnergy: string;
   onSaveBien: (bienData: any) => void;
   onDelete: (bienData: any) => void;
@@ -35,40 +41,47 @@ interface DetailProps {
 
 const Detail: React.FC<DetailProps> = ({
   selectedTab,
+  id,
+  type:iniatielType,
   title: initialTitle,
   description: initialDescription,
   price: initialPrice,
+  subscriptionFrequency:initialsubscriptionFrequency,
   location: initialLocation,
   livingArea: initiallivingArea,
   landArea: initiallandArea,
   orientation: initialOrientation,
   view: initialView,
+  rooms: iniatialRooms,
+  energyClass: initialEnergyClass,
+  climateClass: initialClimateClass,
   estimationCostEnergy: initialestimationCostEnergy,
   onSaveBien,
   onDelete,
 }) => {
   // États pour chaque variable
-  const [type, setType] = useState<string>(""); // type du bien
+  const [type, setType] = useState<string>(iniatielType); // type du bien
   const [title, setTitle] = useState<string>(initialTitle);
   const [description, setDescription] = useState<string>(initialDescription);
   const [price, setPrice] = useState<string>(initialPrice?.toString());
-  const [subscriptionFrequency, setSubscriptionFrequency] = useState<string | null>(null);
+  const [subscriptionFrequency, setSubscriptionFrequency] = useState<string | null>(initialsubscriptionFrequency);
   const [location, setLocation] = useState<Location>(initialLocation);  // Utilisation de l'objet localisation
   const [image, setImage] = useState<string>("");
-  const [livingArea, setLivingArea] = useState<string>(initiallivingArea?.toString() ?? "");
+  const [livingArea, setLivingArea] = useState<string>(initiallivingArea?.toString());
   const [landArea, setLandArea] = useState<string>(initiallandArea?.toString());
   const [orientation, setOrientation] = useState<string>(initialOrientation);
   const [view, setView] = useState<string>(initialView);
-  const [energyClass, setEnergyClass] = useState<string>(""); // Classe de performance énergétique
-  const [climateClass, setClimateClass] = useState<string>(""); // Classe climat énergétique
+  const [energyClass, setEnergyClass] = useState<string>(initialEnergyClass); // Classe de performance énergétique
+  const [climateClass, setClimateClass] = useState<string>(initialClimateClass); // Classe climat énergétique
   const [estimationCostEnergy, setestimationCostEnergy] = useState<string>(initialestimationCostEnergy);
   
   // In Detail component
-const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>([]);
+const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>(iniatialRooms);
 
   // État pour gérer l'onglet sélectionné dans la modal
 
   const getBienData = () => ({
+    id,
     type,
     title,
     description,

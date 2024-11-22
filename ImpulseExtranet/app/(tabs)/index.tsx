@@ -5,12 +5,13 @@ import { ThemedText } from '@/components/ThemedText';
 import Buttons from '@/components/navigation/Buttons';
 import TabSelector from '@/components//navigation/ButtonVenteLocation'; // Assurez-vous d'avoir ajouté TabSelector
 import DetailBien from '@/components/DetailBien';
-import { createProperty, getAllProperties, deleteProperty } from '@/components/Api';
+import { createProperty, getAllProperties,updateProperty, deleteProperty } from '@/components/Api';
 
 
 export default function HomeScreen() {
   const [biens, setBiens] = useState<any[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalUpdate, setIsModalUpdate] = useState(false);
   const [selectedBien, setSelectedBien] = useState<any | null>(null);
   const [selectedTab, setSelectedTab] = useState('purchasable');
 
@@ -68,6 +69,7 @@ export default function HomeScreen() {
 
   const closeModal = () => {
     setIsModalVisible(false);
+    setIsModalUpdate(false);
     setSelectedBien(null);
   };
 
@@ -86,6 +88,31 @@ export default function HomeScreen() {
       Alert.alert('Erreur', 'Impossible d\'ajouter le bien.');
     }
   };
+
+    // Fonction pour afficher le modal avec l'utilisateur sélectionné pour mise à jour
+    const openModalForUpdate = (id: string, bienData: any) => {
+      setSelectedBien(bienData);
+      setIsModalUpdate(true); // Ouvrir le modal pour mise à jour
+    };
+  
+    const handleUpdateBien = async (bienData: any) => {
+      if (!bienData || !bienData.id) {
+        console.error('ID de l\'utilisateur est  manquant', bienData);
+        return;
+      }
+    
+      // Continuer avec la mise à jour
+      try {
+        const updatedBien = await updateProperty(bienData.id, bienData, selectedTab);
+        setBiens(prevBiens =>
+          prevBiens.map(bien => (bien.id === bienData.id ? updatedBien : bien))
+        );
+        console.log('Utilisateur mis à jour', updatedBien);
+      } catch (error) {
+        console.error('Erreur lors de la mise à jour', error);
+      }
+      closeModal();
+    };
 
   const handleDeleteBien = async (id: string) => {
     try {
@@ -114,7 +141,12 @@ export default function HomeScreen() {
                 <TouchableOpacity onPress={() => handleDeleteBien(bien.id)} style={styles.deleteButton}>
                   <Text style={styles.buttonText}>Supprimer</Text>
                 </TouchableOpacity>
-                
+                <TouchableOpacity
+                  onPress={() => openModalForUpdate(bien.id, bien)}
+                  style={styles.updateButton}
+                >
+                  <Text style={styles.buttonText}>Modifier</Text>
+                </TouchableOpacity>
               </View>
             ))
           ) : (
@@ -133,6 +165,25 @@ export default function HomeScreen() {
               selectedTab={selectedTab}
                 {...selectedBien}
                 onSaveBien={handleSaveBien}
+                onDelete={closeModal}
+              />
+              
+            ) : (
+              <Text>Aucun bien sélectionné</Text>
+
+            )}
+          </View>
+        </View>
+      </Modal>
+
+      <Modal visible={isModalUpdate} animationType="slide" transparent={true} onRequestClose={closeModal}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            {selectedBien ? (
+              <DetailBien
+              selectedTab={selectedTab}
+                {...selectedBien}
+                onSaveBien={(bienData) =>handleUpdateBien(bienData)}
                 onDelete={closeModal}
               />
               
@@ -192,5 +243,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: '30%',
     alignSelf: 'center'
+  },
+  updateButton: {
+    backgroundColor: 'cyan',
+    padding: 10,
+    borderRadius: 5,
+    width: '30%',
+    alignSelf: 'center',
   },
 });
