@@ -2,7 +2,6 @@ import React from 'react';
 import { View,  StyleSheet, } from 'react-native';
 import Profil from '@/components/Profil';
 import ContactForm from '@/components/ContactForm';
-import MenuHamburger from '@/components/navigation/Menu';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ThemedText } from '@/components/ThemedText';
 import email from 'react-native-email';
@@ -22,7 +21,6 @@ export default function Contact() {
   return (
     <View style={styles.container}>
       
-      <MenuHamburger/>
       <ScrollView showsHorizontalScrollIndicator={false}>
 
       <View style={styles.formContainer}>

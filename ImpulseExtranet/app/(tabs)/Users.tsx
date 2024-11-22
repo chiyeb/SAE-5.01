@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   updateButton: {
-    backgroundColor: 'cyan',
+    backgroundColor: '#9CCC65',
     padding: 10,
     borderRadius: 5,
     width: '30%',

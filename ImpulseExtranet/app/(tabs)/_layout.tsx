@@ -1,4 +1,4 @@
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import React from 'react';
 import MenuHamburger from '@/components/navigation/Menu'; // Assurez-vous que le chemin est correct
 import { Colors } from '@/constants/Colors';
@@ -6,12 +6,30 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function AppLayout() {
   const colorScheme = useColorScheme();
+  const router = useRouter();
+
+  const handleNavigation = (screen: 'Home' | 'Profile' | 'Settings' | 'Logout') => {
+    // Rediriger vers l'écran correspondant
+    switch (screen) {
+      case 'Home':
+        router.push('/HomeScreen');
+        break;
+      case 'Profile':
+        router.push('/Users');
+        break;
+      case 'Settings':
+        router.push('/Contact');
+        break;
+      default:
+        console.warn('Écran non trouvé');
+    }
+  };
 
   return (
     <Stack
       screenOptions={{
-        headerShown: true, // Activer l'en-tête
-        headerRight: () => <MenuHamburger />, // Placer uniquement le menu hamburger dans l'en-tête
+        headerShown: true,
+        headerRight: () => <MenuHamburger setCurrentScreen={handleNavigation} />, // Connecté à la navigation
         headerStyle: {
           backgroundColor: 'white',
         },
@@ -21,7 +39,7 @@ export default function AppLayout() {
       <Stack.Screen
         name="index"
         options={{
-          title: 'Accueil', // Titre de l'en-tête
+          title: 'Accueil',
         }}
       />
     </Stack>
