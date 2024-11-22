@@ -47,6 +47,26 @@ public class MailSender {
 
         sendEmail(recipientEmail, subject, body);
     }
+    public static void sendResetPassword(String recipientEmail, String username, String password) {
+        String subject = "Votre nouveau mot de passe - IMPULSE";
+        String body = String.format(
+                """
+            <html>
+                <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+                    <h2 style="color: #4CAF50;">Bonjour %s,</h2>
+                    <p>Vous avez modifié votre mot de passe, votre nouveau mot de passe est :</p>
+                    <p style="font-size: 18px; font-weight: bold; color: #333;">%s</p>
+                    <p>Merci de garder ces informations confidentielles.</p>
+                    <p style="color: red; font-weight: bold;">Si vous n'êtes pas à l'origine de cette action, veuillez contacter votre agence.</p>
+                    <p>Cordialement,</p>
+                    <p><strong>L'équipe IMPULSE</strong></p>
+                </body>
+            </html>
+            """, username, password
+        );
+
+        sendEmail(recipientEmail, subject, body);
+    }
 
     public static void sendAccountDeletionConfirmation(String recipientEmail, String name) {
         String subject = "Confirmation de suppression de compte";
