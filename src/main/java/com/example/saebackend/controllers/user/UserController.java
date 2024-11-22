@@ -1,7 +1,6 @@
 package com.example.saebackend.controllers.user;
 
 import com.example.saebackend.domain.exceptions.NotFoundException;
-import com.example.saebackend.domain.properties.rental.models.RentalPropertyInputModel;
 import com.example.saebackend.domain.users.UserInputModel;
 import com.example.saebackend.services.user.UserService;
 import com.google.gson.Gson;
@@ -48,13 +47,13 @@ public class UserController {
         }
     }
 
-    @PostMapping(value = "/get/all", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/get/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getAllUsers() {
         return ResponseEntity.ok(gson.toJson(userService.getAll()));
     }
 
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateRentalProperty(@PathVariable String id, @RequestBody UserInputModel userInputModel) {
+    public ResponseEntity<String> updateUser(@PathVariable String id, @RequestBody UserInputModel userInputModel) {
         try {
             return ResponseEntity.ok(gson.toJson(userService.update(id, userInputModel)));
         } catch (NotFoundException e) {
@@ -71,6 +70,19 @@ public class UserController {
             Map<String, String> response = new HashMap<>();
             response.put("error", "User not found");
             response.put("message", "No user found with ID: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
+
+    @PostMapping(value = "/forgotPassword/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> forgotPassword(@PathVariable String email){
+        try {
+            userService.forgotPassword(email);
+            return ResponseEntity.ok("Password reset successfully");
+        } catch (NotFoundException e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("error", "User not found");
+            response.put("message", "No user found with this mail address: " + email);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }

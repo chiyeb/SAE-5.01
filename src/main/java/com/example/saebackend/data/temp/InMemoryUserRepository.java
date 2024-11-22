@@ -1,8 +1,10 @@
 package com.example.saebackend.data.temp;
 
 import com.example.saebackend.domain.id.Id;
+import com.example.saebackend.domain.users.UserInputModel;
 import com.example.saebackend.domain.users.UserModel;
 import com.example.saebackend.repositories.user.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import com.example.saebackend.domain.exceptions.NotFoundException;
 
@@ -13,6 +15,12 @@ import java.util.Objects;
 @Repository
 public class InMemoryUserRepository implements UserRepository {
     private final ArrayList<UserModel> users = new ArrayList<>();
+
+
+    public InMemoryUserRepository() {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        users.add(new UserModel("John", "Doe", "salut@salut.com", "25", "123456789", "Je suis un test", bCryptPasswordEncoder.encode("password")));
+    }
 
     @Override
     public UserModel create(UserModel userModel) {
@@ -31,24 +39,25 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
+    public UserModel getByMail(String mail) {
+        return users.stream().filter(userModel -> userModel.getMail().equals(mail)).findFirst().orElseThrow();
+    }
+
+    @Override
     public List<UserModel> getAll() {
         return users;
     }
 
     @Override
-    public UserModel update(Id id, UserModel userModel) {
+    public UserModel update(Id id, UserInputModel userModel) {
         for(UserModel user : users) {
-            if (user.getId().equals(id)) {
-                return users.set(users.indexOf(user), userModel);
-            }
+            if (user.getId().equals(id)) return user.updateFromModel(userModel);
         }
         throw NotFoundException.userNotFound(id.toString());
     }
 
     @Override
     public boolean deleteById(Id id) {
-        boolean userif = users.removeIf(userModel -> userModel.getId().equals(id));
-        System.out.println(userif);
-        return userif;
+        return users.removeIf(userModel -> userModel.getId().equals(id));
     }
 }

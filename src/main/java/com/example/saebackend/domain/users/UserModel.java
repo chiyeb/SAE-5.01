@@ -1,43 +1,60 @@
 package com.example.saebackend.domain.users;
 
 import com.example.saebackend.domain.id.Id;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-//TODO: Implement UserModel
-public class UserModel {
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
-    private Id id;
+public class UserModel implements UserDetails {
+    private final Id id;
     private String name;
     private String lastname;
-    private String email;
+    private String mail;
     private String age;
     private String phoneNumber;
     private String moreInformations;
-    private Password password;
+
+    private final Set<GrantedAuthority> authorities = new HashSet<>();
+
+    private String password;
 
     //================================================================================
     // Constructor
     //================================================================================
-    private UserModel(String name, String lastname, String email, String age, String phoneNumber, String moreInformations) {
+    public UserModel(String name, String lastname, String mail, String age, String phoneNumber, String moreInformations, String password) {
         this.id = Id.generate();
         this.name = name;
         this.lastname = lastname;
-        this.email = email;
+        this.mail = mail;
         this.age = age;
         this.phoneNumber = phoneNumber;
         this.moreInformations = moreInformations;
-        this.password = Password.generate();
+        this.password = password;
     }
 
     //================================================================================
     // Methods
     //================================================================================
 
-    public static UserModel createFromModel(UserInputModel userInputModel){
-        return new UserModel(userInputModel.name(), userInputModel.lastname(), userInputModel.email(), userInputModel.age(), userInputModel.phoneNumber(), userInputModel.moreInformations());
+    public static UserModel createFromModel(UserInputModel userInputModel, String plainPassword) {
+        return new UserModel(userInputModel.name(), userInputModel.lastname(), userInputModel.email(), userInputModel.age(), userInputModel.phoneNumber(), userInputModel.moreInformations(), Password.encryptPassword(plainPassword));
     }
 
     public UserReadModel readModel() {
-        return new UserReadModel(id.toString(), name, lastname, email, age, phoneNumber, moreInformations);
+        return new UserReadModel(id.toString(), name, lastname, mail, age, phoneNumber, moreInformations);
+    }
+
+    public UserModel updateFromModel(UserInputModel userInputModel){
+        setName(userInputModel.name());
+        setLastname(userInputModel.lastname());
+        setMail(userInputModel.email());
+        setAge(userInputModel.age());
+        setPhoneNumber(userInputModel.phoneNumber());
+        setMoreInformations(userInputModel.moreInformations());
+        return this;
     }
 
     //================================================================================
@@ -56,8 +73,8 @@ public class UserModel {
         return lastname;
     }
 
-    public String getEmail() {
-        return email;
+    public String getMail() {
+        return mail;
     }
 
     public String getAge() {
@@ -72,7 +89,44 @@ public class UserModel {
         return moreInformations;
     }
 
-    public Password getPassword() {
-        return password;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    @Override
+    public String getPassword() {return password;}
+
+    @Override
+    public String getUsername() {
+        return getMail();
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setMoreInformations(String moreInformations) {
+        this.moreInformations = moreInformations;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

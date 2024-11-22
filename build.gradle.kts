@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server:3.3.5")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation ("com.google.code.gson:gson:2.8.9")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
