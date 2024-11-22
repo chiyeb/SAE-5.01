@@ -20,6 +20,9 @@ export default function AppLayout() {
       case 'Settings':
         router.push('/Contact');
         break;
+        case 'Logout':
+        router.push('/Login');
+        break;
       default:
         console.warn('Écran non trouvé');
     }
