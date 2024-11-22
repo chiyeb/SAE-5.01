@@ -4,15 +4,16 @@ import { ThemedText } from './ThemedText';
 
 interface UserProps {
   name: string;
+  lastname :string;
   email: string;
   phoneNumber: number;
   age: number;
   moreInformations: string;
-  
 }
 
 export default function User({
   name,
+  lastname,
   email,
   phoneNumber,
   age,
@@ -24,7 +25,7 @@ export default function User({
     <View  style={styles.container}>
       <View style={styles.textContainer}>
         
-        <Text style={styles.name}>{name} </Text>
+        <Text style={styles.name}>{name} {lastname}</Text>
         <Text style={styles.description}>{email}</Text>
         <Text style={styles.description}>{phoneNumber}</Text>
         <ThemedText type="defaultSemiBold">Age: {age}</ThemedText>

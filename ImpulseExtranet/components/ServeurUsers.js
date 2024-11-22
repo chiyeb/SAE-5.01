@@ -11,18 +11,20 @@ app.use(bodyParser.json());
 let users = [ {
   "id": "17ceb566-98db-46c6-9ba0-5c8b11882642",
   "name": "John",
+  "lastname": "Doe",
   "email": "chihebprivate@gmail.com",
   "age": 25,
   "phoneNumber": 123456789,
-  "moreInformations": "I'm a real estate agent"
+  "moreInformations": "I'm a real estate agent",
 },
 {
   "id": "10ceb567-98db-46c6-9ba0-5c8b11882642",
   "name": "Richard",
+  "lastname": "Jacque",
   "email": "raoul@gmail.com",
   "age": 21,
   "phoneNumber": 123456789,
-  "moreInformations": "I'm a real estate agent"
+  "moreInformations": "I'm a real estate agent",
 }];
 
 // Route par défaut pour la racine "/"

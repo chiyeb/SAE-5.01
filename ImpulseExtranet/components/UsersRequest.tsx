@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:3000'; // Remplacez l'URL avec celle de votre serveur local
+const API_BASE_URL = 'http://127.0.0.1:8080'; // Remplacez l'URL avec celle de votre serveur local
 
 // Récupérer tous les utilisateurs
 export const getAllUsers = async () => {

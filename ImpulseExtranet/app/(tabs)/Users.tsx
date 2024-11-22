@@ -32,7 +32,9 @@ export default function Users() {
 
   const handleAddUser = async () => {
     const newUser = {
+      id:'1234325346556',
       name: 'John',
+      lastname:'Doe',
       email: 'john.doe@example.com',
       age: 30,
       phoneNumber: 6123456,

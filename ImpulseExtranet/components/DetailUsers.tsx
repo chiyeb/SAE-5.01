@@ -5,6 +5,7 @@ import { ThemedText } from './ThemedText';
 interface UserProps {
   id:string
   name: string;
+  lastname: string;
   email: string;
   phoneNumber: number;
   age: number;
@@ -16,6 +17,7 @@ interface UserProps {
 const UserDetail: React.FC<UserProps> = ({
   id:initialId,
   name: initialName,
+  lastname: initialLastName,
   email: initialEmail,
   phoneNumber: initialPhoneNumber,
   age: initialAge,
@@ -26,15 +28,16 @@ const UserDetail: React.FC<UserProps> = ({
   // États pour chaque variable utilisateur
   const [id, setID] = useState<string>(initialId);
   const [name, setName] = useState<string>(initialName);
+  const [lastname, setLastname] = useState<string>(initialLastName);
   const [email, setEmail] = useState<string>(initialEmail);
   const [phoneNumber, setPhoneNumber] = useState<string>(initialPhoneNumber?.toString());
   const [age, setAge] = useState<string>(initialAge?.toString());
   const [moreInformations, setMoreInformations] = useState<string>(initialMoreInformations);
 
-
   const getUserData = () => ({
     id,
     name,
+    lastname,
     email,
     phoneNumber,
     age,
@@ -56,6 +59,9 @@ const UserDetail: React.FC<UserProps> = ({
         <View style={styles.textContainer}>
           <ThemedText type="defaultSemiBold">Nom</ThemedText>
           <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Nom" />
+
+          <ThemedText type="defaultSemiBold">Prénom</ThemedText>
+          <TextInput style={styles.input} value={lastname} onChangeText={setLastname} placeholder="Prénom" />
 
           <ThemedText type="defaultSemiBold">Âge</ThemedText>
           <TextInput
