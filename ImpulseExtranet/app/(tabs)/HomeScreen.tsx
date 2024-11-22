@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, StyleSheet, Modal, Text, TouchableOpacity, Alert , } from 'react-native';
+import { View, ScrollView, StyleSheet, Modal, Text, TouchableOpacity, Alert, Animated } from 'react-native';
 import Bien from '@/components/Bien';
 import { ThemedText } from '@/components/ThemedText';
 import Buttons from '@/components/navigation/Buttons';
-import TabSelector from '@/components//navigation/ButtonVenteLocation'; // Assurez-vous d'avoir ajouté TabSelector
+import TabSelector from '@/components/navigation/ButtonVenteLocation'; 
 import DetailBien from '@/components/DetailBien';
-import { createProperty, getAllProperties,updateProperty, deleteProperty } from '@/components/Api';
-
+import { createProperty, getAllProperties, updateProperty, deleteProperty } from '@/components/Api';
 
 export default function HomeScreen() {
   const [biens, setBiens] = useState<any[]>([]);
@@ -14,6 +13,7 @@ export default function HomeScreen() {
   const [isModalUpdate, setIsModalUpdate] = useState(false);
   const [selectedBien, setSelectedBien] = useState<any | null>(null);
   const [selectedTab, setSelectedTab] = useState('purchasable');
+  const scrollY = new Animated.Value(0); // Suivi du défilement
 
   useEffect(() => {
     const fetchBiens = async () => {
@@ -48,7 +48,7 @@ export default function HomeScreen() {
       },
       images: [],
       price: 200000,
-      ...(selectedTab === 'rental' && { subscriptionFrequency: "WEEKLY" }), // Ajoute uniquement pour location
+      ...(selectedTab === 'rental' && { subscriptionFrequency: "WEEKLY" }),
       livingArea: 75,
       landArea: 0,
       rooms: [
@@ -60,7 +60,6 @@ export default function HomeScreen() {
       climateClass: 'A',
       view: 'Vue sur la ville',
       estimationCostEnergy: 120,
-      
     };
 
     setSelectedBien(newBien);
@@ -89,30 +88,28 @@ export default function HomeScreen() {
     }
   };
 
-    // Fonction pour afficher le modal avec l'utilisateur sélectionné pour mise à jour
-    const openModalForUpdate = (id: string, bienData: any) => {
-      setSelectedBien(bienData);
-      setIsModalUpdate(true); // Ouvrir le modal pour mise à jour
-    };
-  
-    const handleUpdateBien = async (bienData: any) => {
-      if (!bienData || !bienData.id) {
-        console.error('ID de l\'utilisateur est  manquant', bienData);
-        return;
-      }
-    
-      // Continuer avec la mise à jour
-      try {
-        const updatedBien = await updateProperty(bienData.id, bienData, selectedTab);
-        setBiens(prevBiens =>
-          prevBiens.map(bien => (bien.id === bienData.id ? updatedBien : bien))
-        );
-        console.log('Utilisateur mis à jour', updatedBien);
-      } catch (error) {
-        console.error('Erreur lors de la mise à jour', error);
-      }
-      closeModal();
-    };
+  const openModalForUpdate = (id: string, bienData: any) => {
+    setSelectedBien(bienData);
+    setIsModalUpdate(true);
+  };
+
+  const handleUpdateBien = async (bienData: any) => {
+    if (!bienData || !bienData.id) {
+      console.error('ID de l\'utilisateur est manquant', bienData);
+      return;
+    }
+
+    try {
+      const updatedBien = await updateProperty(bienData.id, bienData, selectedTab);
+      setBiens(prevBiens =>
+        prevBiens.map(bien => (bien.id === bienData.id ? updatedBien : bien))
+      );
+      console.log('Utilisateur mis à jour', updatedBien);
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour', error);
+    }
+    closeModal();
+  };
 
   const handleDeleteBien = async (id: string) => {
     try {
@@ -125,52 +122,65 @@ export default function HomeScreen() {
     }
   };
 
+  // Couleur d'arrière-plan qui change en fonction du défilement
+  const getBackgroundColor = scrollY.interpolate({
+    inputRange: [0, 200],  // Plage de défilement
+    outputRange: ['#f5e6ab', '#dba617'],  // Couleurs de fond
+    extrapolate: 'clamp',  // Empêche l'extrapolation
+  });
+
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <View style={styles.titleContainer}>
-          <ThemedText type="title">Administrateur</ThemedText>
-        </View>
-        <TabSelector selectedTab={selectedTab} onTabSelect={setSelectedTab} />
-        <View style={styles.stepContainer}>
-          <ThemedText type="h2">Mes annonces</ThemedText>
-          {biens.length > 0 ? (
-            biens.map((bien) => (
-              <View key={bien.id}>
-                <Bien {...bien} onPress={() => setSelectedBien(bien)} />
-                <TouchableOpacity onPress={() => handleDeleteBien(bien.id)} style={styles.deleteButton}>
-                  <Text style={styles.buttonText}>Supprimer</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => openModalForUpdate(bien.id, bien)}
-                  style={styles.updateButton}
-                >
-                  <Text style={styles.buttonText}>Modifier</Text>
-                </TouchableOpacity>
-              </View>
-            ))
-          ) : (
-            <Text>Aucun bien trouvé</Text>
+      <Animated.View style={[styles.background, { backgroundColor: getBackgroundColor }]}>
+        <ScrollView
+          contentContainerStyle={{ paddingBottom: 50 }}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+            { useNativeDriver: false }
           )}
-          <Buttons onPress={handleAddBien} />
-          
-        </View>
-      </ScrollView>
+          scrollEventThrottle={16}
+        >
+          <View style={styles.titleContainer}>
+            <ThemedText type="title">Administrateur</ThemedText>
+          </View>
+          <TabSelector selectedTab={selectedTab} onTabSelect={setSelectedTab} />
+          <View style={styles.stepContainer}>
+            <ThemedText type="h2">Mes annonces</ThemedText>
+            {biens.length > 0 ? (
+              biens.map((bien) => (
+                <View key={bien.id}>
+                  <Bien {...bien} onPress={() => setSelectedBien(bien)} />
+                  <View style={styles.buttonSupAndUpdate}>
+                  <TouchableOpacity onPress={() => openModalForUpdate(bien.id, bien)} style={styles.updateButton}>
+                    <Text style={styles.buttonText}>Modifier</Text>
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity onPress={() => handleDeleteBien(bien.id)} style={styles.deleteButton}>
+                    <Text style={styles.buttonText}>Supprimer</Text>
+                  </TouchableOpacity>
+                  </View>
+                </View>
+              ))
+            ) : (
+              <Text>Aucun bien trouvé</Text>
+            )}
+            <Buttons onPress={handleAddBien} />
+          </View>
+        </ScrollView>
+      </Animated.View>
 
       <Modal visible={isModalVisible} animationType="slide" transparent={true} onRequestClose={closeModal}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             {selectedBien ? (
               <DetailBien
-              selectedTab={selectedTab}
+                selectedTab={selectedTab}
                 {...selectedBien}
                 onSaveBien={handleSaveBien}
                 onDelete={closeModal}
               />
-              
             ) : (
               <Text>Aucun bien sélectionné</Text>
-
             )}
           </View>
         </View>
@@ -181,15 +191,13 @@ export default function HomeScreen() {
           <View style={styles.modalContent}>
             {selectedBien ? (
               <DetailBien
-              selectedTab={selectedTab}
+                selectedTab={selectedTab}
                 {...selectedBien}
-                onSaveBien={(bienData) =>handleUpdateBien(bienData)}
+                onSaveBien={handleUpdateBien}
                 onDelete={closeModal}
               />
-              
             ) : (
               <Text>Aucun bien sélectionné</Text>
-
             )}
           </View>
         </View>
@@ -198,13 +206,10 @@ export default function HomeScreen() {
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems:'center',
-    backgroundColor: '#fff',
-    
+    alignItems: 'center',
   },
   titleContainer: {
     alignItems: 'center',
@@ -214,14 +219,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
-  profil: {
-    width: '15%',
-  },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
     backgroundColor: 'white',
@@ -231,22 +233,32 @@ const styles = StyleSheet.create({
     height: '90%',
     alignItems: 'center',
   },
-
+  background: {
+    flex: 1,
+    width: '100%',
+  },
   buttonText: {
     color: '#fff',
     fontSize: 16,
-    textAlign:'center',
+    textAlign: 'center',
+  },
+  buttonSupAndUpdate:{
+    flexDirection:'row',
+    justifyContent:'center',
+    flexWrap:'wrap'
   },
   deleteButton: {
     backgroundColor: '#dc3545',
     padding: 10,
+    marginHorizontal:10,
     borderRadius: 5,
     width: '30%',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   updateButton: {
     backgroundColor: '#9CCC65',
     padding: 10,
+    marginHorizontal:10,
     borderRadius: 5,
     width: '30%',
     alignSelf: 'center',
