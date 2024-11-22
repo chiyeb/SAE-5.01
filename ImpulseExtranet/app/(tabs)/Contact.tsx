@@ -9,7 +9,7 @@ import email from 'react-native-email';
 // Fonction pour envoyer un email
 const sendEmail = (contactData: { name: any; subject :any; message: any; }) => {
   const { name, subject,message } = contactData;
-  const to = ['example@example.com']; // Email du destinataire
+  const to = ['impulsewordpresssae@alwaysdata.net']; // Email du destinataire
   email(to, {
     subject: `${subject}`,
     body: `Nom: ${name}\nMessage: ${message}`,
@@ -29,7 +29,7 @@ export default function Contact() {
             Numero : 06 06 06 06 06
           </ThemedText>
           <ThemedText type="defaultSemiBold" style={styles.contactInfo}>
-            Mail de agence : example@example.com
+            Mail de agence : impulsewordpresssae@alwaysdata.net
           </ThemedText>
         <ContactForm onSubmit={(sendEmail)} />
       </View>
