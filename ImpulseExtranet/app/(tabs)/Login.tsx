@@ -13,25 +13,25 @@ const LoginScreen = () => {
   
   const router = useRouter(); // Hook pour gérer la navigation avec Next.js
 
-  const handleLogin = async () => {
-    setError(null); // Réinitialiser les erreurs
-  
-    try {
-      const result = await login(email, password);
-      console.log('Résultat de login:', result);
-  
-      if (result.success) {
-        const token = await AsyncStorage.getItem('auth_token');
-        setToken(token);
-        router.push('/HomeScreen'); // Rediriger si succès
-      } else {
-        setError(result.error || 'Erreur inconnue.');
-      }
-    } catch (err) {
-      console.error('Erreur réseau ou serveur:', err);
-      setError('Impossible de se connecter au serveur.');
+const handleLogin = async () => {
+  setError(null); // Réinitialiser les erreurs
+
+  try {
+    const result = await login(email, password);
+    console.log('Résultat de login:', result);
+
+    if (result.success) {
+      const token = await AsyncStorage.getItem('auth_token');
+      setToken(token);
+      router.push('/HomeScreen'); 
+    } else {
+      setError(result.error || 'Erreur inconnue.');
     }
-  };
+  } catch (err) {
+    console.error('Erreur réseau ou serveur:', err);
+    setError('Impossible de se connecter au serveur.');
+  }
+};
 
   const fetchUserInfo = async () => {
     if (!token) {
@@ -57,7 +57,7 @@ const LoginScreen = () => {
           value={email}
           onChangeText={setEmail}
           placeholder="Email"
-          placeholderTextColor="#999"
+          placeholderTextColor="#111a"
           keyboardType="email-address"
           autoCapitalize="none"
         />
@@ -67,7 +67,7 @@ const LoginScreen = () => {
           value={password}
           onChangeText={setPassword}
           placeholder="Password"
-          placeholderTextColor="#999"
+          placeholderTextColor="#111a"
           secureTextEntry
         />
 
@@ -121,23 +121,25 @@ const styles = StyleSheet.create({
   inputField: {
     width: '100%',
     paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
+    marginVertical:20 ,
     fontSize: 16,
-    color: '#fff',
+    color: 'white',
     borderBottomWidth: 1,
-    borderBottomColor: '#ffffff',
-    backgroundColor: 'transparent',
+    borderBottomColor: '#4169e1',
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
   },
   infoBox: {
     marginTop: 20,
     padding: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)', // Light overlay
+    marginBottom:15 ,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)', // Light overlay
     borderRadius: 5,
     width: '90%',
     maxWidth: 400,
   },
   infoText: {
-    color: '#fff',
+    color: 'black',
     textAlign: 'center',
   },
   error: {

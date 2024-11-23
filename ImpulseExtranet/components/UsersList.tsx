@@ -24,11 +24,11 @@ export default function User({
   return (
     <View  style={styles.container}>
       <View style={styles.textContainer}>
-        
+      
         <Text style={styles.name}>{name} {lastname}</Text>
-        <Text style={styles.description}>{email}</Text>
-        <Text style={styles.description}>{phoneNumber}</Text>
-        <ThemedText type="defaultSemiBold">Age: {age}</ThemedText>
+        <Text style={styles.text}><ThemedText type="defaultSemiBold">Âge: </ThemedText>{age}</Text>
+        <Text style={styles.text}><ThemedText type="defaultSemiBold">Email: </ThemedText>{email}</Text>
+        <Text style={styles.text}><ThemedText type="defaultSemiBold">Téléphone: </ThemedText>{phoneNumber}</Text>
         <Text style={styles.description}>{moreInformations}</Text>
       </View>
       {/* Modal pour afficher les détails du user */}
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
-    width: 300,
+    width: 400,
     margin: 10,
     overflow: 'hidden',
   },
@@ -68,64 +68,16 @@ const styles = StyleSheet.create({
 
   },
   description: {
-    fontSize: 14,
+    fontSize: 16,
     color: 'black',
     textAlign: 'left',
     paddingVertical: 5,
   },
-
-  // Styles du conteneur modal
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.7)', // Fond semi-transparent pour la modal
-    paddingHorizontal: 20,
-  },
-  
-  modalContent: {
-    backgroundColor: '#fff', // Fond blanc pour la modal
-    borderRadius: 20,
-    paddingVertical: 20,
-    paddingHorizontal: 30,
-    width: '85%',
-    height:'95%',
-    alignItems: 'flex-start',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    elevation: 15,
-  },
-
-  modalTitle: {
-    alignSelf:'center'
-  },
-
-  modalText: {
+  text: {
     fontSize: 16,
     lineHeight: 24,
     color: '#333', // Texte sombre pour une bonne lisibilité
     marginBottom: 10,
-  },
-  
-
-  // Styles du bouton de fermeture
-  buttonClose: {
-    backgroundColor: '#007BFF',
-    paddingVertical: 12,
-    paddingHorizontal: 25,
-    borderRadius: 30,
-    marginTop: 20,
-    alignSelf: 'center',
-    elevation: 5,
-  },
-
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
 });
 

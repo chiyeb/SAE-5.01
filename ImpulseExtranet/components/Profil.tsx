@@ -14,7 +14,7 @@ export default function Profil() {
       if (data) {
         setUserInfo(data); // Stocker les informations utilisateur dans l'état
       } else {
-        setError('Erreur lors de la récupération des informations utilisateur.');
+        setError('Erreur lors de la récupération des informations utilisateur. Vous devez être connecté ');
       }
     };
 

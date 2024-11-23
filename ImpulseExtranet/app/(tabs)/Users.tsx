@@ -1,16 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, StyleSheet, Modal, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, ScrollView, StyleSheet, Modal, Text, TouchableOpacity, Alert, Animated } from 'react-native';
 import User from '@/components/UsersList';
 import { ThemedText } from '@/components/ThemedText';
 import Buttons from '@/components/navigation/Buttons';
 import DetailUser from '@/components/DetailUsers';
 import { createUser, getAllUsers, updateUser, deleteUser } from '@/components/UsersRequest';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import ButtonUpdateDelete from '@/components/navigation/ButtonUpdateDelete';
 
 export default function Users() {
   const [users, setUsers] = useState<any[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalUpdate, setIsModalUpdate] = useState(false);
   const [selectedUser, setSelectedUser] = useState<any | null>(null);
+  const [token, setToken] = useState<string | null>(null); // Stocker le token ici
+  const scrollY = new Animated.Value(0); // Suivi du défilement
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const storedToken = await AsyncStorage.getItem('auth_token');
+      setToken(storedToken);
+    };
+
+    fetchToken();
+  }, []);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -31,10 +46,14 @@ export default function Users() {
   }, []);
 
   const handleAddUser = async () => {
+    if (!token) {
+      Alert.alert('Erreur', "Token d'authentification manquant.");
+      return;
+    }
     const newUser = {
-      id:'1234325346556',
+      id: '1234325346556',
       name: 'John',
-      lastname:'Doe',
+      lastname: 'Doe',
       email: 'john.doe@example.com',
       age: 30,
       phoneNumber: 6123456,
@@ -55,34 +74,40 @@ export default function Users() {
       console.log('Erreur', 'Veuillez remplir tous les champs obligatoires.');
       return;
     }
+    if (!token) {
+      Alert.alert('Erreur', "Token d'authentification manquant.");
+      return;
+    }
     try {
-      const createdUser = await createUser(userData);
+      const createdUser = await createUser(userData, token);
       setUsers([...users, createdUser]);
       console.log('Succès', 'Le User a été ajouté.');
       closeModal();
     } catch (error) {
       console.error('Erreur lors de la création du User :', error);
-      Alert.alert('Erreur', 'Impossible d\'ajouter le User.');
+      Alert.alert('Erreur', "Impossible d'ajouter le User.");
     }
   };
 
-  // Fonction pour afficher le modal avec l'utilisateur sélectionné pour mise à jour
   const openModalForUpdate = (id: string, userData: any) => {
     setSelectedUser(userData);
-    setIsModalUpdate(true); // Ouvrir le modal pour mise à jour
+    setIsModalUpdate(true);
   };
 
   const handleUpdateUser = async (userData: any) => {
     if (!userData || !userData.id) {
-      console.error('ID de l\'utilisateur est  manquant', userData);
+      console.error("ID de l'utilisateur manquant", userData);
       return;
     }
-  
-    // Continuer avec la mise à jour
+    if (!token) {
+      Alert.alert('Erreur', "Token d'authentification manquant.");
+      return;
+    }
+
     try {
-      const updatedUser = await updateUser(userData.id, userData);
-      setUsers(prevUsers =>
-        prevUsers.map(user => (user.id === userData.id ? updatedUser : user))
+      const updatedUser = await updateUser(userData.id, userData, token);
+      setUsers((prevUsers) =>
+        prevUsers.map((user) => (user.id === userData.id ? updatedUser : user))
       );
       console.log('Utilisateur mis à jour', updatedUser);
     } catch (error) {
@@ -92,19 +117,37 @@ export default function Users() {
   };
 
   const handleDeleteUser = async (id: string) => {
+    if (!token) {
+      Alert.alert('Erreur', "Token d'authentification manquant.");
+      return;
+    }
     try {
-      await deleteUser(id);
+      await deleteUser(id, token);
       setUsers(users.filter((user) => user.id !== id));
       Alert.alert('Succès', 'Le User a été supprimé.');
     } catch (error) {
       console.error('Erreur lors de la suppression :', error);
-      Alert.alert('Erreur', 'Impossible de supprimer le User.');
+      Alert.alert('Erreur', "Impossible de supprimer le User.");
     }
   };
+  // Couleur d'arrière-plan qui change en fonction du défilement
+  const getBackgroundColor = scrollY.interpolate({
+    inputRange: [0, 200],  // Plage de défilement
+    outputRange: ['#f5e6ab', '#dba617'],  // Couleurs de fond
+    extrapolate: 'clamp',  // Empêche l'extrapolation
+  });
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <Animated.View style={[styles.background, { backgroundColor: getBackgroundColor }]}>
+        <ScrollView
+          contentContainerStyle={{ paddingBottom: 50 }}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+            { useNativeDriver: false }
+          )}
+          scrollEventThrottle={16}
+        >
         <View style={styles.titleContainer}>
           <ThemedText type="title">Utilisateurs</ThemedText>
         </View>
@@ -114,18 +157,7 @@ export default function Users() {
             users.map((user) => (
               <View key={user.id}>
                 <User {...user} onPress={() => setSelectedUser(user)} />
-                <TouchableOpacity
-                  onPress={() => handleDeleteUser(user.id)}
-                  style={styles.deleteButton}
-                >
-                  <Text style={styles.buttonText}>Supprimer</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => openModalForUpdate(user.id, user)}
-                  style={styles.updateButton}
-                >
-                  <Text style={styles.buttonText}>Modifier</Text>
-                </TouchableOpacity>
+                <ButtonUpdateDelete onUpdate={() => openModalForUpdate(user.id, user)} onDelete={ () => handleDeleteUser(user.id)}/>
               </View>
             ))
           ) : (
@@ -142,7 +174,7 @@ export default function Users() {
             {selectedUser ? (
               <DetailUser
                 {...selectedUser}
-                onSaveUser={handleSaveUser} // Save for new user
+                onSaveUser={handleSaveUser}
                 onDeleteUser={closeModal}
               />
             ) : (
@@ -159,7 +191,7 @@ export default function Users() {
             {selectedUser ? (
               <DetailUser
                 {...selectedUser}
-                onSaveUser={(userData) => handleUpdateUser( userData)} // Save for updating user
+                onSaveUser={(userData) => handleUpdateUser(userData)}
                 onDeleteUser={closeModal}
               />
             ) : (
@@ -168,6 +200,7 @@ export default function Users() {
           </View>
         </View>
       </Modal>
+      </Animated.View>
     </View>
   );
 }
@@ -176,7 +209,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#fff',
   },
   titleContainer: {
     alignItems: 'center',
@@ -186,40 +218,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
-  profil: {
-    width: '15%',
-  },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 20,
-    width: '90%',
+    width: '60%',
     height: '90%',
     alignItems: 'center',
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    textAlign: 'center',
-  },
-  deleteButton: {
-    backgroundColor: '#dc3545',
-    padding: 10,
-    borderRadius: 5,
-    width: '30%',
-    alignSelf: 'center',
-  },
-  updateButton: {
-    backgroundColor: '#9CCC65',
-    padding: 10,
-    borderRadius: 5,
-    width: '30%',
-    alignSelf: 'center',
+  background: {
+    flex: 1,
+    width: '100%',
   },
 });

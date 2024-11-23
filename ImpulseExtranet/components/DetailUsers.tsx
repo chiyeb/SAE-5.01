@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { ThemedText } from './ThemedText';
+import ButtonSaveCancel from './navigation/ButtonSaveCancel';
 
 interface UserProps {
   id:string
@@ -58,89 +59,90 @@ const UserDetail: React.FC<UserProps> = ({
         <ThemedText type="title">Détails de l'utilisateur</ThemedText>
         <View style={styles.textContainer}>
           <ThemedText type="defaultSemiBold">Nom</ThemedText>
-          <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Nom" />
+          <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Entrez votre  nom" />
 
           <ThemedText type="defaultSemiBold">Prénom</ThemedText>
-          <TextInput style={styles.input} value={lastname} onChangeText={setLastname} placeholder="Prénom" />
+          <TextInput style={styles.input} value={lastname} onChangeText={setLastname} placeholder="Entrez votre prénom" />
 
           <ThemedText type="defaultSemiBold">Âge</ThemedText>
           <TextInput
             style={styles.input}
             value={age}
             onChangeText={setAge}
-            placeholder="Code Postal"
+            placeholder="Entrez votre âge"
             keyboardType="numeric"
           />
 
           <ThemedText type="defaultSemiBold">Email</ThemedText>
-          <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholder="Email" />
+          <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholder="Entrez votre  Email" />
 
           <ThemedText type="defaultSemiBold">Numéro de téléphone</ThemedText>
-          <TextInput style={styles.input} value={phoneNumber} onChangeText={setPhoneNumber} placeholder="Numéro de téléphone" keyboardType="phone-pad" />
+          <TextInput style={styles.input} value={phoneNumber} onChangeText={setPhoneNumber} placeholder="Entrez votre numéro de téléphone" keyboardType="phone-pad" />
 
           <ThemedText type="defaultSemiBold">Plus d'information</ThemedText>
-          <TextInput style={styles.input} value={moreInformations} onChangeText={setMoreInformations} placeholder="Plus d'information" />
+          <TextInput style={styles.input} value={moreInformations} onChangeText={setMoreInformations} placeholder="Entrez vos informations" />
 
         </View>
 
-        {/* Boutons Enregistrer et Supprimer */}
-        <TouchableOpacity onPress={handleSave} style={styles.button}>
-          <Text style={styles.buttonText}>Enregistrer l'utilisateur</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={handleDelete} style={styles.button}>
-          <Text style={styles.buttonText}>Annuler</Text>
-        </TouchableOpacity>
+        <ButtonSaveCancel onSave={handleSave} onCancel={handleDelete}/>
       </ScrollView>
     </View>
   );
 };
 
 export default UserDetail;
-
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 20,
     borderRadius: 15,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#f4f4f9', // Un fond doux et légèrement texturé
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 8,
-    width: '90%',
-    height: '100%',
-    marginVertical: 15,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 10,
+    width: '95%',
+    marginVertical: 20,
     marginHorizontal: '5%',
   },
 
   textContainer: {
     marginTop: 15,
     marginBottom: 10,
+    width: '80%',
+    alignSelf:'center'
   },
 
   input: {
-    borderBottomWidth: 2,
-    borderColor: '#ddd',
-    paddingVertical: 12,
-    fontSize: 18,
+    borderWidth: 1, // Bord plus visible
+    borderColor: '#dcdde1', // Gris clair
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 16,
     marginBottom: 20,
-    color: '#333',
+    color: '#2c3e50', // Texte gris foncé
+    backgroundColor: '#fff', // Fond blanc
     fontFamily: 'Roboto',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
   },
 
-  button: {
-    backgroundColor: '#007BFF',
-    padding: 10,
-    borderRadius: 5,
-    marginVertical: 15,
-    width: '50%',
-    alignSelf: 'center',
-    justifyContent: 'center',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
+  // Ajout d'un style pour le titre
+  title: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#34495e', // Gris bleu foncé
+    marginBottom: 20,
     textAlign: 'center',
+  },
+
+  // Style optionnel pour ajouter un séparateur visuel
+  divider: {
+    height: 1,
+    backgroundColor: '#dcdde1',
+    marginVertical: 15,
   },
 });

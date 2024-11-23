@@ -4,6 +4,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import NbPiece from './navigation/ButtonNbPiece';
 import { pickImage } from './SelectImage';
 import { ThemedText } from './ThemedText';
+import ButtonSaveCancel from './navigation/ButtonSaveCancel';
 
 
 
@@ -309,111 +310,123 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>(iniati
 
           
         </View>
-        {/* Boutons Enregistrer et Supprimer */}
-        <TouchableOpacity onPress={handleSave} style={styles.button}>
-          <Text style={styles.buttonText}>Enregistrer le bien</Text>
-        </TouchableOpacity>
-
-        {/* Nouveau bouton pour supprimer */}
-        <TouchableOpacity onPress={handleDelete} style={styles.button}>
-          <Text style={styles.buttonText}>Annuler</Text>
-        </TouchableOpacity>
+        <ButtonSaveCancel onSave={handleSave} onCancel={handleDelete}/>
       </ScrollView>
     </View>
   );
 };
 
 export default Detail;
-
 const styles = StyleSheet.create({
- // Style principal du conteneur
- container: {
-  padding: 20,
-  borderRadius: 15,
-  backgroundColor: '#fafafa', // Un fond légèrement gris clair pour un look moderne
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 3 },
-  shadowOpacity: 0.2,
-  shadowRadius: 5,
-  elevation: 8, // Ombre plus douce pour un effet plus subtil
-  width: '90%',
-  height:'100%',
-  marginVertical: 15,
-  marginHorizontal: '5%',
-},
-
-  // Conteneur pour les textes
+  container: {
+    padding: 20,
+    borderRadius: 15,
+    backgroundColor: '#ffffff', // Fond blanc pour une sensation de propreté
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 6,
+    width: '95%',
+    height:'95%',
+    alignSelf: 'center',
+    marginVertical: 20,
+  },
   textContainer: {
     marginTop: 15,
     marginBottom: 10,
+    width: '80%',
+    alignSelf:'center'
   },
-
-  // Style pour les champs de saisie
   input: {
-    borderBottomWidth: 2,
-    borderColor: '#ddd',
-    paddingVertical: 12,
-    fontSize: 18,
-    marginBottom: 20,
-    color: '#333', // Texte légèrement plus sombre pour un meilleur contraste
-    fontFamily: 'Roboto', // Utilisation d'une police moderne et lisible
-  },
-
-  // Aperçu de l'image
-  imagePreview: {
-    width: 100,
-    height: 100,
+    borderWidth: 1,
+    borderColor: '#d3d3d3', // Bordures grises douces
     borderRadius: 10,
-    marginTop: 10,
-  },
-
-  // Texte affiché quand il n'y a pas d'image
-  noImageText: {
+    paddingVertical: 12,
+    paddingHorizontal: 10,
     fontSize: 16,
-    color: '#888',
-    marginTop: 10,
+    backgroundColor: '#f9f9f9', // Légèrement grisé pour un contraste avec le fond blanc
+    color: '#333',
+    marginBottom: 20,
+    fontFamily: 'Roboto', // Police moderne
   },
-
-  // Style du bouton principal
+  imagePreview: {
+    width: 120,
+    height: 120,
+    borderRadius: 12,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    alignSelf: 'center',
+  },
+  noImageText: {
+    fontSize: 14,
+    color: '#999',
+    marginTop: 10,
+    textAlign: 'center',
+  },
   button: {
     backgroundColor: '#007BFF',
-    padding: 10,
-    borderRadius: 5,
+    paddingVertical: 12,
+    borderRadius: 25, // Plus arrondi pour une esthétique moderne
     marginVertical: 15,
-    width: '50%',
+    marginHorizontal:30,
+    width: '30%',
     alignSelf: 'center',
-    justifyContent: 'center',
+    shadowColor: '#007BFF',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    alignItems:'center',
+    justifyContent:"center",
+    flexDirection:'row',
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
+    fontWeight: '600',
     textAlign: 'center',
+  },
+  pickerContainer: {
+    marginBottom: 20,
+  },
+  pickerLabel: {
+    fontSize: 16,
+    color: '#555', // Couleur neutre
+    marginBottom: 5,
+  },
+  pickerSelect: {
+    fontSize: 16,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: '#f9f9f9',
   },
 });
 
-// Styles pour les sélecteurs de plateforme
+// Styles pour RNPickerSelect
 const pickerSelectStyles = {
   inputIOS: {
-    fontSize: 18,
+    fontSize: 16,
     paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderWidth: 2,
-    borderColor: '#ddd',
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: '#d3d3d3',
     borderRadius: 10,
     color: '#333',
-    backgroundColor: '#fff', // Fond blanc pour bien faire ressortir le texte
+    backgroundColor: '#f9f9f9',
     marginBottom: 20,
   },
   inputAndroid: {
-      fontSize: 18,
-      paddingVertical: 12,
-      paddingHorizontal: 20,
-      borderWidth: 2,
-      borderColor: '#ddd',
-      borderRadius: 10,
-      color: '#333',
-      backgroundColor: '#fff',
-      marginBottom: 20,
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: '#d3d3d3',
+    borderRadius: 10,
+    color: '#333',
+    backgroundColor: '#f9f9f9',
+    marginBottom: 20,
   },
 };
-

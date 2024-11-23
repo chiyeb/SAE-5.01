@@ -14,12 +14,13 @@ export const getAllUsers = async () => {
 };
 
 // Créer un utilisateur
-export const createUser = async (user: any) => {
+export const createUser = async (user: any, token: string) => {
   try {
     const response = await fetch(`${API_BASE_URL}/user/create`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`, // Ajouter le token dans les headers
       },
       body: JSON.stringify(user),
     });
@@ -35,7 +36,7 @@ export const createUser = async (user: any) => {
 };
 
 // Mettre à jour un utilisateur
-export const updateUser = async (id: string, updatedUser: any) => {
+export const updateUser = async (id: string, updatedUser: any, token: string) => {
   if (!id) {
     console.error('ID manquant lors de la mise à jour de l\'utilisateur');
     return;
@@ -43,7 +44,10 @@ export const updateUser = async (id: string, updatedUser: any) => {
   try {
     const response = await fetch(`${API_BASE_URL}/user/update/${id}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`, // Ajouter le token dans les headers
+      },
       body: JSON.stringify(updatedUser),
       
     });
@@ -71,10 +75,14 @@ export const updateUser = async (id: string, updatedUser: any) => {
 
 
 // Supprimer un utilisateur
-export const deleteUser = async (id: string) => {
+export const deleteUser = async (id: string, token: string) => {
   try {
     const response = await fetch(`${API_BASE_URL}/user/delete/${id}`, {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`, // Ajouter le token dans les headers
+      },
     });
 
     if (!response.ok) {

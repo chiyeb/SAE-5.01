@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { logout } from '@/components/LoginRequest'; // Assurez-vous du chemin correct
+import Feather from '@expo/vector-icons/Feather';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+
+
+
 
 interface MenuHamburgerProps {
   setCurrentScreen: (screen: 'Home' | 'Profile' | 'Settings' | 'Logout') => void;
@@ -13,8 +20,16 @@ const MenuHamburger: React.FC<MenuHamburgerProps> = ({ setCurrentScreen }) => {
     setIsVisible(!isVisible);
   };
 
-  const handleNavigation = (screen: 'Home' | 'Profile' | 'Settings' | 'Logout') => {
+  const handleNavigation = async (screen: 'Home' | 'Profile' | 'Settings' | 'Logout') => {
     setIsVisible(false);
+
+    if (screen === 'Logout') {
+      // Appeler la fonction logout
+      await logout();
+      console.log('Utilisateur déconnecté avec succès');
+      // Rediriger ou mettre à jour l'état en conséquence
+    }
+
     setCurrentScreen(screen);
   };
 
@@ -27,16 +42,16 @@ const MenuHamburger: React.FC<MenuHamburgerProps> = ({ setCurrentScreen }) => {
         <TouchableOpacity style={styles.overlay} onPress={toggleMenu} />
         <View style={styles.menu}>
           <TouchableOpacity style={styles.menuItem} onPress={() => handleNavigation('Home')}>
-            <Text style={styles.menuText}>Accueil</Text>
+            <Text style={styles.menuText}> <Feather name="home" size={24} color="black" /> Accueil</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.menuItem} onPress={() => handleNavigation('Profile')}>
-            <Text style={styles.menuText}>Profil</Text>
+            <Text style={styles.menuText}><AntDesign name="adduser" size={24} color="black" /> Utilisateurs</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.menuItem} onPress={() => handleNavigation('Settings')}>
-            <Text style={styles.menuText}>Contact</Text>
+            <Text style={styles.menuText}><Feather name="mail" size={24} color="black" /> Contact</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.menuItem} onPress={() => handleNavigation('Logout')}>
-            <Text style={styles.menuText}>Déconnexion</Text>
+            <Text style={styles.menuText}><MaterialCommunityIcons name="logout" size={24} color="black" />Déconnexion</Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -45,7 +60,6 @@ const MenuHamburger: React.FC<MenuHamburgerProps> = ({ setCurrentScreen }) => {
 };
 
 export default MenuHamburger;
-
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
@@ -61,17 +75,29 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 50,
     right: 10,
-    borderRadius: 8,
+    backgroundColor: '#fff',
+    borderRadius: 12,
     paddingVertical: 10,
-    width: 150,
+    width: 180,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5, // Pour les ombres sur Android
   },
   menuItem: {
-    paddingVertical: 10,
+    paddingVertical: 12,
     paddingHorizontal: 20,
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
   },
   menuText: {
-    color: 'white',
+    color: '#333',
     fontSize: 16,
+    fontWeight: '500',
+  },
+  menuItemLast: {
+    borderBottomWidth: 0, // Pas de ligne pour le dernier élément
   },
 });

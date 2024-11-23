@@ -2,11 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const API_BASE_URL = 'http://127.0.0.1:8080'; // Ou http://localhost:3000 selon votre configuration
 
-// Fonction de login
-export const login = async (
-  email: string,
-  password: string
-): Promise<{ success: boolean; token?: string; error?: string }> => {
+// Fonction de login (authentification)
+export const login = async (email: string, password: string): Promise<{ success: boolean; token?: string; error?: string }> => {
   if (!email || !password) {
     return { success: false, error: 'Veuillez entrer un email et un mot de passe.' };
   }
@@ -16,20 +13,22 @@ export const login = async (
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'authorization': `Basic ${btoa(`${email}:${password}`)}`,
       },
       body: JSON.stringify({ email, password }), // JSON envoyé au backend
     });
-
+    console.log(response.ok);
     if (!response.ok) {
       const errorMessage = await response.text();
       return { success: false, error: errorMessage || 'Erreur inconnue.' };
     }
 
-    const token = await response.text(); // Supposons que le token est renvoyé sous forme de texte
-    await AsyncStorage.setItem('auth_token', token); // Stockage du token localement
+    const token = await response.text();
+    await AsyncStorage.setItem('auth_token', token);
     return { success: true, token };
   } catch (error) {
-    console.error('Erreur réseau ou serveur :', error);
+    await AsyncStorage.removeItem('auth_token');
+    console.error('Erreur lors de la connexion :', error);
     return { success: false, error: 'Erreur réseau ou serveur.' };
   }
 };

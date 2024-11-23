@@ -5,8 +5,10 @@ import { ThemedText } from '@/components/ThemedText';
 import Buttons from '@/components/navigation/Buttons';
 import TabSelector from '@/components/navigation/ButtonVenteLocation'; 
 import DetailBien from '@/components/DetailBien';
-import { createProperty, getAllProperties, updateProperty, deleteProperty } from '@/components/Api';
+import { createProperty, getAllProperties, updateProperty, deleteProperty } from '@/components/BienRequest';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ButtonUpdateDelete from '@/components/navigation/ButtonUpdateDelete';
+
 
 export default function HomeScreen() {
   const [biens, setBiens] = useState<any[]>([]);
@@ -157,7 +159,7 @@ export default function HomeScreen() {
   // Couleur d'arrière-plan qui change en fonction du défilement
   const getBackgroundColor = scrollY.interpolate({
     inputRange: [0, 200],  // Plage de défilement
-    outputRange: ['#f5e6ab', '#dba617'],  // Couleurs de fond
+    outputRange: ['#43CBFF', '#9708CC'],  // Couleurs de fond
     extrapolate: 'clamp',  // Empêche l'extrapolation
   });
 
@@ -182,21 +184,13 @@ export default function HomeScreen() {
               biens.map((bien) => (
                 <View key={bien.id}>
                   <Bien {...bien} onPress={() => setSelectedBien(bien)} />
-                  <View style={styles.buttonSupAndUpdate}>
-                  <TouchableOpacity onPress={() => openModalForUpdate(bien.id, bien)} style={styles.updateButton}>
-                    <Text style={styles.buttonText}>Modifier</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity onPress={() => handleDeleteBien(bien.id)} style={styles.deleteButton}>
-                    <Text style={styles.buttonText}>Supprimer</Text>
-                  </TouchableOpacity>
-                  </View>
+                  <ButtonUpdateDelete onUpdate={() => openModalForUpdate(bien.id, bien) } onDelete={ () => handleDeleteBien(bien.id)}/>
                 </View>
               ))
             ) : (
               <Text>Aucun bien trouvé</Text>
             )}
-            <Buttons onPress={handleAddBien} />
+            <Buttons onPress={handleAddBien}  />
           </View>
         </ScrollView>
       </Animated.View>
@@ -261,38 +255,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 20,
-    width: '90%',
+    width: '60%',
     height: '90%',
     alignItems: 'center',
   },
   background: {
     flex: 1,
     width: '100%',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    textAlign: 'center',
-  },
-  buttonSupAndUpdate:{
-    flexDirection:'row',
-    justifyContent:'center',
-    flexWrap:'wrap'
-  },
-  deleteButton: {
-    backgroundColor: '#dc3545',
-    padding: 10,
-    marginHorizontal:10,
-    borderRadius: 5,
-    width: '30%',
-    alignSelf: 'center',
-  },
-  updateButton: {
-    backgroundColor: '#9CCC65',
-    padding: 10,
-    marginHorizontal:10,
-    borderRadius: 5,
-    width: '30%',
-    alignSelf: 'center',
   },
 });
