@@ -59,17 +59,17 @@ public class PropertyController {
         }
     }
 
-    @DeleteMapping(value = "/delete/purchasable/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/delete/purchasable/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> deletePurchasableProperty(@PathVariable String id) {
         try {
             purchasablePropertyService.deleteById(id);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Purchasable property with ID: " + id + " deleted successfully");
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Property not found", e);
         }
     }
 
-    @PostMapping(value = "/create/rental", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE) // TODO(Mettre des ResponseEntity et des tests pour vérifier que le json est correct)
+    @PostMapping(value = "/create/rental", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createRentalProperty(@Valid @RequestBody RentalPropertyInputModel propertyModel) {
         if (propertyModel == null) {
             return ResponseEntity.badRequest().body("Property is null");
@@ -100,11 +100,11 @@ public class PropertyController {
         }
     }
 
-    @DeleteMapping(value = "/delete/rental/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/delete/rental/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> deleteRentalProperty(@PathVariable String id) {
         try {
             rentalPropertyService.deleteById(id);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Rental property with ID: " + id + " deleted successfully");
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Property not found", e);
         }

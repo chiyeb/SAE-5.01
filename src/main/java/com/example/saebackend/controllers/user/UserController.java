@@ -4,6 +4,7 @@ import com.example.saebackend.domain.exceptions.NotFoundException;
 import com.example.saebackend.domain.users.UserInputModel;
 import com.example.saebackend.services.user.UserService;
 import com.google.gson.Gson;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -47,7 +48,7 @@ public class UserController {
      * @return a JSON representation of the created user or an error message.
      */
     @PostMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> createUser(@RequestBody UserInputModel userInputModel) {
+    public ResponseEntity<String> createUser(@Valid @RequestBody UserInputModel userInputModel) {
         if (userInputModel == null) {
             return ResponseEntity.badRequest().body("User is null");
         }
@@ -94,7 +95,7 @@ public class UserController {
      * @return a JSON representation of the updated user.
      */
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateRentalProperty(@PathVariable String id, @RequestBody UserInputModel userInputModel) {
+    public ResponseEntity<String> updateRentalProperty(@PathVariable String id, @Valid @RequestBody UserInputModel userInputModel) {
         try {
             return ResponseEntity.ok(gson.toJson(userService.update(id, userInputModel)));
         } catch (NotFoundException e) {
@@ -108,7 +109,7 @@ public class UserController {
      * @param id the ID of the user to delete.
      * @return a success message or an error message if the user is not found.
      */
-    @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/delete/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<?> deleteUser(@PathVariable String id) {
         try {
             userService.deleteById(id);
@@ -127,7 +128,7 @@ public class UserController {
      * @param email the email address of the user.
      * @return a success message or an error message if the user is not found.
      */
-    @PostMapping(value = "/forgotPassword/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/forgotPassword/{email}", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<?> forgotPassword(@PathVariable String email) {
         try {
             userService.forgotPassword(email);
