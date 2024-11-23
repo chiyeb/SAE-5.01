@@ -32,6 +32,7 @@ export default function HomeScreen() {
   useEffect(() => {
     if (token) {
       const fetchBiens = async () => {
+        console.log(selectedTab);
         try {
           const data = await getAllProperties(selectedTab);
           if (Array.isArray(data)) {
@@ -47,7 +48,7 @@ export default function HomeScreen() {
 
       fetchBiens();
     }
-  }, [selectedTab]);
+  }, [selectedTab,token]);
 
   const handleAddBien = async () => {
     if (!token) {

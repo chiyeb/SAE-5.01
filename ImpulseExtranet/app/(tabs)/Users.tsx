@@ -6,8 +6,6 @@ import Buttons from '@/components/navigation/Buttons';
 import DetailUser from '@/components/DetailUsers';
 import { createUser, getAllUsers, updateUser, deleteUser } from '@/components/UsersRequest';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import ButtonUpdateDelete from '@/components/navigation/ButtonUpdateDelete';
 
 export default function Users() {
