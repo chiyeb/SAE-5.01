@@ -44,4 +44,8 @@ public class PurchasablePropertyService { // TODO(Les deux classes propertyservi
     public void deleteById(String id) {
         if (!purchasablePropertyRepository.deleteById(Id.fromString(id))) throw NotFoundException.propertyNotFound(id);
     }
+
+    public List<PropertyReadModel> getByOwnerId(String ownerId) {
+        return purchasablePropertyRepository.getByOwnerId(Id.fromString(ownerId)).stream().map(PurchasableProperty::readModel).toList();
+    }
 }

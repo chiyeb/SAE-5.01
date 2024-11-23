@@ -63,4 +63,15 @@ public class MariaDBRentalPropertyRepository implements RentalPropertyRepository
         jpaRentalPropertyRepository.deleteById(id.toString());
         return true;
     }
+
+    @Override
+    public List<RentalProperty> getByOwnerId(Id ownerId) {
+        try {
+            List<RentalPropertyEntity> rentalPropertyEntities = jpaRentalPropertyRepository.findByOwner_Id(ownerId.toString());
+            return rentalPropertyEntities.stream().map(mapper::mapTo).toList();
+        }
+        catch(EntityNotFoundException e) {
+            throw NotFoundException.propertyNotFound(ownerId.toString());
+        }
+    }
 }

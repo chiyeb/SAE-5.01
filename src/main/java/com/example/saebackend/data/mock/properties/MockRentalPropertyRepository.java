@@ -124,4 +124,12 @@ public class MockRentalPropertyRepository implements RentalPropertyRepository {
     public boolean deleteById(Id id) {
         return properties.removeIf(property -> property.getId().equals(id));
     }
+
+    @Override
+    public List<RentalProperty> getByOwnerId(Id ownerId) {
+        return properties.stream()
+                .filter(property -> property.getOwner().getId().equals(ownerId))
+                .toList();
+    }
+
 }

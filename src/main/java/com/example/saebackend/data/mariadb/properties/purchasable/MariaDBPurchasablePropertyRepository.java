@@ -63,4 +63,15 @@ public class MariaDBPurchasablePropertyRepository implements PurchasableProperty
         jpaPurchasablePropertyRepository.deleteById(id.toString());
         return true;
     }
+
+    @Override
+    public List<PurchasableProperty> getByOwnerId(Id ownerId) {
+        try {
+            List<PurchasablePropertyEntity> purchasablePropertyEntities = jpaPurchasablePropertyRepository.findByOwner_Id(ownerId.toString());
+            return purchasablePropertyEntities.stream().map(mapper::mapTo).toList();
+        }
+        catch(EntityNotFoundException e) {
+            throw NotFoundException.propertyNotFound(ownerId.toString());
+        }
+    }
 }

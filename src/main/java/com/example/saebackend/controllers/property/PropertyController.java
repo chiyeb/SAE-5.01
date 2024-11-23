@@ -114,4 +114,24 @@ public class PropertyController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Property not found", e);
         }
     }
+    @GetMapping(value = "/get/rental/owner", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getRentalPropertyByOwnerId(@RequestHeader("Authorization") String authHeader) {
+        try {
+            String token = authHeader.replace("Bearer ", "");
+            String idOwer = jwtService.getLoggedUserId(token);
+            return ResponseEntity.ok(gson.toJson(rentalPropertyService.getByOwnerId(idOwer)));
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Property not found", e);
+        }
+    }
+    @GetMapping(value = "/get/purchasable/owner", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getPurchasablePropertyByOwnerId(@RequestHeader("Authorization") String authHeader) {
+        try {
+            String token = authHeader.replace("Bearer ", "");
+            String idOwer = jwtService.getLoggedUserId(token);
+            return ResponseEntity.ok(gson.toJson(purchasablePropertyService.getByOwnerId(idOwer)));
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Property not found", e);
+        }
+    }
 }

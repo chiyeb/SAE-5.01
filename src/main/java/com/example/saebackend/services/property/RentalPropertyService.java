@@ -45,4 +45,8 @@ public class RentalPropertyService { // TODO(Les deux classes propertyservice se
     public void deleteById(String id) {
         if (!rentalPropertyRepository.deleteById(Id.fromString(id))) throw NotFoundException.propertyNotFound(id);
     }
+
+    public List<PropertyReadModel> getByOwnerId(String ownerId) {
+        return rentalPropertyRepository.getByOwnerId(Id.fromString(ownerId)).stream().map(RentalProperty::readModel).toList();
+    }
 }

@@ -16,4 +16,6 @@ public interface RentalPropertyRepository { // TODO(y a t-il besoin de deux repo
     RentalProperty update(Id id, RentalPropertyInputModel propertyModel);
 
     boolean deleteById(Id id);
+
+    List<RentalProperty> getByOwnerId(Id ownerId);
 }

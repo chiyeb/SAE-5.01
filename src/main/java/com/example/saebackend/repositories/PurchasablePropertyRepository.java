@@ -16,4 +16,6 @@ public interface PurchasablePropertyRepository { // TODO(y a t-il besoin de deux
     PurchasableProperty update(Id id, PurchasablePropertyInputModel propertyModel);
 
     boolean deleteById(Id id);
+
+   List<PurchasableProperty> getByOwnerId(Id ownerId);
 }
