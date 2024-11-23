@@ -176,11 +176,11 @@ export default function HomeScreen() {
           scrollEventThrottle={16}
         >
           <View style={styles.titleContainer}>
-            <ThemedText type="title">Administrateur</ThemedText>
+            <ThemedText type="title">Tous les biens</ThemedText>
           </View>
           <TabSelector selectedTab={selectedTab} onTabSelect={setSelectedTab} />
           <View style={styles.stepContainer}>
-            <ThemedText type="h2">Mes annonces</ThemedText>
+            <ThemedText type="h2">Annonces</ThemedText>
             {biens.length > 0 ? (
               biens.map((bien) => (
                 <View key={bien.id}>

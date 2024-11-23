@@ -10,7 +10,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 
 interface MenuHamburgerProps {
-  setCurrentScreen: (screen: 'Home' | 'Profile' | 'Settings' | 'Logout') => void;
+  setCurrentScreen: (screen: 'Home' | 'Profile' | 'Logout') => void;
 }
 
 const MenuHamburger: React.FC<MenuHamburgerProps> = ({ setCurrentScreen }) => {
@@ -20,7 +20,7 @@ const MenuHamburger: React.FC<MenuHamburgerProps> = ({ setCurrentScreen }) => {
     setIsVisible(!isVisible);
   };
 
-  const handleNavigation = async (screen: 'Home' | 'Profile' | 'Settings' | 'Logout') => {
+  const handleNavigation = async (screen: 'Home' | 'Profile' | 'Logout') => {
     setIsVisible(false);
 
     if (screen === 'Logout') {
@@ -42,13 +42,10 @@ const MenuHamburger: React.FC<MenuHamburgerProps> = ({ setCurrentScreen }) => {
         <TouchableOpacity style={styles.overlay} onPress={toggleMenu} />
         <View style={styles.menu}>
           <TouchableOpacity style={styles.menuItem} onPress={() => handleNavigation('Home')}>
-            <Text style={styles.menuText}> <Feather name="home" size={24} color="black" /> Accueil</Text>
+            <Text style={styles.menuText}> <Feather name="home" size={24} color="black" /> Biens</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.menuItem} onPress={() => handleNavigation('Profile')}>
             <Text style={styles.menuText}><AntDesign name="adduser" size={24} color="black" /> Utilisateurs</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => handleNavigation('Settings')}>
-            <Text style={styles.menuText}><Feather name="mail" size={24} color="black" /> Contact</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.menuItem} onPress={() => handleNavigation('Logout')}>
             <Text style={styles.menuText}><MaterialCommunityIcons name="logout" size={24} color="black" />Déconnexion</Text>

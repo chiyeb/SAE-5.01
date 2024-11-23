@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     color:'black',
   },
   h2:{
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
     color:'black',
     paddingBottom: 5,

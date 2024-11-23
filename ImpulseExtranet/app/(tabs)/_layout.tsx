@@ -8,7 +8,7 @@ export default function AppLayout() {
   const colorScheme = useColorScheme();
   const router = useRouter();
 
-  const handleNavigation = (screen: 'Home' | 'Profile' | 'Settings' | 'Logout') => {
+  const handleNavigation = (screen: 'Home' | 'Profile' | 'Logout') => {
     // Rediriger vers l'écran correspondant
     switch (screen) {
       case 'Home':
@@ -17,10 +17,7 @@ export default function AppLayout() {
       case 'Profile':
         router.push('/Users');
         break;
-      case 'Settings':
-        router.push('/Contact');
-        break;
-        case 'Logout':
+      case 'Logout':
         router.push('/Login');
         break;
       default:
@@ -40,9 +37,9 @@ export default function AppLayout() {
       }}
     >
       <Stack.Screen
-        name="index"
+        name="Login"
         options={{
-          title: 'Accueil',
+          title: 'Connexion',
         }}
       />
     </Stack>
