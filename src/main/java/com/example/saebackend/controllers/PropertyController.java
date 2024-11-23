@@ -51,7 +51,7 @@ public class PropertyController {
     }
 
     @PutMapping(value = "/update/purchasable/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updatePurchasableProperty(@PathVariable String id, @RequestBody PurchasablePropertyInputModel propertyModel) {
+    public ResponseEntity<String> updatePurchasableProperty(@PathVariable String id, @Valid @RequestBody PurchasablePropertyInputModel propertyModel) {
         try {
             return ResponseEntity.ok(gson.toJson(purchasablePropertyService.update(id, propertyModel)));
         } catch (NotFoundException e) {
@@ -70,7 +70,7 @@ public class PropertyController {
     }
 
     @PostMapping(value = "/create/rental", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE) // TODO(Mettre des ResponseEntity et des tests pour vérifier que le json est correct)
-    public ResponseEntity<String> createRentalProperty(@RequestBody RentalPropertyInputModel propertyModel) {
+    public ResponseEntity<String> createRentalProperty(@Valid @RequestBody RentalPropertyInputModel propertyModel) {
         if (propertyModel == null) {
             return ResponseEntity.badRequest().body("Property is null");
         }
@@ -92,7 +92,7 @@ public class PropertyController {
     }
 
     @PutMapping(value = "/update/rental/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateRentalProperty(@PathVariable String id, @RequestBody RentalPropertyInputModel propertyModel) {
+    public ResponseEntity<String> updateRentalProperty(@PathVariable String id,@Valid @RequestBody RentalPropertyInputModel propertyModel) {
         try {
             return ResponseEntity.ok(gson.toJson(rentalPropertyService.update(id, propertyModel)));
         } catch (NotFoundException e) {

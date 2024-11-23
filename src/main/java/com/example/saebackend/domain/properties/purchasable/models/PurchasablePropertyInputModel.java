@@ -1,44 +1,51 @@
 package com.example.saebackend.domain.properties.purchasable.models;
 
+import com.example.saebackend.domain.properties.enums.ClimateClass;
+import com.example.saebackend.domain.properties.enums.EnergyClass;
+import com.example.saebackend.domain.properties.enums.PropertyType;
 import com.example.saebackend.domain.properties.models.PropertyInputModel;
 import com.example.saebackend.domain.properties.models.PropertyLocationModel;
 import com.example.saebackend.domain.properties.models.RoomCountModel;
+import com.example.saebackend.base.validation.ValueOfEnum;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import java.util.List;
 
 public record PurchasablePropertyInputModel(
-
-        @NotNull(message = "Type is required")
-        // TODO("Implémenter une contrainte pour vérifier si le type appartient au bon enum")
+        @NotNull
+        @ValueOfEnum(enumClass = PropertyType.class)
         String type,
-        @NotNull(message = "Title is required")
+        @NotNull
         String title,
-        @NotNull(message = "Description is required")
+        @NotNull
         String description,
-        @NotNull(message = "Location is required")
+        @NotNull
         PropertyLocationModel location,
-        @NotNull(message = "Images are required")
+        @NotNull
         List<String> images,
-        @NotNull(message = "Price is required")
+        @NotNull
+        @PositiveOrZero
         double price,
-        @NotNull(message = "Living area is required")
+        @NotNull
+        @Positive
         double livingArea,
-        @NotNull(message = "Land area is required")
+        @NotNull
+        @PositiveOrZero
         double landArea,
-        @NotNull(message = "Rooms are required")
+        @NotNull
         List<RoomCountModel> rooms,
-        @NotNull(message = "Orientation is required")
+        @NotNull
         String orientation,
-
         @NotNull
-        // TODO("Implémenter une contrainte pour vérifier si le type appartient au bon enum")
+        @ValueOfEnum(enumClass = EnergyClass.class)
         String energyClass,
-
         @NotNull
-        // TODO("Implémenter une contrainte pour vérifier si le type appartient au bon enum")
+        @ValueOfEnum(enumClass = ClimateClass.class)
         String climateClass,
-        @NotNull(message = "View is required")
+        @NotNull
         String view,
-        @NotNull(message = "Estimation cost energy is required")
+        @NotNull
+        @PositiveOrZero
         double estimationCostEnergy) implements PropertyInputModel {}
