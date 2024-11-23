@@ -5,6 +5,7 @@ import com.example.saebackend.domain.properties.enums.ClimateClass;
 import com.example.saebackend.domain.properties.enums.EnergyClass;
 import com.example.saebackend.domain.properties.enums.PropertyType;
 import com.example.saebackend.domain.properties.models.PropertyReadModel;
+import com.example.saebackend.domain.users.UserModel;
 
 import java.util.List;
 
@@ -23,14 +24,13 @@ public abstract class Property {
     private ClimateClass climateClass;
     private String view;
     private double estimationCostEnergy;
-
-//    private final Id idOwner; TODO(implémenter utilisateur)
+    private final UserModel owner;
 
     //================================================================================
     // Constructor with Id
     //================================================================================
 
-    public Property(Id id, PropertyType type, String title, String description, PropertyLocation location, List<String> images, double livingArea, double landArea, PropertyRoomData rooms, String orientation, EnergyClass energyClass, ClimateClass climateClass, String view, double estimationCostEnergy) {
+    public Property(Id id, PropertyType type, String title, String description, PropertyLocation location, List<String> images, double livingArea, double landArea, PropertyRoomData rooms, String orientation, EnergyClass energyClass, ClimateClass climateClass, String view, double estimationCostEnergy, UserModel owner) {
         this.id = id;
         this.type = type;
         this.title = title;
@@ -45,6 +45,7 @@ public abstract class Property {
         this.view = view;
         this.climateClass = climateClass;
         this.estimationCostEnergy = estimationCostEnergy;
+        this.owner = owner;
     }
 
     //================================================================================
@@ -167,8 +168,7 @@ public abstract class Property {
         this.estimationCostEnergy = estimationCostEnergy;
     }
 
-    //    public Id getIdOwner() { TODO(implémenter utilisateur)
-//        return idOwner;
-//    }
-
+    public UserModel getOwner() {
+        return owner;
+    }
 }

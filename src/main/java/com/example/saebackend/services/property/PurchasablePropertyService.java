@@ -6,6 +6,7 @@ import com.example.saebackend.domain.properties.models.PropertyReadModel;
 import com.example.saebackend.domain.properties.purchasable.PurchasableProperty;
 import com.example.saebackend.domain.properties.purchasable.models.PurchasablePropertyInputModel;
 import com.example.saebackend.repositories.PurchasablePropertyRepository;
+import com.example.saebackend.repositories.user.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,13 +14,15 @@ import java.util.List;
 @Service
 public class PurchasablePropertyService { // TODO(Les deux classes propertyservice se répètent, il faut trouver un moyen de les combiner yeah!)
     PurchasablePropertyRepository purchasablePropertyRepository;
+    UserRepository userRepository;
 
-    public PurchasablePropertyService(PurchasablePropertyRepository purchasablePropertyRepository) {
+    public PurchasablePropertyService(PurchasablePropertyRepository purchasablePropertyRepository, UserRepository userRepository) {
         this.purchasablePropertyRepository = purchasablePropertyRepository;
+        this.userRepository = userRepository;
     }
 
-    public PropertyReadModel create(PurchasablePropertyInputModel propertyModel) {
-        return purchasablePropertyRepository.create(PurchasableProperty.createFromModel(propertyModel)).readModel();
+    public PropertyReadModel create(PurchasablePropertyInputModel propertyModel, String userId) {
+        return purchasablePropertyRepository.create(PurchasableProperty.createFromModel(propertyModel,userRepository.getById(Id.fromString(userId)))).readModel();
     }
 
     public PropertyReadModel getById(String id) {

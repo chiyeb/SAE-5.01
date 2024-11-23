@@ -10,6 +10,7 @@ import com.example.saebackend.services.utils.MailSender;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Service;
 import com.example.saebackend.domain.exceptions.NotFoundException;
 
@@ -19,9 +20,11 @@ import java.util.List;
 @Service
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final JwtDecoder jwtDecoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, JwtDecoder jwtDecoder) {
         this.userRepository = userRepository;
+        this.jwtDecoder = jwtDecoder;
     }
 
     public UserReadModel create(UserInputModel userInputModel) {
@@ -35,10 +38,15 @@ public class UserService implements UserDetailsService {
         return null;
     }
 
+
     public UserReadModel getById(String id) {
         UserModel userModel = userRepository.getById(Id.fromString(id));
         if (userModel == null) throw NotFoundException.userNotFound(id);
         return userModel.readModel();
+    }
+
+    public UserReadModel getLoggedUser(String token) {
+        return userRepository.getById(Id.fromString(jwtDecoder.decode(token).getSubject())).readModel();
     }
 
     public List<UserReadModel> getAll() {

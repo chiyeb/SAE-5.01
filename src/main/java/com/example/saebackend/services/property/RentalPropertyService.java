@@ -6,6 +6,7 @@ import com.example.saebackend.domain.properties.models.PropertyReadModel;
 import com.example.saebackend.domain.properties.rental.RentalProperty;
 import com.example.saebackend.domain.properties.rental.models.RentalPropertyInputModel;
 import com.example.saebackend.repositories.RentalPropertyRepository;
+import com.example.saebackend.repositories.user.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,13 +14,16 @@ import java.util.List;
 @Service
 public class RentalPropertyService { // TODO(Les deux classes propertyservice se répètent, il faut trouver un moyen de les combiner yeah!)
     RentalPropertyRepository rentalPropertyRepository;
+    UserRepository userRepository;
 
-    public RentalPropertyService(RentalPropertyRepository rentalPropertyRepository) {
+
+    public RentalPropertyService(RentalPropertyRepository rentalPropertyRepository, UserRepository userRepository) {
         this.rentalPropertyRepository = rentalPropertyRepository;
+        this.userRepository = userRepository;
     }
 
-    public PropertyReadModel create(RentalPropertyInputModel propertyModel) {
-        return rentalPropertyRepository.create(RentalProperty.createFromModel(propertyModel)).readModel();
+    public PropertyReadModel create(RentalPropertyInputModel propertyModel, String userId) {
+        return rentalPropertyRepository.create(RentalProperty.createFromModel(propertyModel,userRepository.getById(Id.fromString(userId)))).readModel();
     }
 
     public PropertyReadModel getById(String id) {

@@ -1,4 +1,4 @@
-package com.example.saebackend.data.temp;
+package com.example.saebackend.data.mock.properties;
 
 import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.users.UserInputModel;
@@ -19,7 +19,7 @@ public class InMemoryUserRepository implements UserRepository {
 
     public InMemoryUserRepository() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        users.add(new UserModel("John", "Doe", "salut@salut.com", "25", "123456789", "Je suis un test", bCryptPasswordEncoder.encode("password")));
+        users.add(new UserModel("Administrateur", "IMPULSE", "admin@admin.com", "999", "123456789", "Je suis l'admin !", bCryptPasswordEncoder.encode("password")));
     }
 
     @Override

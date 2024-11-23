@@ -35,6 +35,16 @@ public class UserController {
         return ResponseEntity.ok(gson.toJson(userService.create(userInputModel)));
     }
 
+    @GetMapping("/current")
+    public Object getCurrentUser(@RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.replace("Bearer ", "");
+        try {
+            return userService.getLoggedUser(token);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found", e);
+        }
+    }
+
     @GetMapping(value = "/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getUserById(@PathVariable String id) {
         try {

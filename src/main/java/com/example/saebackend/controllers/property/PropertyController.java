@@ -3,6 +3,7 @@ package com.example.saebackend.controllers.property;
 import com.example.saebackend.domain.exceptions.NotFoundException;
 import com.example.saebackend.domain.properties.purchasable.models.PurchasablePropertyInputModel;
 import com.example.saebackend.domain.properties.rental.models.RentalPropertyInputModel;
+import com.example.saebackend.services.JWTService;
 import com.example.saebackend.services.property.PurchasablePropertyService;
 import com.example.saebackend.services.property.RentalPropertyService;
 import com.google.gson.Gson;
@@ -18,21 +19,24 @@ import org.springframework.web.server.ResponseStatusException;
 public class PropertyController {
     private final PurchasablePropertyService purchasablePropertyService;
     private final RentalPropertyService rentalPropertyService;
+    private final JWTService jwtService;
     private final Gson gson;
 
     @Autowired
-    public PropertyController(PurchasablePropertyService purchasablePropertyService, RentalPropertyService rentalPropertyService) {
+    public PropertyController(PurchasablePropertyService purchasablePropertyService, RentalPropertyService rentalPropertyService, JWTService jwtService) {
         this.purchasablePropertyService = purchasablePropertyService;
         this.rentalPropertyService = rentalPropertyService;
+        this.jwtService = jwtService;
         this.gson = new Gson();
     }
 
     @PostMapping(value = "/create/purchasable", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE) // TODO(Mettre des ResponseEntity et des tests pour vérifier que le json est correct)
-    public ResponseEntity<String> createPurchasableProperty(@RequestBody PurchasablePropertyInputModel propertyModel) {
+    public ResponseEntity<String> createPurchasableProperty(@RequestBody PurchasablePropertyInputModel propertyModel, @RequestHeader("Authorization") String authHeader) {
         if (propertyModel == null) {
             return ResponseEntity.badRequest().body("Property is null");
         }
-        return ResponseEntity.ok(gson.toJson(purchasablePropertyService.create(propertyModel)));
+        String id = jwtService.getLoggedUserId(authHeader.replace("Bearer ", ""));
+        return ResponseEntity.ok(gson.toJson(purchasablePropertyService.create(propertyModel, id)));
     }
 
     @GetMapping(value = "/get/purchasable/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -69,11 +73,12 @@ public class PropertyController {
     }
 
     @PostMapping(value = "/create/rental", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE) // TODO(Mettre des ResponseEntity et des tests pour vérifier que le json est correct)
-    public ResponseEntity<String> createRentalProperty(@RequestBody RentalPropertyInputModel propertyModel) {
+    public ResponseEntity<String> createRentalProperty(@RequestBody RentalPropertyInputModel propertyModel, @RequestHeader("Authorization") String authHeader) {
         if (propertyModel == null) {
             return ResponseEntity.badRequest().body("Property is null");
         }
-        return ResponseEntity.ok(gson.toJson(rentalPropertyService.create(propertyModel)));
+        String id = jwtService.getLoggedUserId(authHeader.replace("Bearer ", ""));
+        return ResponseEntity.ok(gson.toJson(rentalPropertyService.create(propertyModel, id)));
     }
 
     @GetMapping(value = "/get/rental/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
