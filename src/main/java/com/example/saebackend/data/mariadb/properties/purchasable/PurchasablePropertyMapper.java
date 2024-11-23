@@ -4,8 +4,10 @@ import com.example.saebackend.base.Mapper;
 import com.example.saebackend.data.mariadb.jpa_repositories.JpaPropertyLocationRepository;
 import com.example.saebackend.data.mariadb.jpa_repositories.JpaPurchasablePropertyRepository;
 import com.example.saebackend.data.mariadb.jpa_repositories.JpaRoomTypeRepository;
+import com.example.saebackend.data.mariadb.jpa_repositories.JpaUserRepository;
 import com.example.saebackend.data.mariadb.properties.location.LocationMapper;
 import com.example.saebackend.data.mariadb.properties.roomtype.RoomTypeMapper;
+import com.example.saebackend.data.mariadb.users.UserModelMapper;
 import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.properties.PropertyRoomData;
 import com.example.saebackend.domain.properties.enums.ClimateClass;
@@ -20,11 +22,13 @@ public class PurchasablePropertyMapper implements Mapper<PurchasablePropertyEnti
     private final JpaPurchasablePropertyRepository jpaPurchasablePropertyRepository;
     private final LocationMapper locationMapper;
     private final RoomTypeMapper roomTypeMapper;
+    private final UserModelMapper userModelMapper;
 
-    public PurchasablePropertyMapper(JpaPurchasablePropertyRepository jpaPurchasablePropertyRepository, JpaPropertyLocationRepository jpaPropertyLocationRepository, JpaRoomTypeRepository jpaRoomTypeRepository) {
+    public PurchasablePropertyMapper(JpaPurchasablePropertyRepository jpaPurchasablePropertyRepository, JpaPropertyLocationRepository jpaPropertyLocationRepository, JpaRoomTypeRepository jpaRoomTypeRepository, JpaUserRepository jpaUserRepository) {
         this.jpaPurchasablePropertyRepository = jpaPurchasablePropertyRepository;
         this.locationMapper = new LocationMapper(jpaPropertyLocationRepository);
         this.roomTypeMapper = new RoomTypeMapper(jpaRoomTypeRepository);
+        this.userModelMapper = new UserModelMapper(jpaUserRepository);
     }
 
     @Override
@@ -44,7 +48,8 @@ public class PurchasablePropertyMapper implements Mapper<PurchasablePropertyEnti
                 ClimateClass.fromString(input.getClimateClass()),
                 input.getView(),
                 input.getEstimationEnergyCost(),
-                input.getPrice()
+                input.getPrice(),
+                userModelMapper.mapTo(input.getOwner())
         );
     }
 
@@ -52,6 +57,7 @@ public class PurchasablePropertyMapper implements Mapper<PurchasablePropertyEnti
     public PurchasablePropertyEntity mapFrom(PurchasableProperty output) {
         return jpaPurchasablePropertyRepository.saveAndFlush(new PurchasablePropertyEntity(
                 output.getId().toString(),
+                userModelMapper.mapFrom(output.getOwner()),
                 output.getType().toString(),
                 output.getTitle(),
                 output.getDescription(),

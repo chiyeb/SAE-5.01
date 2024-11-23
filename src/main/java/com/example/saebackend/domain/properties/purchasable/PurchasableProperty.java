@@ -8,6 +8,7 @@ import com.example.saebackend.domain.properties.enums.PropertyType;
 import com.example.saebackend.domain.properties.models.PropertyReadModel;
 import com.example.saebackend.domain.properties.purchasable.models.PurchasablePropertyInputModel;
 import com.example.saebackend.domain.properties.purchasable.models.PurchasablePropertyReadModel;
+import com.example.saebackend.domain.users.UserModel;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public class PurchasableProperty extends Property {
     private double price;
 
-    private PurchasableProperty(Id id, PropertyType type, String title, String description, PropertyLocation location, List<String> images, double livingArea, double landArea, PropertyRoomData roomData, String orientation, EnergyClass energyClass, ClimateClass climateClass, String view, double estimationCostEnergy, double price, UserModel user) {
+    public PurchasableProperty(Id id, PropertyType type, String title, String description, PropertyLocation location, List<String> images, double livingArea, double landArea, PropertyRoomData roomData, String orientation, EnergyClass energyClass, ClimateClass climateClass, String view, double estimationCostEnergy, double price, UserModel user) {
         super(id, type, title, description, location, images, livingArea, landArea, roomData, orientation, energyClass, climateClass, view, estimationCostEnergy,user);
         this.price = price;
     }

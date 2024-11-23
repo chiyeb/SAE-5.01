@@ -112,7 +112,7 @@ public class MariaDbUserModelRepository implements UserRepository {
      * @throws NotFoundException if no user with the specified email is found.
      */
     @Override
-    public UserModel getByEmail(String email) {
+    public UserModel getByMail(String email) {
         UserModelEntity userModelEntity = jpaUserRepository.findBymail(email);
         if (userModelEntity == null) {
             throw NotFoundException.propertyNotFound(email);

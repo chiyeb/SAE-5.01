@@ -4,8 +4,10 @@ import com.example.saebackend.base.Mapper;
 import com.example.saebackend.data.mariadb.jpa_repositories.JpaPropertyLocationRepository;
 import com.example.saebackend.data.mariadb.jpa_repositories.JpaRentalPropertyRepository;
 import com.example.saebackend.data.mariadb.jpa_repositories.JpaRoomTypeRepository;
+import com.example.saebackend.data.mariadb.jpa_repositories.JpaUserRepository;
 import com.example.saebackend.data.mariadb.properties.location.LocationMapper;
 import com.example.saebackend.data.mariadb.properties.roomtype.RoomTypeMapper;
+import com.example.saebackend.data.mariadb.users.UserModelMapper;
 import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.properties.PropertyRoomData;
 import com.example.saebackend.domain.properties.enums.ClimateClass;
@@ -21,11 +23,14 @@ public class RentalPropertyMapper implements Mapper<RentalPropertyEntity, Rental
     private final JpaRentalPropertyRepository jpaRentalPropertyRepository;
     private final LocationMapper locationMapper;
     private final RoomTypeMapper roomTypeMapper;
+    private final UserModelMapper userModelMapper;
 
-    public RentalPropertyMapper(JpaRentalPropertyRepository jpaRentalPropertyRepository, JpaPropertyLocationRepository jpaPropertyLocationRepository, JpaRoomTypeRepository jpaRoomTypeRepository) {
+
+    public RentalPropertyMapper(JpaRentalPropertyRepository jpaRentalPropertyRepository, JpaPropertyLocationRepository jpaPropertyLocationRepository, JpaRoomTypeRepository jpaRoomTypeRepository, JpaUserRepository jpaUserRepository) {
         this.jpaRentalPropertyRepository = jpaRentalPropertyRepository;
         this.locationMapper = new LocationMapper(jpaPropertyLocationRepository);
         this.roomTypeMapper = new RoomTypeMapper(jpaRoomTypeRepository);
+        this.userModelMapper = new UserModelMapper(jpaUserRepository);
     }
 
     @Override
@@ -46,7 +51,8 @@ public class RentalPropertyMapper implements Mapper<RentalPropertyEntity, Rental
                 input.getView(),
                 input.getEstimationEnergyCost(),
                 SubscriptionFrequency.fromString(input.getRentFrequency()),
-                input.getRent()
+                input.getRent(),
+                userModelMapper.mapTo(input.getOwner())
         );
     }
 
@@ -54,6 +60,7 @@ public class RentalPropertyMapper implements Mapper<RentalPropertyEntity, Rental
     public RentalPropertyEntity mapFrom(RentalProperty output) {
         return jpaRentalPropertyRepository.saveAndFlush(new RentalPropertyEntity(
                 output.getId().toString(),
+                userModelMapper.mapFrom(output.getOwner()),
                 output.getType().toString(),
                 output.getTitle(),
                 output.getDescription(),

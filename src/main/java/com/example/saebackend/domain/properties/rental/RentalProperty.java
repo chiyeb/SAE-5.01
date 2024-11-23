@@ -8,6 +8,7 @@ import com.example.saebackend.domain.properties.enums.PropertyType;
 import com.example.saebackend.domain.properties.models.PropertyReadModel;
 import com.example.saebackend.domain.properties.rental.models.RentalPropertyInputModel;
 import com.example.saebackend.domain.properties.rental.models.RentalPropertyReadModel;
+import com.example.saebackend.domain.users.UserModel;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class RentalProperty extends Property {
     private SubscriptionFrequency subscriptionFrequency;
     private double subscriptionPrice;
 
-    private RentalProperty(Id id, PropertyType type, String title, String description, PropertyLocation location, List<String> images, double livingArea, double landArea, PropertyRoomData rooms, String orientation, EnergyClass energyClass, ClimateClass climateClass, String view, double estimationCostEnergy, SubscriptionFrequency subscriptionFrequency, double subscriptionPrice, UserModel user) {
+    public RentalProperty(Id id, PropertyType type, String title, String description, PropertyLocation location, List<String> images, double livingArea, double landArea, PropertyRoomData rooms, String orientation, EnergyClass energyClass, ClimateClass climateClass, String view, double estimationCostEnergy, SubscriptionFrequency subscriptionFrequency, double subscriptionPrice, UserModel user) {
         super(id, type, title, description, location, images, livingArea, landArea, rooms, orientation, energyClass, climateClass, view, estimationCostEnergy, user);
 //        this.idRenter = idRenter;
         this.subscriptionFrequency = subscriptionFrequency;

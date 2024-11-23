@@ -124,7 +124,7 @@ public class UserService implements UserDetailsService {
      * @throws NotFoundException if the user is not found.
      */
     public void forgotPassword(String email) {
-        UserModel userModel = userRepository.getByEmail(email);
+        UserModel userModel = userRepository.getByMail(email);
         if (userModel == null) throw NotFoundException.userNotFound(email);
         String newPassword = Password.generatePassword();
         userModel.setPassword(Password.encryptPassword(newPassword));

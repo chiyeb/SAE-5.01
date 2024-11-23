@@ -3,6 +3,7 @@ package com.example.saebackend.data.mariadb.properties.purchasable;
 import com.example.saebackend.data.mariadb.jpa_repositories.JpaPurchasablePropertyRepository;
 import com.example.saebackend.data.mariadb.jpa_repositories.JpaRoomTypeRepository;
 import com.example.saebackend.data.mariadb.jpa_repositories.JpaPropertyLocationRepository;
+import com.example.saebackend.data.mariadb.jpa_repositories.JpaUserRepository;
 import com.example.saebackend.domain.exceptions.NotFoundException;
 import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.properties.purchasable.PurchasableProperty;
@@ -22,9 +23,9 @@ public class MariaDBPurchasablePropertyRepository implements PurchasableProperty
     private final PurchasablePropertyMapper mapper;
 
     @Autowired
-    public MariaDBPurchasablePropertyRepository(JpaPurchasablePropertyRepository jpaPurchasablePropertyRepository, JpaRoomTypeRepository jpaRoomTypeRepository, JpaPropertyLocationRepository jpaPropertyLocationRepository) {
+    public MariaDBPurchasablePropertyRepository(JpaPurchasablePropertyRepository jpaPurchasablePropertyRepository, JpaRoomTypeRepository jpaRoomTypeRepository, JpaPropertyLocationRepository jpaPropertyLocationRepository, JpaUserRepository jpaUserRepository) {
         this.jpaPurchasablePropertyRepository = jpaPurchasablePropertyRepository;
-        this.mapper = new PurchasablePropertyMapper(jpaPurchasablePropertyRepository,jpaPropertyLocationRepository, jpaRoomTypeRepository);
+        this.mapper = new PurchasablePropertyMapper(jpaPurchasablePropertyRepository,jpaPropertyLocationRepository, jpaRoomTypeRepository, jpaUserRepository);
     }
 
     @Override

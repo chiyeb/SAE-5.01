@@ -54,7 +54,7 @@ public class MockRentalPropertyRepository implements RentalPropertyRepository {
                         120.0, // Estimation cost of energy
                         SubscriptionFrequency.MONTHLY,
                         200000.0, // Price
-                        userRepository.getByMail("admin@admin.com") // Owner
+                        userRepository.getByMail("impulsewordpresssae@alwaysdata.net") // Owner
                 ),
                 RentalProperty.create(
                         PropertyType.HOUSE,
@@ -72,7 +72,7 @@ public class MockRentalPropertyRepository implements RentalPropertyRepository {
                         300.0, // Estimation cost of energy
                         SubscriptionFrequency.YEARLY,
                         350000.0, // Price
-                        userRepository.getByMail("admin@admin.com") // Owner
+                        userRepository.getByMail("impulsewordpresssae@alwaysdata.net") // Owner
                 ),
                 RentalProperty.create(
                         PropertyType.APARTMENT,
@@ -90,7 +90,7 @@ public class MockRentalPropertyRepository implements RentalPropertyRepository {
                         80.0, // Estimation cost of energy
                         SubscriptionFrequency.WEEKLY,
                         100000.0, // Price
-                        userRepository.getByMail("admin@admin.com") // Owner
+                        userRepository.getByMail("impulsewordpresssae@alwaysdata.net") // Owner
                 )));
     }
 

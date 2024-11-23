@@ -55,7 +55,7 @@ public class MockPurchasablePropertyRepository implements PurchasablePropertyRep
                         "Vue sur la ville", // View
                         120.0, // Estimation cost of energy
                         200000.0, // Price
-                        userRepository.getByMail("admin@admin.com") // Owner
+                        userRepository.getByMail("impulsewordpresssae@alwaysdata.net") // Owner
                 ),
                 PurchasableProperty.create(
                         PropertyType.HOUSE,
@@ -72,7 +72,7 @@ public class MockPurchasablePropertyRepository implements PurchasablePropertyRep
                         "Vue sur les montagnes", // View
                         300.0, // Estimation cost of energy
                         350000.0, // Price
-                        userRepository.getByMail("admin@admin.com") // Owner
+                        userRepository.getByMail("impulsewordpresssae@alwaysdata.net") // Owner
                 ),
                 PurchasableProperty.create(
                         PropertyType.APARTMENT,
@@ -89,7 +89,7 @@ public class MockPurchasablePropertyRepository implements PurchasablePropertyRep
                         "Vue sur la mer", // View
                         80.0, // Estimation cost of energy
                         100000.0,// Price
-                        userRepository.getByMail("admin@admin.com") // Owner
+                        userRepository.getByMail("impulsewordpresssae@alwaysdata.net") // Owner
                 )));
     }
 

@@ -2,6 +2,7 @@ package com.example.saebackend.data.mariadb.properties;
 
 import com.example.saebackend.data.mariadb.properties.location.LocationEntity;
 import com.example.saebackend.data.mariadb.properties.roomtype.RoomTypeEntity;
+import com.example.saebackend.data.mariadb.users.UserModelEntity;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -13,6 +14,9 @@ import java.util.Map;
 public class PropertyEntity {
     @Id
     private String id;
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private UserModelEntity owner;
     private String type;
     private String title;
     private String description;
@@ -54,8 +58,9 @@ public class PropertyEntity {
 
     public PropertyEntity() {}
 
-    public PropertyEntity(String id, String type, String title, String description, LocationEntity location, List<String> images, double livingArea, double landArea, Map<RoomTypeEntity, Integer> rooms, String orientation, String energyClass, String climateClass, String view, double estimationEnergyCost) {
+    public PropertyEntity(String id, UserModelEntity owner, String type, String title, String description, LocationEntity location, List<String> images, double livingArea, double landArea, Map<RoomTypeEntity, Integer> rooms, String orientation, String energyClass, String climateClass, String view, double estimationEnergyCost) {
         this.id = id;
+        this.owner = owner;
         this.type = type;
         this.title = title;
         this.description = description;
@@ -77,6 +82,10 @@ public class PropertyEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public UserModelEntity getOwner() {
+        return owner;
     }
 
     public String getType() {

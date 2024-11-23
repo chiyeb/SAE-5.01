@@ -1,4 +1,4 @@
-package com.example.saebackend.data.temp;
+package com.example.saebackend.data.mock.properties;
 
 import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.users.UserInputModel;
@@ -19,7 +19,7 @@ public class InMemoryUserRepository implements UserRepository {
 
     public InMemoryUserRepository() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        users.add(new UserModel("Administrateur", "IMPULSE", "admin@admin.com", "999", "123456789", "Je suis l'admin !", bCryptPasswordEncoder.encode("password")));
+        users.add(new UserModel(Id.generate(),"Administrateur", "IMPULSE", "admin@admin.com", 999, "123456789", "Je suis l'admin !", bCryptPasswordEncoder.encode("password")));
     }
 
     @Override
@@ -59,5 +59,12 @@ public class InMemoryUserRepository implements UserRepository {
     @Override
     public boolean deleteById(Id id) {
         return users.removeIf(userModel -> userModel.getId().equals(id));
+    }
+
+    @Override
+    public void forgotPassword(UserModel userModel) {
+        UserModel user = this.getByMail(userModel.getMail());
+        user.setPassword(userModel.getPassword());
+        users.set(users.indexOf(user), user);
     }
 }

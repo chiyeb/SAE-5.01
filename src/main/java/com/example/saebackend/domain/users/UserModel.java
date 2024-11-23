@@ -62,7 +62,7 @@ public class UserModel  implements UserDetails {
      * @return The created UserModel.
      */
     public static UserModel createFromModel(UserInputModel userInputModel, String plainPassword) {
-        return new UserModel(userInputModel.name(), userInputModel.lastname(), userInputModel.email(), userInputModel.age(), userInputModel.phoneNumber(), userInputModel.moreInformations(), Password.encryptPassword(plainPassword));
+        return new UserModel(Id.generate(), userInputModel.name(), userInputModel.lastname(), userInputModel.email(), userInputModel.age(), userInputModel.phoneNumber(), userInputModel.moreInformations(), Password.encryptPassword(plainPassword));
     }
 
     /**
@@ -149,7 +149,7 @@ public class UserModel  implements UserDetails {
         this.mail = mail;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 

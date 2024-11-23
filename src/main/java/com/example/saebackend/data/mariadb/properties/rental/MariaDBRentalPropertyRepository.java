@@ -3,6 +3,7 @@ package com.example.saebackend.data.mariadb.properties.rental;
 import com.example.saebackend.data.mariadb.jpa_repositories.JpaPropertyLocationRepository;
 import com.example.saebackend.data.mariadb.jpa_repositories.JpaRentalPropertyRepository;
 import com.example.saebackend.data.mariadb.jpa_repositories.JpaRoomTypeRepository;
+import com.example.saebackend.data.mariadb.jpa_repositories.JpaUserRepository;
 import com.example.saebackend.domain.exceptions.NotFoundException;
 import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.properties.rental.RentalProperty;
@@ -22,9 +23,9 @@ public class MariaDBRentalPropertyRepository implements RentalPropertyRepository
     private final RentalPropertyMapper mapper;
 
     @Autowired
-    public MariaDBRentalPropertyRepository(JpaRentalPropertyRepository jpaRentalPropertyRepository, JpaRoomTypeRepository jpaRoomTypeRepository, JpaPropertyLocationRepository jpaPropertyLocationRepository) {
+    public MariaDBRentalPropertyRepository(JpaRentalPropertyRepository jpaRentalPropertyRepository, JpaRoomTypeRepository jpaRoomTypeRepository, JpaPropertyLocationRepository jpaPropertyLocationRepository, JpaUserRepository jpaUserRepository) {
         this.jpaRentalPropertyRepository = jpaRentalPropertyRepository;
-        this.mapper = new RentalPropertyMapper(jpaRentalPropertyRepository, jpaPropertyLocationRepository, jpaRoomTypeRepository);
+        this.mapper = new RentalPropertyMapper(jpaRentalPropertyRepository, jpaPropertyLocationRepository, jpaRoomTypeRepository, jpaUserRepository);
     }
 
     @Override
