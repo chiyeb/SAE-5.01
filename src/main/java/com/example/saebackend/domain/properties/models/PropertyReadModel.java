@@ -1,5 +1,7 @@
 package com.example.saebackend.domain.properties.models;
 
+import com.example.saebackend.domain.users.UserReadModel;
+
 import java.util.List;
 
 public interface PropertyReadModel {
@@ -18,4 +20,5 @@ public interface PropertyReadModel {
     String climateClass();
     String view();
     double estimationCostEnergy();
+    UserReadModel owner();
 }

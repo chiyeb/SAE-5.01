@@ -85,4 +85,5 @@ public class Password {
     public static boolean matches(String plainPasswordToCheck, String encryptedPassword) {
         return PASSWORD_ENCODER.matches(plainPasswordToCheck, encryptedPassword);
     }
+
 }

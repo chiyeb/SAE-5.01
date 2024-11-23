@@ -10,6 +10,7 @@ import com.example.saebackend.domain.properties.enums.PropertyType;
 import com.example.saebackend.domain.properties.purchasable.PurchasableProperty;
 import com.example.saebackend.domain.properties.purchasable.models.PurchasablePropertyInputModel;
 import com.example.saebackend.repositories.PurchasablePropertyRepository;
+import com.example.saebackend.repositories.user.UserRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class MockPurchasablePropertyRepository implements PurchasablePropertyRep
     }
     private final List<PurchasableProperty> properties;
 
-    public MockPurchasablePropertyRepository() {
+    public MockPurchasablePropertyRepository(UserRepository userRepository) {
         final PropertyRoomData propertyRoomData = new PropertyRoomData(
                 Map.of(
                         roomTypes.get("bedroom"), 2,
@@ -53,7 +54,8 @@ public class MockPurchasablePropertyRepository implements PurchasablePropertyRep
                         ClimateClass.A, // Climate class
                         "Vue sur la ville", // View
                         120.0, // Estimation cost of energy
-                        200000.0 // Price
+                        200000.0, // Price
+                        userRepository.getByMail("admin@admin.com") // Owner
                 ),
                 PurchasableProperty.create(
                         PropertyType.HOUSE,
@@ -69,7 +71,8 @@ public class MockPurchasablePropertyRepository implements PurchasablePropertyRep
                         ClimateClass.B, // Climate class
                         "Vue sur les montagnes", // View
                         300.0, // Estimation cost of energy
-                        350000.0 // Price
+                        350000.0, // Price
+                        userRepository.getByMail("admin@admin.com") // Owner
                 ),
                 PurchasableProperty.create(
                         PropertyType.APARTMENT,
@@ -85,7 +88,8 @@ public class MockPurchasablePropertyRepository implements PurchasablePropertyRep
                         ClimateClass.A, // Climate class
                         "Vue sur la mer", // View
                         80.0, // Estimation cost of energy
-                        100000.0 // Price
+                        100000.0,// Price
+                        userRepository.getByMail("admin@admin.com") // Owner
                 )));
     }
 

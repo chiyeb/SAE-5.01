@@ -7,6 +7,10 @@ import com.example.saebackend.domain.users.UserModel;
 import com.example.saebackend.domain.users.UserReadModel;
 import com.example.saebackend.repositories.user.UserRepository;
 import com.example.saebackend.services.utils.MailSender;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Service;
 import com.example.saebackend.domain.exceptions.NotFoundException;
 
@@ -19,17 +23,18 @@ import java.util.List;
  * </p>
  */
 @Service
-public class UserService {
-
+public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final JwtDecoder jwtDecoder;
 
     /**
      * Constructor for UserService.
      *
      * @param userRepository the {@link UserRepository} to access user data.
      */
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, JwtDecoder jwtDecoder) {
         this.userRepository = userRepository;
+        this.jwtDecoder = jwtDecoder;
     }
 
     /**
@@ -67,6 +72,10 @@ public class UserService {
         return userModel.readModel();
     }
 
+    public UserReadModel getLoggedUser(String token) {
+        return userRepository.getById(Id.fromString(jwtDecoder.decode(token).getSubject())).readModel();
+    }
+
     /**
      * Retrieves all users.
      *
@@ -101,6 +110,12 @@ public class UserService {
         if (!userRepository.deleteById(Id.fromString(id))) throw NotFoundException.userNotFound(id);
         MailSender.sendAccountDeletionConfirmation(userModel.getMail(), userModel.getName());
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.getByMail(username);
+    }
+
 
     /**
      * Resets the password for the user associated with the given email.

@@ -4,7 +4,7 @@ import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.users.UserInputModel;
 import com.example.saebackend.domain.users.UserModel;
 import com.example.saebackend.repositories.user.UserRepository;
-import org.springframework.context.annotation.Primary;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import com.example.saebackend.domain.exceptions.NotFoundException;
 
@@ -15,6 +15,12 @@ import java.util.Objects;
 @Repository
 public class InMemoryUserRepository implements UserRepository {
     private final ArrayList<UserModel> users = new ArrayList<>();
+
+
+    public InMemoryUserRepository() {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        users.add(new UserModel("Administrateur", "IMPULSE", "admin@admin.com", "999", "123456789", "Je suis l'admin !", bCryptPasswordEncoder.encode("password")));
+    }
 
     @Override
     public UserModel create(UserModel userModel) {
@@ -33,6 +39,11 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
+    public UserModel getByMail(String mail) {
+        return users.stream().filter(userModel -> userModel.getMail().equals(mail)).findFirst().orElseThrow();
+    }
+
+    @Override
     public List<UserModel> getAll() {
         return users;
     }
@@ -40,36 +51,13 @@ public class InMemoryUserRepository implements UserRepository {
     @Override
     public UserModel update(Id id, UserInputModel userModel) {
         for(UserModel user : users) {
-            if (user.getId().equals(id)) {
-                UserModel userToUpdate = this.getById(id);
-                userToUpdate.updateFromModel(userModel);
-                return users.set(users.indexOf(user), userToUpdate);
-            }
+            if (user.getId().equals(id)) return user.updateFromModel(userModel);
         }
         throw NotFoundException.userNotFound(id.toString());
     }
 
     @Override
     public boolean deleteById(Id id) {
-        boolean userif = users.removeIf(userModel -> userModel.getId().equals(id));
-        System.out.println(userif);
-        return userif;
-    }
-
-    @Override
-    public UserModel getByEmail(String email) {
-        for(UserModel userModel : users){
-            if(Objects.equals(userModel.getMail(), email)){
-                return userModel;
-            }
-        }
-        throw NotFoundException.userNotFound(email);
-    }
-
-    @Override
-    public void forgotPassword(UserModel userModel) {
-        UserModel user = this.getByEmail(userModel.getMail());
-        user.setPassword(userModel.getPassword());
-        users.set(users.indexOf(user), user);
+        return users.removeIf(userModel -> userModel.getId().equals(id));
     }
 }

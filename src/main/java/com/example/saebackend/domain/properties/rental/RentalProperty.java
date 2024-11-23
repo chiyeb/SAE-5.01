@@ -16,19 +16,19 @@ public class RentalProperty extends Property {
     private SubscriptionFrequency subscriptionFrequency;
     private double subscriptionPrice;
 
-    public RentalProperty(Id id, PropertyType type, String title, String description, PropertyLocation location, List<String> images, double livingArea, double landArea, PropertyRoomData rooms, String orientation, EnergyClass energyClass, ClimateClass climateClass, String view, double estimationCostEnergy, SubscriptionFrequency subscriptionFrequency, double subscriptionPrice) {
-        super(id, type, title, description, location, images, livingArea, landArea, rooms, orientation, energyClass, climateClass, view, estimationCostEnergy);
+    private RentalProperty(Id id, PropertyType type, String title, String description, PropertyLocation location, List<String> images, double livingArea, double landArea, PropertyRoomData rooms, String orientation, EnergyClass energyClass, ClimateClass climateClass, String view, double estimationCostEnergy, SubscriptionFrequency subscriptionFrequency, double subscriptionPrice, UserModel user) {
+        super(id, type, title, description, location, images, livingArea, landArea, rooms, orientation, energyClass, climateClass, view, estimationCostEnergy, user);
 //        this.idRenter = idRenter;
         this.subscriptionFrequency = subscriptionFrequency;
         this.subscriptionPrice = subscriptionPrice;
 
     }
 
-    public static RentalProperty create(PropertyType type, String title, String description, PropertyLocation location, List<String> images, double livingArea, double landArea, PropertyRoomData roomData, String orientation, EnergyClass energyClass, ClimateClass climateClass, String view, double estimationCostEnergy, SubscriptionFrequency subscriptionFrequency, double subscriptionPrice) {
-        return new RentalProperty(Id.generate(), type, title, description, location, images, livingArea, landArea, roomData, orientation, energyClass, climateClass, view, estimationCostEnergy, subscriptionFrequency, subscriptionPrice);
+    public static RentalProperty create(PropertyType type, String title, String description, PropertyLocation location, List<String> images, double livingArea, double landArea, PropertyRoomData roomData, String orientation, EnergyClass energyClass, ClimateClass climateClass, String view, double estimationCostEnergy, SubscriptionFrequency subscriptionFrequency, double subscriptionPrice, UserModel user) {
+        return new RentalProperty(Id.generate(), type, title, description, location, images, livingArea, landArea, roomData, orientation, energyClass, climateClass, view, estimationCostEnergy, subscriptionFrequency, subscriptionPrice, user);
     }
 
-    public static RentalProperty createFromModel(RentalPropertyInputModel model){
+    public static RentalProperty createFromModel(RentalPropertyInputModel model, UserModel user){
         return new RentalProperty(
                 Id.generate(),
                 PropertyType.fromString(model.type()),
@@ -45,7 +45,8 @@ public class RentalProperty extends Property {
                 model.view(),
                 model.estimationCostEnergy(),
                 SubscriptionFrequency.fromString(model.subscriptionFrequency()),
-                model.price()
+                model.price(),
+                user
         );
     }
 
@@ -90,7 +91,8 @@ public class RentalProperty extends Property {
                 getEnergyClass().toString(),
                 getClimateClass().toString(),
                 getView(),
-                getEstimationCostEnergy()
+                getEstimationCostEnergy(),
+                getOwner().readModel()
         );
     }
 

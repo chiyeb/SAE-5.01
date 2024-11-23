@@ -59,6 +59,16 @@ public class UserController {
         }
     }
 
+    @GetMapping("/current")
+    public Object getCurrentUser(@RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.replace("Bearer ", "");
+        try {
+            return userService.getLoggedUser(token);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found", e);
+        }
+    }
+
     /**
      * Retrieves a user by ID.
      *
@@ -95,7 +105,7 @@ public class UserController {
      * @return a JSON representation of the updated user.
      */
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateRentalProperty(@PathVariable String id, @Valid @RequestBody UserInputModel userInputModel) {
+    public ResponseEntity<String> updateUser(@PathVariable String id, @Valid @RequestBody UserInputModel userInputModel) {
         try {
             return ResponseEntity.ok(gson.toJson(userService.update(id, userInputModel)));
         } catch (NotFoundException e) {

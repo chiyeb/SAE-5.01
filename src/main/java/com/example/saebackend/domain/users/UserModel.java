@@ -1,13 +1,18 @@
 package com.example.saebackend.domain.users;
 
 import com.example.saebackend.domain.id.Id;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 
 /**
  * Represents a user in the system with personal information and a password.
  * This model is used for storing and manipulating user data such as name, email, age, etc.
  */
-public class UserModel {
-
+public class UserModel  implements UserDetails {
     private final Id id;
     private String name;
     private String lastname;
@@ -15,6 +20,7 @@ public class UserModel {
     private int age;
     private String phoneNumber;
     private String moreInformations;
+    private final Set<GrantedAuthority> authorities = new HashSet<>();
     private String password;
 
     //================================================================================
@@ -56,7 +62,7 @@ public class UserModel {
      * @return The created UserModel.
      */
     public static UserModel createFromModel(UserInputModel userInputModel, String plainPassword) {
-        return new UserModel(Id.generate(), userInputModel.name(), userInputModel.lastname(), userInputModel.email(), userInputModel.age(), userInputModel.phoneNumber(), userInputModel.moreInformations(), Password.encryptPassword(plainPassword));
+        return new UserModel(userInputModel.name(), userInputModel.lastname(), userInputModel.email(), userInputModel.age(), userInputModel.phoneNumber(), userInputModel.moreInformations(), Password.encryptPassword(plainPassword));
     }
 
     /**
@@ -116,8 +122,19 @@ public class UserModel {
         return moreInformations;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    @Override
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return getMail();
     }
 
     public void setName(String name) {
@@ -132,7 +149,7 @@ public class UserModel {
         this.mail = mail;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 

@@ -3,6 +3,7 @@ package com.example.saebackend.repositories.user;
 import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.users.UserInputModel;
 import com.example.saebackend.domain.users.UserModel;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -32,6 +33,15 @@ public interface UserRepository {
     UserModel getById(Id id);
 
     /**
+     * Retrieves a user by their email address.
+     *
+     * @param email the email address of the user to retrieve.
+     * @return the {@link UserModel} of the requested user.
+     */
+    UserModel getByMail(String mail);
+
+
+    /**
      * Retrieves all users.
      *
      * @return a {@link List} of all {@link UserModel} objects.
@@ -54,14 +64,6 @@ public interface UserRepository {
      * @return {@code true} if the user was deleted successfully, {@code false} otherwise.
      */
     boolean deleteById(Id id);
-
-    /**
-     * Retrieves a user by their email address.
-     *
-     * @param email the email address of the user to retrieve.
-     * @return the {@link UserModel} of the requested user.
-     */
-    UserModel getByEmail(String email);
 
     /**
      * Resets the password for the specified user.

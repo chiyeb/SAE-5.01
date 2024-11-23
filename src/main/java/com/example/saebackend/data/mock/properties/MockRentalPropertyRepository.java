@@ -11,6 +11,7 @@ import com.example.saebackend.domain.properties.rental.RentalProperty;
 import com.example.saebackend.domain.properties.rental.SubscriptionFrequency;
 import com.example.saebackend.domain.properties.rental.models.RentalPropertyInputModel;
 import com.example.saebackend.repositories.RentalPropertyRepository;
+import com.example.saebackend.repositories.user.UserRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class MockRentalPropertyRepository implements RentalPropertyRepository {
     }
     private final List<RentalProperty> properties;
 
-    public MockRentalPropertyRepository() {
+    public MockRentalPropertyRepository(UserRepository userRepository) {
         final PropertyRoomData propertyRoomData = new PropertyRoomData(
                 Map.of(
                         roomTypes.get("bedroom"), 2,
@@ -52,7 +53,8 @@ public class MockRentalPropertyRepository implements RentalPropertyRepository {
                         "Vue sur la ville", // View
                         120.0, // Estimation cost of energy
                         SubscriptionFrequency.MONTHLY,
-                        200000.0 // Price
+                        200000.0, // Price
+                        userRepository.getByMail("admin@admin.com") // Owner
                 ),
                 RentalProperty.create(
                         PropertyType.HOUSE,
@@ -69,7 +71,8 @@ public class MockRentalPropertyRepository implements RentalPropertyRepository {
                         "Vue sur les montagnes", // View
                         300.0, // Estimation cost of energy
                         SubscriptionFrequency.YEARLY,
-                        350000.0 // Price
+                        350000.0, // Price
+                        userRepository.getByMail("admin@admin.com") // Owner
                 ),
                 RentalProperty.create(
                         PropertyType.APARTMENT,
@@ -86,7 +89,8 @@ public class MockRentalPropertyRepository implements RentalPropertyRepository {
                         "Vue sur la mer", // View
                         80.0, // Estimation cost of energy
                         SubscriptionFrequency.WEEKLY,
-                        100000.0 // Price
+                        100000.0, // Price
+                        userRepository.getByMail("admin@admin.com") // Owner
                 )));
     }
 
