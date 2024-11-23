@@ -14,7 +14,6 @@ import java.util.Properties;
  * <p>Emails are sent using SMTP settings defined in this class.</p>
  */
 public class MailSender {
-
     private static final String SMTP_HOST = "smtp-impulsewordpresssae.alwaysdata.net";
     private static final String SMTP_PORT = "587";
     private static final String SMTP_USERNAME = "impulsewordpresssae@alwaysdata.net";

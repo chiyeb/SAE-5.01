@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Primary
 @Repository
 public class InMemoryUserRepository implements UserRepository {
     private final ArrayList<UserModel> users = new ArrayList<>();

@@ -1,7 +1,8 @@
 package com.example.saebackend.data.mariadb.properties.purchasable;
 
-import com.example.saebackend.data.mariadb.properties.jpa_repositories.*;
-import com.example.saebackend.data.mariadb.properties.jpa_repositories.JpaPropertyLocationRepository;
+import com.example.saebackend.data.mariadb.jpa_repositories.JpaPurchasablePropertyRepository;
+import com.example.saebackend.data.mariadb.jpa_repositories.JpaRoomTypeRepository;
+import com.example.saebackend.data.mariadb.jpa_repositories.JpaPropertyLocationRepository;
 import com.example.saebackend.domain.exceptions.NotFoundException;
 import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.properties.purchasable.PurchasableProperty;

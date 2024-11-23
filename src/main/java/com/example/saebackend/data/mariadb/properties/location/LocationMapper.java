@@ -1,7 +1,7 @@
 package com.example.saebackend.data.mariadb.properties.location;
 
 import com.example.saebackend.base.Mapper;
-import com.example.saebackend.data.mariadb.properties.jpa_repositories.JpaPropertyLocationRepository;
+import com.example.saebackend.data.mariadb.jpa_repositories.JpaPropertyLocationRepository;
 import com.example.saebackend.domain.properties.PropertyLocation;
 
 import java.util.UUID;
