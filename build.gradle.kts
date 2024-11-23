@@ -28,6 +28,8 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    implementation ("org.springframework.boot:spring-boot-starter-mail")
+    implementation ("org.mariadb.jdbc:mariadb-java-client:3.1.4")
 }
 
 tasks.withType<Test> {

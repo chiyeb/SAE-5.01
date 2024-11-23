@@ -1,4 +1,4 @@
-package com.example.saebackend.controllers;
+package com.example.saebackend.controllers.property;
 
 import com.example.saebackend.domain.exceptions.NotFoundException;
 import com.example.saebackend.domain.properties.purchasable.models.PurchasablePropertyInputModel;

@@ -10,4 +10,8 @@ public class NotFoundException extends RuntimeException{
     public static NotFoundException propertyNotFound(String id) {
         return new NotFoundException(MessageFormat.format("Property with id {0} not found", id));
     }
+
+    public static NotFoundException userNotFound(String id) {
+        return new NotFoundException(MessageFormat.format("User with id {0} not found", id));
+    }
 }
