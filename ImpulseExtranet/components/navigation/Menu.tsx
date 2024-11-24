@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { logout } from '@/components/LoginRequest'; // Assurez-vous du chemin correct
 import Feather from '@expo/vector-icons/Feather';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 
 
 interface MenuHamburgerProps {
-  setCurrentScreen: (screen: 'Home' | 'Profile' | 'Logout') => void;
+  setCurrentScreen: (screen: 'Home' | 'YourProperties' | 'Profile' | 'Logout') => void;
 }
 
 const MenuHamburger: React.FC<MenuHamburgerProps> = ({ setCurrentScreen }) => {
@@ -20,7 +21,7 @@ const MenuHamburger: React.FC<MenuHamburgerProps> = ({ setCurrentScreen }) => {
     setIsVisible(!isVisible);
   };
 
-  const handleNavigation = async (screen: 'Home' | 'Profile' | 'Logout') => {
+  const handleNavigation = async (screen: 'Home' | 'YourProperties' | 'Profile' | 'Logout') => {
     setIsVisible(false);
 
     if (screen === 'Logout') {
@@ -33,6 +34,7 @@ const MenuHamburger: React.FC<MenuHamburgerProps> = ({ setCurrentScreen }) => {
     setCurrentScreen(screen);
   };
 
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={toggleMenu}>
@@ -42,7 +44,10 @@ const MenuHamburger: React.FC<MenuHamburgerProps> = ({ setCurrentScreen }) => {
         <TouchableOpacity style={styles.overlay} onPress={toggleMenu} />
         <View style={styles.menu}>
           <TouchableOpacity style={styles.menuItem} onPress={() => handleNavigation('Home')}>
-            <Text style={styles.menuText}> <Feather name="home" size={24} color="black" /> Biens</Text>
+            <Text style={styles.menuText}> <Feather name="home" size={24} color="black" /> Tout les biens</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.menuItem} onPress={() => handleNavigation('YourProperties')}>
+            <Text style={styles.menuText}> <Feather name="home" size={24} color="black" /> Vos biens</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.menuItem} onPress={() => handleNavigation('Profile')}>
             <Text style={styles.menuText}><AntDesign name="adduser" size={24} color="black" /> Utilisateurs</Text>

@@ -28,6 +28,14 @@ interface BienProps {
   rooms: { roomType: string; count: number }[];
   energyClass: string;
   climateClass: string;
+  owner: {
+    name: string;
+    lastname :string;
+    email: string;
+    phoneNumber: number;
+    age: number;
+    moreInformations: string;
+  };
 }
 
 export default function Bien({
@@ -48,6 +56,7 @@ export default function Bien({
   rooms = [],
   energyClass,
   climateClass,
+  owner
 }: BienProps) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null); // Stocker les informations utilisateur
@@ -118,7 +127,7 @@ export default function Bien({
         <Text style={styles.description}>{type}</Text>
         <Text style={styles.location}>{location?.address}</Text>
         <ThemedText type="defaultSemiBold" style={styles.price}>{price} €</ThemedText>
-        <ThemedText type="defaultSemiBold" style={styles.description}>{userInfo.name} {userInfo.lastname}</ThemedText>
+        <ThemedText type="defaultSemiBold" style={styles.description}>{owner.name} {owner.lastname}</ThemedText>
         
         <Text style={styles.description}>{description}</Text>
       </View>

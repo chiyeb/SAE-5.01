@@ -4,6 +4,22 @@ const API_BASE_URL = 'http://127.0.0.1:8080'; // url de l'API
 export const getAllProperties = async (selectedTab: string,token: string) => {
   try {
     console.log(selectedTab);
+    const response = await fetch(`${API_BASE_URL}/property/get/${selectedTab}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`, // Ajouter le token dans les headers
+      },
+    });
+    return await response.json();
+  } catch (error) {
+    console.error('Erreur lors de la récupération des biens :', error);
+  }
+};
+
+export const getAllPropertiesForCurrentUser = async (selectedTab: string,token: string) => {
+  try {
+    console.log(selectedTab);
     const response = await fetch(`${API_BASE_URL}/property/get/${selectedTab}/owner`, {
       method: 'GET',
       headers: {
