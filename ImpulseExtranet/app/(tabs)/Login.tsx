@@ -23,7 +23,7 @@ const handleLogin = async () => {
     if (result.success) {
       const token = await AsyncStorage.getItem('auth_token');
       setToken(token);
-      router.push('/HomeScreen'); 
+      router.push('/YourPropertiesScreen'); 
     } else {
       setError(result.error || 'Erreur dans le mail ou le mot de passe.');
     }

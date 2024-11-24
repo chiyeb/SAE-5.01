@@ -1,17 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Feather,FontAwesome, Ionicons,MaterialCommunityIcons,AntDesign } from '@expo/vector-icons';
 import { logout } from '@/components/LoginRequest'; // Assurez-vous du chemin correct
-import Feather from '@expo/vector-icons/Feather';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 
 
 interface MenuHamburgerProps {
-  setCurrentScreen: (screen:  'YourProperties' | 'Profile' | 'Logout') => void;
+  setCurrentScreen: (screen:  'YourProperties' | 'Profile' |'Contact' | 'Logout') => void;
 }
 
 const MenuHamburger: React.FC<MenuHamburgerProps> = ({ setCurrentScreen }) => {
@@ -21,7 +18,7 @@ const MenuHamburger: React.FC<MenuHamburgerProps> = ({ setCurrentScreen }) => {
     setIsVisible(!isVisible);
   };
 
-  const handleNavigation = async (screen:  'YourProperties' | 'Profile' | 'Logout') => {
+  const handleNavigation = async (screen:  'YourProperties' | 'Profile' | 'Contact' | 'Logout') => {
     setIsVisible(false);
 
     if (screen === 'Logout') {
@@ -48,7 +45,10 @@ const MenuHamburger: React.FC<MenuHamburgerProps> = ({ setCurrentScreen }) => {
             <Text style={styles.menuText}> <Feather name="home" size={24} color="black" /> Vos biens</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.menuItem} onPress={() => handleNavigation('Profile')}>
-            <Text style={styles.menuText}><AntDesign name="adduser" size={24} color="black" /> Profil</Text>
+            <Text style={styles.menuText}><FontAwesome name="user" size={24} color="black" /> Profil</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.menuItem} onPress={() => handleNavigation('Contact')}>
+            <Text style={styles.menuText}><AntDesign name="contacts" size={24} color="black" /> Contact</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.menuItem} onPress={() => handleNavigation('Logout')}>
             <Text style={styles.menuText}><MaterialCommunityIcons name="logout" size={24} color="black" />Déconnexion</Text>

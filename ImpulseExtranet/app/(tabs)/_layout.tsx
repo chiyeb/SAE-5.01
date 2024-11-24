@@ -8,7 +8,7 @@ export default function AppLayout() {
   const colorScheme = useColorScheme();
   const router = useRouter();
 
-  const handleNavigation = (screen:  "YourProperties" | 'Profile' | 'Logout') => {
+  const handleNavigation = (screen:  "YourProperties" | 'Profile' |'Contact'| 'Logout') => {
     // Rediriger vers l'écran correspondant
     switch (screen) {
       
@@ -18,6 +18,9 @@ export default function AppLayout() {
         break;
       case 'Profile':
         router.push('/ProfilUser');
+        break;
+        case 'Contact':
+        router.push('/Contact');
         break;
       case 'Logout':
         router.push('/Login');

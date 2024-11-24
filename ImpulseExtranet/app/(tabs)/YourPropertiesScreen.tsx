@@ -197,13 +197,13 @@ export default function YourPropertiesScreen() {
               biens.map((bien) => (
                 <View key={bien.id}>
                   <Bien {...bien} onPress={() => setSelectedBien(bien)} />
-                  <ButtonUpdateDelete onUpdate={() => openModalForUpdate(bien.id, bien) } onDelete={ () => handleDeleteBien(bien.id)}/>
+                  
                 </View>
               ))
             ) : (
               <Text>Aucun bien trouvé</Text>
             )}
-            <Buttons onPress={handleAddBien}  />
+            
           </View>
         </ScrollView>
       </Animated.View>
