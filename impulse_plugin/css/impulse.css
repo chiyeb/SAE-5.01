@@ -1,0 +1,161 @@
+.estates-list {
+    display:grid; !important;
+    padding-top: 1em; !important;
+    padding-bottom: 1em; !important;
+    margin:auto; !important;
+    justify-content:center; !important;
+    gap: 1em; !important;
+}
+
+.grid {
+    display: inline-grid; !important;
+    grid-template-columns: repeat(2, 1fr); !important;
+    gap: 1em; !important;
+}
+
+.horizontal-estate-card {
+    aspect-ratio: 32/9; !important;
+    background-color: #ffffff; !important;
+    box-shadow: 0px 0 5px rgba(0, 0, 0, 0.5); !important;
+    border-radius: 25px; !important;
+    border: 0.25em solid black; !important;
+    overflow: hidden; !important;
+    display: flex; !important;
+}
+
+.horizontal-estate-card:hover {
+    transition: 0.3s; !important;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); !important;
+}
+
+.vertical-estate-card {
+    aspect-ratio: 31/38; !important;
+    background-color: #ffffff; !important;
+    box-shadow: 0px 0 5px rgba(0, 0, 0, 0.5); !important;
+    border-radius: 25px; !important;
+    border: 0.25em solid black; !important;
+    overflow: hidden; !important;
+    display: flex; !important;
+    flex-direction: column; !important;
+}
+
+.vertical-estate-card:hover {
+    transition: 0.3s; !important;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); !important;
+}
+
+.estate-photo-container {
+    aspect-ratio: 16/9; !important;
+}
+
+.estate-photo-container img {
+    aspect-ratio: inherit; !important;
+    height: 100%; !important;
+    width: 100%; !important;
+}
+
+.estate-info-container {
+    display: flex; !important;
+    flex-direction: column; !important;
+    flex-wrap: wrap; !important;
+    flex: 50%; !important;
+}
+
+.card-content {
+    padding: 25px 25px 0; !important;
+    flex-grow: 1; !important;
+}
+
+.card-text {
+    margin: 0 !important;
+}
+
+.bottom-bar {
+    display: flex; !important;
+    padding-right: 2%; !important;
+    align-items: center; !important;
+    flex-direction: row-reverse; !important;
+}
+
+
+.virtual-visit-button {
+    width: 35%; !important;
+    height: 75%; !important;
+    padding: 0 0; !important;
+    border: 0.25em solid; !important;
+    border-radius: 25px; !important;
+}
+
+.estate-title {
+    font-size: 20px; !important;
+    color: #0bb6aa; !important;
+}
+
+.estate-price {
+    font-size: 24px; !important;
+}
+
+.estate-description {
+    font-size: 16px; !important;
+    overflow: hidden; !important;
+    display: -webkit-box; !important;
+    -webkit-line-clamp: 2; !important; /* number of lines to show */
+    line-clamp: 2; !important;
+    -webkit-box-orient: vertical; !important;
+}
+
+/*PC*/
+@media (min-width: 1350px) {
+    .horizontal-estate-card {
+        width: 1350px; !important;
+    }
+
+    .bottom-bar {
+        height: 54px; !important;
+    }
+
+    .estate-description {
+        padding-top: 5px; !important;
+        overflow: hidden; !important;
+        display: -webkit-box; !important;
+        -webkit-line-clamp: 5; !important; /* number of lines to show */
+        line-clamp: 5; !important;
+        -webkit-box-orient: vertical; !important;
+    }
+}
+
+@media (max-width: 800px) {
+    /*Mobile*/
+    .horizontal-estate-card {
+        width: 90%; !important;
+        aspect-ratio: 28/38; !important;
+        flex-direction: column; !important;
+    }
+
+    /*Mobile*/
+    .bottom-bar {
+        padding-right: 2%; !important;
+    }
+
+    /*Mobile*/
+    .bottom-bar {
+        padding-right: 2%; !important;
+    }
+
+    /*Mobile*/
+    .estate-price {
+        margin-top: 10px; !important;
+        margin-bottom: 10px; !important;
+    }
+
+    /*Mobile*/
+    .estate-description {
+        line-height: normal; !important;
+        padding-top: 3px; !important;
+        overflow: hidden; !important;
+        display: -webkit-box; !important;
+        -webkit-line-clamp: 2; !important; /* number of lines to show */
+        line-clamp: 2; !important;
+        -webkit-box-orient: vertical; !important;
+    }
+}
