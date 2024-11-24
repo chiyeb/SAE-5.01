@@ -18,6 +18,13 @@ import com.example.saebackend.domain.properties.purchasable.PurchasableProperty;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Mapper class for converting between {@link PurchasablePropertyEntity} and {@link PurchasableProperty}.
+ * <p>
+ * This class handles the transformation of data between the database entity
+ * and the domain model for purchasable properties.
+ * </p>
+ */
 public class PurchasablePropertyMapper implements Mapper<PurchasablePropertyEntity, PurchasableProperty>{
     private final JpaPurchasablePropertyRepository jpaPurchasablePropertyRepository;
     private final LocationMapper locationMapper;

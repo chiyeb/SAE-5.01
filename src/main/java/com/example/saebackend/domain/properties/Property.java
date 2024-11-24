@@ -9,6 +9,11 @@ import com.example.saebackend.domain.users.UserModel;
 
 import java.util.List;
 
+/**
+ * Represents a property with various attributes such as title, description, location,
+ * room data, energy and climate classification, and more. This is an abstract class
+ * that can be extended to create specific types of properties.
+ */
 public abstract class Property {
     private final Id id;
     private PropertyType type;
@@ -52,9 +57,12 @@ public abstract class Property {
     // Methods
     //================================================================================
 
+    /**
+     * Converts this property to a {@link PropertyReadModel}.
+     *
+     * @return a {@code PropertyReadModel} representing the property.
+     */
     public abstract PropertyReadModel readModel();
-    public abstract double getPriceOrSubscriptionPrice();
-    public abstract void setPriceOrSubscriptionPrice(double priceOrSubscriptionPrice);
 
     //================================================================================
     // Getters
@@ -115,6 +123,10 @@ public abstract class Property {
     public double getEstimationCostEnergy() {
         return estimationCostEnergy;
     }
+
+    public abstract double getPriceOrSubscriptionPrice();
+
+    public abstract void setPriceOrSubscriptionPrice(double priceOrSubscriptionPrice);
 
     public void setType(PropertyType type) {
         this.type = type;

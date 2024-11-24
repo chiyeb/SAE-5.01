@@ -19,6 +19,12 @@ import com.example.saebackend.domain.properties.rental.SubscriptionFrequency;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Mapper class for converting between {@link RentalPropertyEntity} and {@link RentalProperty}.
+ * <p>
+ * This class handles the transformation of data between the database entity and the domain model for rental properties.
+ * </p>
+ */
 public class RentalPropertyMapper implements Mapper<RentalPropertyEntity, RentalProperty>{
     private final JpaRentalPropertyRepository jpaRentalPropertyRepository;
     private final LocationMapper locationMapper;

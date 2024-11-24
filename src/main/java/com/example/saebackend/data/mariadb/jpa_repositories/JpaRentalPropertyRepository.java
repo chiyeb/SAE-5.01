@@ -5,6 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
+/**
+ * This interface provides methods for performing CRUD operations and additional query methods for RentalPropertyEntities.
+ */
 public interface JpaRentalPropertyRepository extends JpaRepository<RentalPropertyEntity, String> {
     List<RentalPropertyEntity> findByOwner_Id(String ownerId);
 }

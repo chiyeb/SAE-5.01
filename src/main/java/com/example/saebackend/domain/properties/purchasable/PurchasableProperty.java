@@ -12,7 +12,10 @@ import com.example.saebackend.domain.users.UserModel;
 
 import java.util.List;
 
-
+/**
+ * Represents a purchasable property. This class extends the {@link Property} class
+ * and adds a price attribute, enabling the representation of properties that can be purchased.
+ */
 public class PurchasableProperty extends Property {
     private double price;
 
@@ -25,6 +28,13 @@ public class PurchasableProperty extends Property {
         return new PurchasableProperty(Id.generate(), type, title, description, location, images, livingArea, landArea, roomData, orientation, energyClass, climateClass, view, estimationCostEnergy, price, user);
     }
 
+    /**
+     * Creates a new {@code PurchasableProperty} from the given input model and user.
+     *
+     * @param inputModel the model containing the property data.
+     * @param user       the owner of the property.
+     * @return a new {@code PurchasableProperty}.
+     */
     public static PurchasableProperty createFromModel(PurchasablePropertyInputModel inputModel, UserModel user) {
         return new PurchasableProperty(
                 Id.generate(),
@@ -46,6 +56,12 @@ public class PurchasableProperty extends Property {
         );
     }
 
+    /**
+     * Updates the property with the data from the given input model.
+     *
+     * @param model the model containing the updated property data.
+     * @return the updated property.
+     */
     public PurchasableProperty updateFromModel(PurchasablePropertyInputModel model) {
         setType(PropertyType.fromString(model.type()));
         setTitle(model.title());

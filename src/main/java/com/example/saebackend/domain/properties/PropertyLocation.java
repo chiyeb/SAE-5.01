@@ -2,6 +2,9 @@ package com.example.saebackend.domain.properties;
 
 import com.example.saebackend.domain.properties.models.PropertyLocationModel;
 
+/**
+ * Represents the geographical location of a property, including address and coordinates.
+ */
 public class PropertyLocation {
 
     private final double latitude;
@@ -20,10 +23,21 @@ public class PropertyLocation {
         this.country = country;
     }
 
+    /**
+     * Creates a {@code PropertyLocation} instance from a {@link PropertyLocationModel}.
+     *
+     * @param propertyLocationModel the model containing the location data.
+     * @return a {@code PropertyLocation} object with data from the model.
+     */
     public static PropertyLocation createFromModel(PropertyLocationModel propertyLocationModel){
         return new PropertyLocation(propertyLocationModel.latitude(), propertyLocationModel.longitude(), propertyLocationModel.address(), propertyLocationModel.city(), propertyLocationModel.postalCode(), propertyLocationModel.country());
     }
 
+    /**
+     * Converts this {@code PropertyLocation} instance into a {@link PropertyLocationModel}.
+     *
+     * @return a model object representing the property location.
+     */
     public PropertyLocationModel readModel() {
         return new PropertyLocationModel(latitude, longitude, address, city, postalCode, country);
     }

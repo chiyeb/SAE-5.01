@@ -15,6 +15,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+/**
+ * Controller for handling property-related requests.
+ * Provides endpoints for creating, retrieving, updating, and deleting purchasable and rental properties.
+ */
 @RestController
 @RequestMapping("/property")
 public class PropertyController {

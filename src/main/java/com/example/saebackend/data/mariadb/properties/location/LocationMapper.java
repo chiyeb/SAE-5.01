@@ -6,6 +6,12 @@ import com.example.saebackend.domain.properties.PropertyLocation;
 
 import java.util.UUID;
 
+/**
+ * Mapper class for converting between {@link LocationEntity} and {@link PropertyLocation}.
+ * <p>
+ * This class handles the transformation of data between the database entity and the domain model for locations.
+ * </p>
+ */
 public class LocationMapper implements Mapper<LocationEntity, PropertyLocation> {
     private final JpaPropertyLocationRepository jpaPropertyLocationRepository;
 

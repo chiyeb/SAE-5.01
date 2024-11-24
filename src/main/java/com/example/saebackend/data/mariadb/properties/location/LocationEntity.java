@@ -5,6 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/**
+ * Entity class representing a location in a database.
+ */
 @Entity
 @Table(name = "location")
 public class LocationEntity {

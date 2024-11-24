@@ -3,7 +3,6 @@ package com.example.saebackend.repositories.user;
 import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.users.UserInputModel;
 import com.example.saebackend.domain.users.UserModel;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -35,7 +34,7 @@ public interface UserRepository {
     /**
      * Retrieves a user by their email address.
      *
-     * @param email the email address of the user to retrieve.
+     * @param mail the email address of the user to retrieve.
      * @return the {@link UserModel} of the requested user.
      */
     UserModel getByMail(String mail);

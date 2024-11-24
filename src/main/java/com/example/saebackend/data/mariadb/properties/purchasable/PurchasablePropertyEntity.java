@@ -10,6 +10,9 @@ import jakarta.persistence.Table;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Entity class representing a purchasable property in a database.
+ */
 @Entity
 @Table(name = "purchasable_property")
 public class PurchasablePropertyEntity extends PropertyEntity {

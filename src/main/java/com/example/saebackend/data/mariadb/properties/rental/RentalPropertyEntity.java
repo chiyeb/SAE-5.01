@@ -11,6 +11,9 @@ import jakarta.persistence.Table;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Entity class representing a rental property in a database.
+ */
 @Entity
 @Table(name = "rental_property")
 public class RentalPropertyEntity extends PropertyEntity {

@@ -7,12 +7,18 @@ import com.example.saebackend.domain.properties.models.PropertyInputModel;
 import com.example.saebackend.domain.properties.models.PropertyLocationModel;
 import com.example.saebackend.domain.properties.models.RoomCountModel;
 import com.example.saebackend.base.validation.ValueOfEnum;
+import com.example.saebackend.domain.properties.purchasable.PurchasableProperty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
 import java.util.List;
 
+/**
+ * A model representing the input data for creating or updating a {@link PurchasableProperty}.
+ * This model is used for receiving property details from the user or an external system
+ * through API requests.
+ */
 public record PurchasablePropertyInputModel(
         @NotNull
         @ValueOfEnum(enumClass = PropertyType.class)

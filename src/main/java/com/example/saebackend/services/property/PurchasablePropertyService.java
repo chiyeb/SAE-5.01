@@ -5,12 +5,16 @@ import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.properties.models.PropertyReadModel;
 import com.example.saebackend.domain.properties.purchasable.PurchasableProperty;
 import com.example.saebackend.domain.properties.purchasable.models.PurchasablePropertyInputModel;
-import com.example.saebackend.repositories.PurchasablePropertyRepository;
+import com.example.saebackend.repositories.properties.PurchasablePropertyRepository;
 import com.example.saebackend.repositories.user.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service class for managing purchasable properties.
+ * Provides methods for creating, retrieving, updating, and deleting purchasable properties.
+ */
 @Service
 public class PurchasablePropertyService { // TODO(Les deux classes propertyservice se répètent, il faut trouver un moyen de les combiner yeah!)
     PurchasablePropertyRepository purchasablePropertyRepository;

@@ -4,6 +4,10 @@ import com.example.saebackend.domain.users.UserReadModel;
 
 import java.util.List;
 
+/**
+ * Represents a read model for a property. This model is used for the data that
+ * is exposed through an API or a similar interface.
+ */
 public interface PropertyReadModel {
     String id();
     String type();

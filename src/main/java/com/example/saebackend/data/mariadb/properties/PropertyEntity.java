@@ -8,6 +8,9 @@ import jakarta.persistence.*;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Entity class representing a property in a database.
+ */
 @Entity
 @Table(name = "property")
 @Inheritance(strategy = InheritanceType.JOINED)

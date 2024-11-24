@@ -1,4 +1,4 @@
-package com.example.saebackend.data.mock.properties;
+package com.example.saebackend.data.inmemory.users;
 
 import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.users.UserInputModel;
@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * In-memory implementation of the UserRepository interface.
+ * Provides methods for managing users stored in memory.
+ */
 @Repository
 public class InMemoryUserRepository implements UserRepository {
     private final ArrayList<UserModel> users = new ArrayList<>();
@@ -19,7 +23,7 @@ public class InMemoryUserRepository implements UserRepository {
 
     public InMemoryUserRepository() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        users.add(new UserModel(Id.generate(),"Administrateur", "IMPULSE", "admin@admin.com", 999, "123456789", "Je suis l'admin !", bCryptPasswordEncoder.encode("password")));
+        users.add(new UserModel(Id.generate(),"Administrateur", "IMPULSE", "impulsewordpresssae@alwaysdata.net", 999, "123456789", "Je suis l'admin !", bCryptPasswordEncoder.encode("password")));
     }
 
     @Override

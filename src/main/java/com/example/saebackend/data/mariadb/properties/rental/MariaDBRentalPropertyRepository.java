@@ -8,7 +8,7 @@ import com.example.saebackend.domain.exceptions.NotFoundException;
 import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.properties.rental.RentalProperty;
 import com.example.saebackend.domain.properties.rental.models.RentalPropertyInputModel;
-import com.example.saebackend.repositories.RentalPropertyRepository;
+import com.example.saebackend.repositories.properties.RentalPropertyRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -16,6 +16,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Implementation of the {@link RentalPropertyRepository} interface using MariaDB.
+ * <p>
+ * This repository manages CRUD operations for rental property-related data using
+ * a JPA repository and maps between database entities and domain models.
+ * </p>
+ */
 @Primary
 @Repository
 public class MariaDBRentalPropertyRepository implements RentalPropertyRepository {

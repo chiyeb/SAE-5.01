@@ -8,7 +8,7 @@ import com.example.saebackend.domain.exceptions.NotFoundException;
 import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.properties.purchasable.PurchasableProperty;
 import com.example.saebackend.domain.properties.purchasable.models.PurchasablePropertyInputModel;
-import com.example.saebackend.repositories.PurchasablePropertyRepository;
+import com.example.saebackend.repositories.properties.PurchasablePropertyRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -16,6 +16,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Implementation of the {@link PurchasablePropertyRepository} interface using MariaDB.
+ * <p>
+ * This repository manages CRUD operations for purchasable property-related data using
+ * a JPA repository and maps between database entities and domain models.
+ * </p>
+ */
 @Primary
 @Repository
 public class MariaDBPurchasablePropertyRepository implements PurchasablePropertyRepository {

@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * This interface provides methods for performing CRUD operations and additional query methods for PurchasablePropertyEntities.
+ */
 @Repository
 public interface JpaPurchasablePropertyRepository extends JpaRepository<PurchasablePropertyEntity, String> {
     List<PurchasablePropertyEntity> findByOwner_Id(String ownerId);

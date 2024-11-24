@@ -2,6 +2,10 @@ package com.example.saebackend.domain.properties.models;
 
 import java.util.List;
 
+/**
+ * Represents an input model for a property. This model is used to capture the data
+ * provided by the user when creating or updating a property.
+ **/
 public interface PropertyInputModel {
     String type();
     String title();

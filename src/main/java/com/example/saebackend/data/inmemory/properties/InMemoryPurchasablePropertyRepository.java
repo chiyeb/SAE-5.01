@@ -1,4 +1,4 @@
-package com.example.saebackend.data.mock.properties;
+package com.example.saebackend.data.inmemory.properties;
 
 import com.example.saebackend.domain.id.Id;
 import com.example.saebackend.domain.properties.PropertyLocation;
@@ -7,10 +7,9 @@ import com.example.saebackend.domain.properties.RoomType;
 import com.example.saebackend.domain.properties.enums.ClimateClass;
 import com.example.saebackend.domain.properties.enums.EnergyClass;
 import com.example.saebackend.domain.properties.enums.PropertyType;
-import com.example.saebackend.domain.properties.rental.RentalProperty;
-import com.example.saebackend.domain.properties.rental.SubscriptionFrequency;
-import com.example.saebackend.domain.properties.rental.models.RentalPropertyInputModel;
-import com.example.saebackend.repositories.RentalPropertyRepository;
+import com.example.saebackend.domain.properties.purchasable.PurchasableProperty;
+import com.example.saebackend.domain.properties.purchasable.models.PurchasablePropertyInputModel;
+import com.example.saebackend.repositories.properties.PurchasablePropertyRepository;
 import com.example.saebackend.repositories.user.UserRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,17 +18,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * In-memory implementation of the PurchasablePropertyRepository interface.
+ * Provides methods for managing purchasable properties stored in memory.
+ */
 @Repository
-public class MockRentalPropertyRepository implements RentalPropertyRepository {
+public class InMemoryPurchasablePropertyRepository implements PurchasablePropertyRepository {
     private final Map<String, RoomType> roomTypes = new HashMap<>();
     {
         roomTypes.put("bedroom", new RoomType("bedroom"));
         roomTypes.put("bathroom", new RoomType("bathroom"));
         roomTypes.put("kitchen", new RoomType("kitchen"));
     }
-    private final List<RentalProperty> properties;
+    private final List<PurchasableProperty> properties;
 
-    public MockRentalPropertyRepository(UserRepository userRepository) {
+    public InMemoryPurchasablePropertyRepository(UserRepository userRepository) {
         final PropertyRoomData propertyRoomData = new PropertyRoomData(
                 Map.of(
                         roomTypes.get("bedroom"), 2,
@@ -38,12 +41,15 @@ public class MockRentalPropertyRepository implements RentalPropertyRepository {
                 )
         );
         this.properties = new ArrayList<>();
-        this.properties.addAll(List.of(RentalProperty.create(
+        this.properties.addAll(List.of(PurchasableProperty.create(
                         PropertyType.APARTMENT,
                         "Appartement moderne en centre-ville",
                         "Un appartement spacieux avec 2 chambres, cuisine équipée et balcon donnant sur la ville.",
                         new PropertyLocation(48.866667, 2.333333,"12 rue de l'eau","Paris", "70123" ,"France"), // Location
-                        new ArrayList<>(), // Images
+                        List.of(
+                                "https://picsum.photos/500/500",
+                                "https://picsum.photos/500/500"
+                        ), // Images
                         75.0, // Living area in square meters
                         0.0,  // Land area in square meters
                         propertyRoomData,
@@ -52,11 +58,10 @@ public class MockRentalPropertyRepository implements RentalPropertyRepository {
                         ClimateClass.A, // Climate class
                         "Vue sur la ville", // View
                         120.0, // Estimation cost of energy
-                        SubscriptionFrequency.MONTHLY,
                         200000.0, // Price
                         userRepository.getByMail("impulsewordpresssae@alwaysdata.net") // Owner
                 ),
-                RentalProperty.create(
+                PurchasableProperty.create(
                         PropertyType.HOUSE,
                         "Maison de campagne pittoresque",
                         "Charmante maison de campagne avec un grand jardin, une terrasse et vue sur les montagnes.",
@@ -70,11 +75,10 @@ public class MockRentalPropertyRepository implements RentalPropertyRepository {
                         ClimateClass.B, // Climate class
                         "Vue sur les montagnes", // View
                         300.0, // Estimation cost of energy
-                        SubscriptionFrequency.YEARLY,
                         350000.0, // Price
                         userRepository.getByMail("impulsewordpresssae@alwaysdata.net") // Owner
                 ),
-                RentalProperty.create(
+                PurchasableProperty.create(
                         PropertyType.APARTMENT,
                         "Studio cosy proche de la plage",
                         "Petit studio avec accès direct à la plage, parfait pour les vacances.",
@@ -88,20 +92,19 @@ public class MockRentalPropertyRepository implements RentalPropertyRepository {
                         ClimateClass.A, // Climate class
                         "Vue sur la mer", // View
                         80.0, // Estimation cost of energy
-                        SubscriptionFrequency.WEEKLY,
-                        100000.0, // Price
+                        100000.0,// Price
                         userRepository.getByMail("impulsewordpresssae@alwaysdata.net") // Owner
                 )));
     }
 
     @Override
-    public RentalProperty create(RentalProperty RentalProperty) {
-        properties.add(RentalProperty);
-        return RentalProperty;
+    public PurchasableProperty create(PurchasableProperty purchasableProperty) {
+        properties.add(purchasableProperty);
+        return purchasableProperty;
     }
 
     @Override
-    public RentalProperty getById(Id id) {
+    public PurchasableProperty getById(Id id) {
         return properties.stream()
                 .filter(property -> property.getId().equals(id))
                 .findFirst()
@@ -109,13 +112,14 @@ public class MockRentalPropertyRepository implements RentalPropertyRepository {
     }
 
     @Override
-    public List<RentalProperty> getAll() {
+    public List<PurchasableProperty> getAll() {
         return properties;
     }
 
+
     @Override
-    public RentalProperty update(Id id, RentalPropertyInputModel updateData) {
-        RentalProperty propertyToUpdate = getById(id);
+    public PurchasableProperty update(Id id, PurchasablePropertyInputModel updateData) {
+        PurchasableProperty propertyToUpdate = getById(id);
         if (propertyToUpdate == null) return null;
         return propertyToUpdate.updateFromModel(updateData);
     }
@@ -126,7 +130,7 @@ public class MockRentalPropertyRepository implements RentalPropertyRepository {
     }
 
     @Override
-    public List<RentalProperty> getByOwnerId(Id ownerId) {
+    public List<PurchasableProperty> getByOwnerId(Id ownerId) {
         return properties.stream()
                 .filter(property -> property.getOwner().getId().equals(ownerId))
                 .toList();

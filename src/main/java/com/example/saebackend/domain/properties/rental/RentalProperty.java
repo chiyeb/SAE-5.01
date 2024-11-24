@@ -12,6 +12,10 @@ import com.example.saebackend.domain.users.UserModel;
 
 import java.util.List;
 
+/**
+ * A class representing a rental property that can be rented by a user. This class extends the {@link Property} class
+ * and adds additional functionality specific to rental properties, such as subscription frequency and subscription price.
+ */
 public class RentalProperty extends Property {
     //    private final Id idRenter; TODO("Au lieu de stocker seulement l'id renter, on devrait stocker un objet User qui contient l'id et le nom de locataire")
     private SubscriptionFrequency subscriptionFrequency;
@@ -25,10 +29,18 @@ public class RentalProperty extends Property {
 
     }
 
+
     public static RentalProperty create(PropertyType type, String title, String description, PropertyLocation location, List<String> images, double livingArea, double landArea, PropertyRoomData roomData, String orientation, EnergyClass energyClass, ClimateClass climateClass, String view, double estimationCostEnergy, SubscriptionFrequency subscriptionFrequency, double subscriptionPrice, UserModel user) {
         return new RentalProperty(Id.generate(), type, title, description, location, images, livingArea, landArea, roomData, orientation, energyClass, climateClass, view, estimationCostEnergy, subscriptionFrequency, subscriptionPrice, user);
     }
 
+    /**
+     * Creates a new {@code RentalProperty} from the given input model and user.
+     *
+     * @param model the model containing the property data.
+     * @param user       the owner of the property.
+     * @return a new {@code PurchasableProperty}.
+     */
     public static RentalProperty createFromModel(RentalPropertyInputModel model, UserModel user){
         return new RentalProperty(
                 Id.generate(),
@@ -55,6 +67,12 @@ public class RentalProperty extends Property {
     // Methods
     //================================================================================
 
+    /**
+     * Updates the property with the data from the given input model.
+     *
+     * @param model the model containing the updated property data.
+     * @return the updated property.
+     */
     public RentalProperty updateFromModel(RentalPropertyInputModel model) {
         setType(PropertyType.fromString(model.type()));
         setTitle(model.title());

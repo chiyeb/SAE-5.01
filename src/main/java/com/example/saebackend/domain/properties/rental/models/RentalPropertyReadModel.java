@@ -3,10 +3,16 @@ package com.example.saebackend.domain.properties.rental.models;
 import com.example.saebackend.domain.properties.models.PropertyLocationModel;
 import com.example.saebackend.domain.properties.models.PropertyReadModel;
 import com.example.saebackend.domain.properties.models.RoomCountModel;
+import com.example.saebackend.domain.properties.rental.RentalProperty;
 import com.example.saebackend.domain.users.UserReadModel;
 
 import java.util.List;
 
+/**
+ * A read-only model that represents the data of a {@link RentalProperty}.
+ * This model is used for the representation of property details when reading or viewing
+ * the property data through an API or a similar interface.
+ */
 public record RentalPropertyReadModel(String id,
                                       String type,
                                       String title,

@@ -5,6 +5,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller for handling login requests.
+ * Provides an endpoint for generating JWT tokens upon successful authentication.
+ */
 @RestController
 public class LoginController {
     private final JWTService jwtService;
