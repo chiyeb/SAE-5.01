@@ -49,6 +49,33 @@ export const isLoggedIn = async (): Promise<boolean> => {
   const token = await getStoredToken();
   return token !== null;
 };
+export const forgotPassword = async (email: string) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/user/forgotPassword/${email}`, {
+      method: 'POST', // Généralement, les endpoints de ce type utilisent POST
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+    });
+
+    // Vérifie si la réponse est réussie
+    if (!response.ok) {
+      console.error(`Erreur : ${response.statusText} (${response.status})`);
+      return { success: false, message: `Erreur : ${response.statusText}` };
+    }
+
+    // Lit la réponse en texte brut
+    const data = await response.text();
+    console.log('Réponse brute de l\'API:', data);
+
+    // Retourne la réponse brute comme donnée
+    return { success: true, data };
+  } catch (error) {
+    console.error('Erreur lors de la demande de réinitialisation de mot de passe :', error);
+    return { success: false, message: 'Une erreur est survenue. Veuillez réessayer plus tard.' };
+  }
+};
+
 
 // Fonction pour récupérer les informations utilisateur
 export const getUserInfo = async (): Promise<any | null> => {

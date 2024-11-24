@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextInput, Button, Text, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router'; // Importer le useRouter de Next.js
-import { login, getUserInfo } from '@/components/LoginRequest'; // Remplacez par le bon chemin
+import { login, getUserInfo, forgotPassword } from '@/components/LoginRequest'; // Remplacez par le bon chemin
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = () => {
@@ -47,6 +47,16 @@ const handleLogin = async () => {
     }
   };
 
+  const handleForgotPassword = async (email: string) => {
+    const result = await forgotPassword(email);
+    if (result.success) {
+      alert(`Réinitialisation envoyée : ${result.data}`);
+    } else {
+      alert(`Erreur : ${result.message}`);
+    }
+  };
+  
+
   return (
     <View style={styles.container}>
       <View style={styles.loginBox}>
@@ -70,7 +80,7 @@ const handleLogin = async () => {
           placeholderTextColor="#111a"
           secureTextEntry
         />
-
+        <Button title="Mot de passe oublié" onPress={()=>handleForgotPassword(email)} color="#4169e1" />
         <Button title="Login" onPress={handleLogin} color="#4169e1" />
       </View>
 
