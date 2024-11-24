@@ -9,7 +9,7 @@ export const login = async (email: string, password: string): Promise<{ success:
   }
 
   try {
-    const response = await fetch(`${API_BASE_URL}/login`, {
+    const response = await fetch(`${API_BASE_URL}/login/intranet`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
