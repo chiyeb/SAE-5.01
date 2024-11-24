@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import { ThemedText } from './ThemedText';
+import { getUserInfo } from '@/components/LoginRequest'; // Assurez-vous que le chemin est correct
 
 interface BienProps {
   type: string;
@@ -49,6 +50,9 @@ export default function Bien({
   climateClass,
 }: BienProps) {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [userInfo, setUserInfo] = useState<any>(null); // Stocker les informations utilisateur
+  const [error, setError] = useState<string | null>(null); // Stocker les erreurs
+
 
   const showBienDetails = () => {
     setIsModalVisible(true);
@@ -70,6 +74,36 @@ export default function Bien({
     }
   };
 
+  // Utiliser useEffect pour récupérer les infos utilisateur dès que le composant est monté
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const data = await getUserInfo(); // Récupérer les infos de l'utilisateur
+      if (data) {
+        setUserInfo(data); // Stocker les informations utilisateur dans l'état
+      } else {
+        setError('Erreur lors de la récupération des informations utilisateur. Vous devez être connecté ');
+      }
+    };
+
+    fetchUserData(); // Appeler la fonction pour récupérer les données utilisateur
+  }, []); // Se déclencher uniquement au montage du composant
+
+  if (error) {
+    return (
+      <View style={styles.container}>
+        <Text >{error}</Text>
+      </View>
+    );
+  }
+
+  if (!userInfo) {
+    return (
+      <View style={styles.container}>
+        <Text >Chargement des informations...</Text>
+      </View>
+    );
+  }
+
   return (
     <TouchableOpacity onPress={showBienDetails} style={styles.container}>
       <ImageBackground
@@ -84,6 +118,8 @@ export default function Bien({
         <Text style={styles.description}>{type}</Text>
         <Text style={styles.location}>{location?.address}</Text>
         <ThemedText type="defaultSemiBold" style={styles.price}>{price} €</ThemedText>
+        <ThemedText type="defaultSemiBold" style={styles.description}>{userInfo.name} {userInfo.lastname}</ThemedText>
+        
         <Text style={styles.description}>{description}</Text>
       </View>
       <View style={styles.infoContainer}>
@@ -114,6 +150,8 @@ export default function Bien({
               <Text style={styles.modalText}><ThemedText type="defaultSemiBold">Estimation des coûts annuels d'énergie: </ThemedText>{estimationCostEnergy} €</Text>
               <Text style={styles.modalText}><ThemedText type="defaultSemiBold">Performance énergétique: </ThemedText>{energyClass}</Text>
               <Text style={styles.modalText}><ThemedText type="defaultSemiBold">Classe climat: </ThemedText>{climateClass}</Text>
+              <Text style={styles.modalText}><ThemedText type="defaultSemiBold">Propriétaire: </ThemedText>{userInfo.name} {userInfo.lastname}</Text>
+              
 
               <TouchableOpacity onPress={closeModal} style={styles.buttonClose}>
                 <Text style={styles.buttonText}>Fermer</Text>

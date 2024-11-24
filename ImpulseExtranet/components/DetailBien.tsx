@@ -5,6 +5,7 @@ import NbPiece from './navigation/ButtonNbPiece';
 import { pickImage } from './SelectImage';
 import { ThemedText } from './ThemedText';
 import ButtonSaveCancel from './navigation/ButtonSaveCancel';
+import { launchImageLibrary } from 'react-native-image-picker'; 
 
 
 
@@ -29,7 +30,7 @@ interface DetailProps {
   location: Location;
   livingArea: number;
   landArea: number;
-  images: string,
+  images: string[],
   orientation: string;
   view: string;
   rooms: { roomType: string; count: number }[];
@@ -67,7 +68,7 @@ const Detail: React.FC<DetailProps> = ({
   const [price, setPrice] = useState<string>(initialPrice?.toString());
   const [subscriptionFrequency, setSubscriptionFrequency] = useState<string | null>(initialsubscriptionFrequency);
   const [location, setLocation] = useState<Location>(initialLocation);  // Utilisation de l'objet localisation
-  const [image, setImage] = useState<string>("");
+  const [images, setImages] = useState<string[]>([]);
   const [livingArea, setLivingArea] = useState<string>(initiallivingArea?.toString());
   const [landArea, setLandArea] = useState<string>(initiallandArea?.toString());
   const [orientation, setOrientation] = useState<string>(initialOrientation);
@@ -99,13 +100,16 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>(iniati
     livingArea: parseFloat(livingArea),
     landArea: parseFloat(landArea),
     rooms,
-    image,
+    images,
     orientation,
     view,
     energyClass,
     estimationCostEnergy,
     climateClass,
   });
+
+
+  
 
   const handleSave = () => {
     onSaveBien(getBienData());
@@ -126,7 +130,25 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>(iniati
     const removeRoom = (index: number) => {
       setRooms((prevRooms) => prevRooms.filter((_, i) => i !== index));
     };
-  
+    const pickImage = (setImages: React.Dispatch<React.SetStateAction<string[]>>) => {
+      launchImageLibrary({ mediaType: 'photo', quality: 0.5 }, (response) => {
+        if (response.didCancel) {
+          console.log('User canceled image picker');
+        } else if (response.errorCode) {
+          console.log('Image picker error: ', response.errorMessage);
+        } else {
+          // Vérifier si l'URI est défini, sinon, fournir une chaîne vide ou une autre valeur par défaut
+          const source = response.assets?.[0].uri ?? '';  // Si undefined, utilise une chaîne vide
+          if (source) {
+            setImages([source]);  // Mettre à jour l'état avec l'URI de la première image sélectionnée
+          } else {
+            console.log('Aucune image sélectionnée');
+          }
+        }
+      });
+    };
+    
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -224,15 +246,14 @@ const [rooms, setRooms] = useState<{ roomType: string, count: number }[]>(iniati
             placeholder="Pays"
           />
 
-          <ThemedText type="defaultSemiBold">Photo</ThemedText>
-          {image ? (
-            <Image source={{ uri: image }} style={styles.imagePreview} />
-          ) : (
-            <Text style={styles.noImageText}>Aucune photo sélectionnée</Text>
-          )}
-          <TouchableOpacity onPress={() => pickImage(setImage)} style={styles.button}>
-            <Text style={styles.buttonText}>Choisir une image</Text>
-          </TouchableOpacity>
+            {/* Image */}
+            <Text >Images</Text>
+      <TouchableOpacity onPress={() => pickImage(setImages)} style={styles.button}>
+        <Text style={styles.buttonText}>Choisir une image</Text>
+      </TouchableOpacity>
+      {images.length > 0 && (
+        <Image source={{ uri: images[0] }} style={styles.imagePreview} />
+      )}
 
           <ThemedText type="defaultSemiBold">Surface Habitable (m²)</ThemedText>
           <TextInput

@@ -32,23 +32,28 @@ export default function HomeScreen() {
   useEffect(() => {
     if (token) {
       const fetchBiens = async () => {
-        console.log(selectedTab);
+        console.log('selectedTab:', selectedTab);  // Vérifiez quel tab est sélectionné
         try {
-          const data = await getAllProperties(selectedTab);
+          const data = await getAllProperties(selectedTab,token);
+          
+          // Vérifiez si les données sont un tableau valide avant de les assigner à l'état
           if (Array.isArray(data)) {
             setBiens(data);
           } else {
+            console.log(data);
             console.error('Données invalides reçues:', data);
-            setBiens([]);
+            setBiens([]);  // Mettez un tableau vide si les données sont invalides
           }
         } catch (error) {
           console.error('Erreur lors de la récupération des biens :', error);
+          setBiens([]);  // En cas d'erreur, un tableau vide est mis dans l'état
         }
       };
-
+  
       fetchBiens();
     }
-  }, [selectedTab,token]);
+  }, [selectedTab, token]);
+  
 
   const handleAddBien = async () => {
     if (!token) {
@@ -95,6 +100,7 @@ export default function HomeScreen() {
   };
 
   const handleSaveBien = async (bienData: any) => {
+    console.log(bienData.id);
     if (!bienData.title || !bienData.description || !bienData.price) {
       Alert.alert('Erreur', 'Veuillez remplir tous les champs obligatoires.');
       return;

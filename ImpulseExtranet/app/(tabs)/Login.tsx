@@ -25,7 +25,7 @@ const handleLogin = async () => {
       setToken(token);
       router.push('/HomeScreen'); 
     } else {
-      setError(result.error || 'Erreur inconnue.');
+      setError(result.error || 'Erreur dans le mail ou le mot de passe.');
     }
   } catch (err) {
     console.error('Erreur réseau ou serveur:', err);

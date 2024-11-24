@@ -20,7 +20,7 @@ export const login = async (email: string, password: string): Promise<{ success:
     console.log(response.ok);
     if (!response.ok) {
       const errorMessage = await response.text();
-      return { success: false, error: errorMessage || 'Erreur inconnue.' };
+      return { success: false, error: errorMessage || 'Erreur dans le mail ou le mot de passe.' };
     }
 
     const token = await response.text();
