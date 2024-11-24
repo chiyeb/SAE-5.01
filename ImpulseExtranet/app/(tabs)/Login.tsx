@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { TextInput, Button, Text, StyleSheet, View } from 'react-native';
+import { TextInput, Button, Text, StyleSheet, View,TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router'; // Importer le useRouter de Next.js
-import { login, getUserInfo, forgotPassword } from '@/components/LoginRequest'; // Remplacez par le bon chemin
+import { login, forgotPassword } from '@/components/LoginRequest'; // Remplacez par le bon chemin
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ThemedText } from '@/components/ThemedText';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [token, setToken] = useState<string | null>(null);
-  const [userInfo, setUserInfo] = useState<object | null>(null);
   const [error, setError] = useState<string | null>(null);
   
   const router = useRouter(); // Hook pour gérer la navigation avec Next.js
@@ -33,26 +33,14 @@ const handleLogin = async () => {
   }
 };
 
-  const fetchUserInfo = async () => {
-    if (!token) {
-      setError('Aucun jeton trouvé. Connectez-vous d\'abord.');
-      return;
-    }
-
-    const info = await getUserInfo();
-    if (info) {
-      setUserInfo(info);
-    } else {
-      setError('Erreur lors de la récupération des informations utilisateur.');
-    }
-  };
-
   const handleForgotPassword = async (email: string) => {
     const result = await forgotPassword(email);
     if (result.success) {
-      alert(`Réinitialisation envoyée : ${result.data}`);
+      alert("Réinitialisation envoyée : Un email de réinitialisation de mot de passe a été envoyé à l'adresse fournie. Veuillez vérifier votre boîte de réception.");
+
     } else {
-      alert(`Erreur : ${result.message}`);
+      alert("Erreur : L'adresse email est invalide ou non inscrite. Veuillez vérifier l'email et réessayer.");
+
     }
   };
   
@@ -80,23 +68,12 @@ const handleLogin = async () => {
           placeholderTextColor="#111a"
           secureTextEntry
         />
-        <Button title="Mot de passe oublié" onPress={()=>handleForgotPassword(email)} color="#4169e1" />
+            <TouchableOpacity style={styles.buttons} onPress={()=>handleForgotPassword(email)}>
+              <ThemedText type='link' >Mot de passe oublié</ThemedText>
+            </TouchableOpacity>
+        
         <Button title="Login" onPress={handleLogin} color="#4169e1" />
       </View>
-
-      {token && (
-        <View style={styles.infoBox}>
-            
-          <Button title="Get User Info" onPress={fetchUserInfo} color="#4169e1" />
-        </View>
-      )}
-
-      {userInfo && (
-        <View style={styles.infoBox}>
-          <Text style={styles.infoText}>User Info: {JSON.stringify(userInfo)}</Text>
-        </View>
-      )}
-
       {error && <Text style={styles.error}>{error}</Text>}
     </View>
   );
@@ -156,6 +133,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
     color: 'red',
     textAlign: 'center',
+  },
+  buttons: {
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    marginVertical: 10,
+    color:'white',
   },
 });
 
