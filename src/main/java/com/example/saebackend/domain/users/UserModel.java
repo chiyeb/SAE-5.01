@@ -2,6 +2,7 @@ package com.example.saebackend.domain.users;
 
 import com.example.saebackend.domain.id.Id;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.HashSet;
@@ -47,6 +48,20 @@ public class UserModel  implements UserDetails {
         this.age = age;
         this.phoneNumber = phoneNumber;
         this.moreInformations = moreInformations;
+        this.authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        this.password = password;
+    }
+
+    public UserModel(Id id, String name, String lastname, String mail, int age, String phoneNumber, String moreInformations, String password, boolean isAdmin) {
+        this.id = id;
+        this.name = name;
+        this.lastname = lastname;
+        this.mail = mail;
+        this.age = age;
+        this.phoneNumber = phoneNumber;
+        this.moreInformations = moreInformations;
+        this.authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        if (isAdmin) this.authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         this.password = password;
     }
 

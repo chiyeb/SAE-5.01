@@ -21,6 +21,9 @@ public class UserModelEntity {
     private String lastname;
     @Column(name="mail")
     private String mail;
+    @Column(name="admin_status")
+    private boolean admin;
+
     @Column(name="age")
     private int age;
     @Column(name="phone_number")
@@ -48,11 +51,12 @@ public class UserModelEntity {
      * @param moreInformations additional information about the user.
      * @param password         the password of the user.
      */
-    public UserModelEntity(String id, String name, String lastname, String mail, int age, String phoneNumber, String moreInformations, String password) {
+    public UserModelEntity(String id, String name, String lastname, String mail, boolean Admin, int age, String phoneNumber, String moreInformations, String password) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
         this.mail = mail;
+        this.admin = Admin;
         this.age = age;
         this.phoneNumber = phoneNumber;
         this.moreInformations = moreInformations;
@@ -93,6 +97,10 @@ public class UserModelEntity {
      */
     public String getMail() {
         return mail;
+    }
+
+    public boolean isAdmin() {
+        return admin;
     }
 
     /**

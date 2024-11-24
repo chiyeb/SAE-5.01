@@ -25,11 +25,6 @@ import javax.crypto.spec.SecretKeySpec;
 public class WebSecurityConfig {
     @Value("${jwt.key}")
     private String jwtKey;
-    private final NonAuthenticatedEntryPoint nonAuthenticatedEntryPoint;
-
-    public WebSecurityConfig(NonAuthenticatedEntryPoint nonAuthenticatedEntryPoint) {
-        this.nonAuthenticatedEntryPoint = nonAuthenticatedEntryPoint;
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -42,9 +37,6 @@ public class WebSecurityConfig {
                         .requestMatchers("/user/get/**").permitAll()
                         .requestMatchers("/user/forgotPassword/**").permitAll()
                         .anyRequest().authenticated()
-                )
-                .exceptionHandling(exceptionHandling ->
-                        exceptionHandling.authenticationEntryPoint(this.nonAuthenticatedEntryPoint)
                 )
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
                 .httpBasic(Customizer.withDefaults());

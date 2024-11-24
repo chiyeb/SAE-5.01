@@ -1,7 +1,10 @@
 package com.example.saebackend.controllers;
 
+import com.example.saebackend.domain.users.UserModel;
 import com.example.saebackend.services.JWTService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,5 +23,14 @@ public class LoginController {
     @PostMapping("/login")
     public String getToken(Authentication authentication) {
         return jwtService.generateToken(authentication);
+    }
+
+    @PostMapping("/login/intranet")
+    public ResponseEntity<String> getTokenIntranet(Authentication authentication) {
+        UserModel userModel = (UserModel) authentication.getPrincipal();
+        if (userModel.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            return ResponseEntity.ok(jwtService.generateToken(authentication));
+        }
+        return ResponseEntity.status(401).build();
     }
 }

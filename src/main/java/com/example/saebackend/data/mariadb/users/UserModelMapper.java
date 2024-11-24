@@ -3,8 +3,8 @@ package com.example.saebackend.data.mariadb.users;
 import com.example.saebackend.base.Mapper;
 import com.example.saebackend.data.mariadb.jpa_repositories.JpaUserRepository;
 import com.example.saebackend.domain.id.Id;
-import com.example.saebackend.domain.users.Password;
 import com.example.saebackend.domain.users.UserModel;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
  * Mapper class for converting between {@link UserModelEntity} and {@link UserModel}.
@@ -42,7 +42,8 @@ public class UserModelMapper implements Mapper<UserModelEntity, UserModel> {
                 input.getAge(),
                 input.getPhoneNumber(),
                 input.getMoreInformations(),
-                input.getPassword()
+                input.getPassword(),
+                input.isAdmin()
         );
     }
 
@@ -61,6 +62,7 @@ public class UserModelMapper implements Mapper<UserModelEntity, UserModel> {
                         input.getName(),
                         input.getLastname(),
                         input.getMail(),
+                        input.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")),
                         input.getAge(),
                         input.getPhoneNumber(),
                         input.getMoreInformations(),

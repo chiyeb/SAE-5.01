@@ -23,7 +23,7 @@ public class InMemoryUserRepository implements UserRepository {
 
     public InMemoryUserRepository() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        users.add(new UserModel(Id.generate(),"Administrateur", "IMPULSE", "impulsewordpresssae@alwaysdata.net", 999, "123456789", "Je suis l'admin !", bCryptPasswordEncoder.encode("password")));
+        users.add(new UserModel(Id.generate(),"Administrateur", "IMPULSE", "impulsewordpresssae@alwaysdata.net", 999, "123456789", "Je suis l'admin !", bCryptPasswordEncoder.encode("password"),true));
     }
 
     @Override
