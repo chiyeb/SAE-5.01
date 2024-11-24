@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_BASE_URL = 'http://127.0.0.1:8080'; // Ou http://localhost:3000 selon votre configuration
+const API_BASE_URL = 'http://impulseapibackend.alwaysdata.net'; // Ou http://localhost:3000 selon votre configuration
 
 // Fonction de login (authentification)
 export const login = async (email: string, password: string): Promise<{ success: boolean; token?: string; error?: string }> => {

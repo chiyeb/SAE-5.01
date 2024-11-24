@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://127.0.0.1:8080'; // url de l'API
+const API_BASE_URL = 'http://impulseapibackend.alwaysdata.net'; // url de l'API
 
 // Récupérer tous les biens (vente/location)
 export const getAllProperties = async (selectedTab: string,token: string) => {
