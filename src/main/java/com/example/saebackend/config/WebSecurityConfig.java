@@ -40,6 +40,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/property/get/**").permitAll()
                         .requestMatchers("/user/get/**").permitAll()
+                        .requestMatchers("/user/forgotPassword").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exceptionHandling ->
