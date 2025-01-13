@@ -46,28 +46,25 @@ class DisplayEstate {
     public function shortcode_home_estate($atts) {
         $atts = shortcode_atts(
             array(
-                'country' => 'France',
+                'country' => 'FR',
             ),
             $atts,
             'list_properties'
         );
         $url = "https://impulsepasserelle.alwaysdata.net/annonce/get";
         $getEstate = new GetEstate($url);
-        $allListings = array_slice($getEstate->get_all_estate(), 0, 3);
+        $allListings = array_slice($getEstate->get_estate_by_country($atts['country']), 0, 3);
 
         $country = $atts['country'];
-        $filteredListings = array_filter($allListings, function($property) use ($country) {
-            return isset($property['pays']) && strtolower($property['pays']) === strtolower($country);
-        });
 
-        if ( ! is_array($filteredListings) || empty($filteredListings) ) {
+        if ( ! is_array($allListings) || empty($allListings) ) {
             return "<p> Aucun biens en vente en " . esc_html($country) . ".</p>";
         }
 
         ob_start();
         ?>
         <div class="property-list">
-            <?php foreach ( $filteredListings as $property ) : ?>
+            <?php foreach ( $allListings as $property ) : ?>
                 <div class="property-item">
                     <?php if ( ! empty( $property['images'] ) && is_array( $property['images'] ) ) : ?>
                         <div class="property-carousel swiper">
@@ -89,13 +86,23 @@ class DisplayEstate {
                             <?php echo esc_html($property['titre']); ?>
                         </h3>
 
-                        <p class="property-excerpt">
+                        <p class="property-description">
                             <?php
-                            if ($property['corps_impression'] != null) {
-                                echo esc_html($property['corps_impression']);
-                            } else {
-                                echo esc_html(substr($property['corps'], 0, 80) . '...');
-                            }
+                            echo esc_html(
+                                ltrim(
+                                    rtrim(
+                                        trim(
+                                            strip_tags(
+                                                html_entity_decode(
+                                                    $property['corps_impression'] ?? substr($property['corps'], 0, 80) . '...'
+                                                )
+                                            )
+                                        ),
+                                        '></'
+                                    ),
+                                    '></'
+                                )
+                            );
                             ?>
                         </p>
 
@@ -104,14 +111,14 @@ class DisplayEstate {
                         </p>
 
                         <p class="property-location">
-                            <?php echo esc_html($property['ville'] . ', ' . $property['pays']); ?>
+                            <?php echo esc_html($property['ville'] . ', ' . $property['pays']['nom']); ?>
                         </p>
 
                         <p class="property-type">
                             <?php echo esc_html($property['type_bien']); ?>
                         </p>
 
-                        <a href="<?php echo '/index.php/bien?id=' . htmlspecialchars($property['ref'], ENT_QUOTES, 'UTF-8'); ?>">
+                        <a href="<?php echo '/index.php/bien?id=' . htmlspecialchars($property['id']['id'], ENT_QUOTES, 'UTF-8'); ?>">
                             Voir le bien
                         </a>
                     </div>
@@ -129,15 +136,14 @@ class DisplayEstate {
     public function shortcode_estate_page($atts) {
         $atts = shortcode_atts(
             array(
-                'ref' => 000,
+                'id' => 000,
             ),
             $atts,
             'estate_page'
         );
         $url = "https://impulsepasserelle.alwaysdata.net/annonce/get";
         $getEstate = new GetEstate($url);
-        $getEstate->get_all_estate();
-        $property = $getEstate->get_all_estate();
+        $property = $getEstate->get_estate_by_id($atts['id']);
 
         if ( ! is_array($property) || empty($property) ) {
             return "<p>Error with the listing</p>";
@@ -171,21 +177,33 @@ class DisplayEstate {
 
                 <p class="single-property-body">
                     <?php
-                    echo esc_html($property['corps_impression']);
-                    echo esc_html($property['corps']);
+                    echo esc_html(
+                        ltrim(
+                            rtrim(
+                                trim(
+                                    strip_tags(
+                                        html_entity_decode(
+                                            $property['corps'] ?? '')
+                                        )
+                                    )
+                                ),
+                                '></'
+                            ),
+                            '></'
+                    );
                     ?>
                 </p>
 
                 <p class="single-property-price">
-                    <?php echo esc_html($property['prix']); ?>
+                    <?php echo esc_html($property['prix'] ?? '') . "€"; ?>
                 </p>
 
                 <p class="single-property-location">
-                    <?php echo esc_html($property['ville'] . ', ' . $property['pays']); ?>
+                    <?php echo esc_html(($property['ville'] ?? '') . ', ' . ($property['pays']['nom'] ?? '')); ?>
                 </p>
 
                 <p class="single-property-type">
-                    <?php echo esc_html($property['type_bien']); ?>
+                    <?php echo esc_html($property['type_bien'] ?? ''); ?>
                 </p>
             </div>
         </div>
@@ -193,72 +211,93 @@ class DisplayEstate {
             <h2 class="property-info-title">Caractéristiques :</h2>
 
             <div class="property-info-grid">
-                <div class="property-info-item">
-                    <strong>Surface habitable :</strong>
-                    <?php echo esc_html($property['habitable_surface']); ?>
-                </div>
+                <?php if (!empty($property['surface_habitable'])): ?>
+                    <div class="property-info-item">
+                        <strong>Surface habitable :</strong>
+                        <?php echo esc_html($property['surface_habitable']); ?>
+                    </div>
+                <?php endif; ?>
 
-                <div class="property-info-item">
-                    <strong>Chambres :</strong>
-                    <?php echo esc_html($property['nb_chambres']); ?>
-                </div>
+                <?php if (!empty($property['chambres'])): ?>
+                    <div class="property-info-item">
+                        <strong>Chambres :</strong>
+                        <?php echo esc_html($property['chambres']); ?>
+                    </div>
+                <?php endif; ?>
 
-                <div class="property-info-item">
-                    <strong>Piscine :</strong>
-                    <?php echo esc_html($property['piscine']); ?>
-                </div>
+                <?php if (!empty($property['piscine'])): ?>
+                    <div class="property-info-item">
+                        <strong>Piscine :</strong>
+                        <?php echo esc_html($property['piscine']); ?>
+                    </div>
+                <?php endif; ?>
 
-                <div class="property-info-item">
-                    <strong>Surface terrain :</strong>
-                    <?php echo esc_html($property['terrain_surface']); ?>
-                </div>
+                <?php if (!empty($property['terrain_surface'])): ?>
+                    <div class="property-info-item">
+                        <strong>Surface terrain :</strong>
+                        <?php echo esc_html($property['terrain_surface']); ?>
+                    </div>
+                <?php endif; ?>
 
-                <div class="property-info-item">
-                    <strong>Orientation:</strong>
-                    <?php echo esc_html($property['orientation']); ?>
-                </div>
+                <?php if (!empty($property['exposition'])): ?>
+                    <div class="property-info-item">
+                        <strong>Orientation :</strong>
+                        <?php echo esc_html($property['exposition']); ?>
+                    </div>
+                <?php endif; ?>
 
-                <div class="property-info-item">
-                    <strong>Vue :</strong>
-                    <?php echo esc_html($property['vue']); ?>
-                </div>
+                <?php if (!empty($property['vue'])): ?>
+                    <div class="property-info-item">
+                        <strong>Vue :</strong>
+                        <?php echo esc_html($property['vue']); ?>
+                    </div>
+                <?php endif; ?>
             </div>
             <h2 class="property-info-title">Diagnostic de performance énergétique</h2>
             <div class="property-classes-grid">
-                <div class="class-container">
-                    <div class="class-card">
-                        <h3 class="property-h3-title">Classe énergie</h3>
-                        <div class="property-energy-class property-energy-<?php echo esc_attr($property['class_energie']); ?>">
-                            <p class="property-energy-class-text"><?php echo esc_html($property['class_energie']); ?></p>
+                <?php if (!empty($property['class_energie'])): ?>
+                    <div class="class-container">
+                        <div class="class-card">
+                            <h3 class="property-h3-title">Classe énergie</h3>
+                            <div class="property-energy-class property-energy-<?php echo esc_attr($property['class_energie']); ?>">
+                                <p class="property-energy-class-text"><?php echo esc_html($property['class_energie']); ?></p>
+                            </div>
                         </div>
                     </div>
-                    <div class="class-card">
-                        <h3 class="property-h3-title">Classe climat</h3>
-                        <div class="property-climate-class property-climate-<?php echo esc_attr($property['class_climat']); ?>">
-                            <p class="property-climate-class-text"><?php echo esc_html($property['class_climat']); ?></p>
+                <?php endif; ?>
+
+                <?php if (!empty($property['class_climat'])): ?>
+                    <div class="class-container">
+                        <div class="class-card">
+                            <h3 class="property-h3-title">Classe climat</h3>
+                            <div class="property-climate-class property-climate-<?php echo esc_attr($property['class_climat']); ?>">
+                                <p class="property-climate-class-text"><?php echo esc_html($property['class_climat']); ?></p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php endif; ?>
             </div>
             <h2 class="property-info-title">Location</h2>
-            <div id="property-map" style="height: 400px;"></div>
+            <?php if (!empty($property['latitude']) && !empty($property['longitude'])): ?>
+                <div id="property-map" style="height: 400px;"></div>
 
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    var lat = <?php echo esc_js($property['latitude']); ?>;
-                    var lng = <?php echo esc_js($property['longitude']); ?>;
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var lat = <?php echo esc_js($property['latitude']); ?>;
+                        var lng = <?php echo esc_js($property['longitude']); ?>;
 
-                    var map = L.map('property-map').setView([lat, lng], 13);
+                        var map = L.map('property-map').setView([lat, lng], 13);
 
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: '&copy; OpenStreetMap contributors'
-                    }).addTo(map);
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; OpenStreetMap contributors'
+                        }).addTo(map);
 
-                    L.marker([lat, lng]).addTo(map)
-                        .bindPopup('<?php echo esc_js($property['titre']); ?>')
-                        .openPopup();
-                });
-            </script>
+                        L.marker([lat, lng]).addTo(map)
+                            .bindPopup('<?php echo esc_js($property['titre']); ?>')
+                            .openPopup();
+                    });
+                </script>
+            <?php endif; ?>
             <h2 class="property-info-title">Intéréssé par le bien ?</h2>
             <a id="contact-btn-single-property" href="https://impulsewordpresssae.alwaysdata.net/index.php/contact-3/">
                 Nous contacter !
@@ -350,20 +389,15 @@ class DisplayEstate {
         $atts = shortcode_atts(array(
             'country' => 'FR',
         ), $atts, 'properties_pagination');
-
-        $getEstate = new GetEstate();
-        $allListings = $getEstate->fetch_fake_data();
+        $url = "https://impulsepasserelle.alwaysdata.net/annonce/get";
+        $getEstate = new GetEstate($url);
+        $allListings = $getEstate->get_estate_by_country($atts['country']);
 
         $country = $atts['country'];
-
-        $filteredListings = array_filter($allListings, function($property) use ($country) {
-            return isset($property['pays']) && strtolower($property['pays']) === strtolower($country);
-        });
-
         $items_per_page = 10;
-        $total_pages    = ceil(count($filteredListings) / $items_per_page);
+        $total_pages    = ceil(count($allListings) / $items_per_page);
 
-        if ( empty($filteredListings) ) {
+        if ( empty($allListings) ) {
             return '<p>Aucun bien en vente en ' . esc_html($country) . '.</p>';
         }
 
@@ -376,9 +410,8 @@ class DisplayEstate {
                      style="display: <?php echo $i === 0 ? 'block' : 'none'; ?>;">
                     <div class="properties-list">
                         <?php
-                        // Display properties for the current page
                         $offset = $i * $items_per_page;
-                        $pagedProperties = array_slice($filteredListings, $offset, $items_per_page);
+                        $pagedProperties = array_slice($allListings, $offset, $items_per_page);
 
                         foreach ($pagedProperties as $property) : ?>
                             <div class="property-card">
@@ -404,21 +437,32 @@ class DisplayEstate {
                                     <p class="property-description">
                                         <?php
                                         echo esc_html(
-                                            $property['corps_impression']
-                                            ?? substr($property['corps'], 0, 80) . '...'
+                                            ltrim(
+                                                rtrim(
+                                                    trim(
+                                                        strip_tags(
+                                                            html_entity_decode(
+                                                                $property['corps_impression'] ?? substr($property['corps'], 0, 80) . '...'
+                                                            )
+                                                        )
+                                                    ),
+                                                    '></'
+                                                ),
+                                                '></'
+                                            )
                                         );
                                         ?>
                                     </p>
                                     <p class="property-price">
-                                        <?php echo esc_html($property['prix']); ?>
+                                        <?php echo esc_html($property['prix'] . "€"); ?>
                                     </p>
                                     <p class="property-location">
-                                        <?php echo esc_html($property['ville'] . ', ' . $property['pays']); ?>
+                                        <?php echo esc_html($property['ville'] . ', ' . $property['pays']['nom']); ?>
                                     </p>
                                     <p class="property-type">
-                                        Property type: <?php echo esc_html($property['type_bien']); ?>
+                                        <?php echo esc_html($property['type_bien']); ?>
                                     </p>
-                                    <a href="<?php echo '/index.php/bien?id=' . htmlspecialchars($property['ref'], ENT_QUOTES, 'UTF-8'); ?>">
+                                    <a href="<?php echo '/index.php/bien?id=' . htmlspecialchars($property['id']['id'], ENT_QUOTES, 'UTF-8'); ?>">
                                         Voir le bien
                                     </a>
                                 </div>

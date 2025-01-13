@@ -145,4 +145,100 @@ class GetEstate
         }
         return $data;
     }
+    /**
+     * Récupère les biens par pays depuis l'API ou les données factices.
+     *
+     * @param string $pays Le pays pour lequel récupérer les biens.
+     * @return array|WP_Error Tableau des biens ou une erreur WP_Error.
+     */
+    public function get_estate_by_country($pays)
+    {
+        if (!$this->api_url) {
+            return new WP_Error(
+                'api_error',
+                'Pas d URL d api initialisé'
+            );
+        }
+
+        $response = wp_remote_get($this->api_url . '?pays=' . urlencode($pays), array(
+            'timeout' => 10,
+        ));
+
+        if (is_wp_error($response)) {
+            return $response;
+        }
+
+        $status_code = wp_remote_retrieve_response_code($response);
+        if (200 !== $status_code) {
+            return new WP_Error(
+                'api_error',
+                'Réponse API invalide. Code HTTP: ' . $status_code
+            );
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        if (empty($body)) {
+            return new WP_Error(
+                'api_empty',
+                'La réponse de l’API est vide'
+            );
+        }
+
+        $data = json_decode($body, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return new WP_Error(
+                'api_json_error',
+                'JSON invalide : ' . json_last_error_msg()
+            );
+        }
+        return $data;
+    }
+    public function get_estate_by_id($id)
+    {
+        if (!$this->api_url) {
+            return new WP_Error(
+                'api_error',
+                'Pas d URL d api initialisée'
+            );
+        }
+
+        $endpoint = rtrim($this->api_url, '/') . '/' . urlencode($id);
+
+        $response = wp_remote_get($endpoint, array(
+            'timeout' => 10,
+        ));
+
+        if (is_wp_error($response)) {
+            return $response;
+        }
+
+        $status_code = wp_remote_retrieve_response_code($response);
+        if (200 !== $status_code) {
+            return new WP_Error(
+                'api_error',
+                'Réponse API invalide. Code HTTP: ' . $status_code
+            );
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        if (empty($body)) {
+            return new WP_Error(
+                'api_empty',
+                'La réponse de l’API est vide'
+            );
+        }
+
+        $data = json_decode($body, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return new WP_Error(
+                'api_json_error',
+                'JSON invalide : ' . json_last_error_msg()
+            );
+        }
+
+        return $data;
+    }
+
 }
