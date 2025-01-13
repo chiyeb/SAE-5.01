@@ -107,7 +107,7 @@ class DisplayEstate {
                         </p>
 
                         <p class="property-price">
-                            <?php echo esc_html($property['prix']); ?>
+                            <?php echo esc_html($property['prix'] . "€"); ?>
                         </p>
 
                         <p class="property-location">
@@ -266,12 +266,12 @@ class DisplayEstate {
                     </div>
                 <?php endif; ?>
 
-                <?php if (!empty($property['class_climat'])): ?>
+                <?php if (!empty($property['class_emission_gaz'])): ?>
                     <div class="class-container">
                         <div class="class-card">
                             <h3 class="property-h3-title">Classe climat</h3>
-                            <div class="property-climate-class property-climate-<?php echo esc_attr($property['class_climat']); ?>">
-                                <p class="property-climate-class-text"><?php echo esc_html($property['class_climat']); ?></p>
+                            <div class="property-climate-class property-climate-<?php echo esc_attr($property['class_emission_gaz']); ?>">
+                                <p class="property-climate-class-text"><?php echo esc_html($property['class_emission_gaz']); ?></p>
                             </div>
                         </div>
                     </div>
@@ -363,7 +363,7 @@ class DisplayEstate {
                             );
                             ?>
                         </p>
-                        <p class="property-price"><?php echo esc_html($property['prix']); ?></p>
+                        <p class="property-price"><?php echo esc_html($property['prix'] . "€"); ?></p>
                         <p class="property-location">
                             <?php echo esc_html($property['ville'] . ', ' . $property['pays']); ?>
                         </p>
