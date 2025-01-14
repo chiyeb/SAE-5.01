@@ -2,45 +2,20 @@
 require_once 'get_estate.php';
 
 /**
- * Plugin Name: Plugin Property API
- * Description: Plugin to fetch (or simulate) properties from an API with an image carousel.
- * Version: 1.12
+ * Plugin Name: Plugin display estates
+ * Description: Plugin to display estate using api
+ * Version: 1.0
  * Author: Chiheb
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
-
-// Energy class colors
-$energyClassColors = array(
-    'A' => '#18a16c',
-    'B' => '#4eb253',
-    'C' => '#a5cd75',
-    'D' => '#f2e814',
-    'E' => '#f2a705',
-    'F' => '#f77707',
-    'G' => '#ed0000',
-);
-
-// Climate class colors
-$climateClassColors = array(
-    'A' => '#a3daf8',
-    'B' => '#8eb5d4',
-    'C' => '#7793b3',
-    'D' => '#5f6e8f',
-    'E' => '#4c5071',
-    'F' => '#363351',
-    'G' => '#221332',
-);
-
-/**
- * Shortcode [list_properties]
- */
+/**Classe d'affichage des biens / annonces pour le bien du plugin**/
 class DisplayEstate {
 
     /**
-     * Shortcode for displaying properties on homepage
+     * Shortcode pour afficher les biens sur la page d'acceuil
      * Usage: [list_properties country="FR"]
      */
     public function shortcode_home_estate($atts) {
@@ -130,7 +105,7 @@ class DisplayEstate {
     }
 
     /**
-     * Shortcode for displaying a single property page (one estate page)
+     * Shortcode pour afficher juste un bien dans la page d'affichage de bien unique
      * Usage: [estate_page id="1234"]
      */
     public function shortcode_estate_page($atts) {
@@ -308,7 +283,7 @@ class DisplayEstate {
     }
 
     /**
-     * Shortcode for listing multiple properties on a page (for "tout les biens en" + country)
+     * Lister tout les biens.
      * Usage: [list_property_page country="FR"]
      */
     public function shortcode_multiple_estate_page( $atts ) {
@@ -384,7 +359,45 @@ class DisplayEstate {
     }
 
     /**
-     * Shortcode with pagination for properties (for all estate page)
+     * Enqueue scripts and styles
+     */
+    public function enqueue_carousel_scripts() {
+        wp_enqueue_style( 'swiper-style', 'https://unpkg.com/swiper/swiper-bundle.min.css', array(), '8.4.5' );
+        wp_enqueue_script( 'swiper-script', 'https://unpkg.com/swiper/swiper-bundle.min.js', array(), '8.4.5', true );
+
+        wp_enqueue_style(
+            'plugin-style',
+            plugin_dir_url(__FILE__) . 'styles.css',
+            array(),
+            '1.0.0'
+        );
+
+        wp_add_inline_script( 'swiper-script', "
+            document.addEventListener('DOMContentLoaded', function () {
+                const carousels = document.querySelectorAll('.property-carousel, .single-property-carousel');
+                carousels.forEach(carousel => {
+                    new Swiper(carousel, {
+                        loop: true,
+                        navigation: {
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        },
+                        pagination: {
+                            el: '.swiper-pagination',
+                            clickable: true,
+                        },
+                    });
+                });
+            });
+        ");
+
+        // Leaflet
+        wp_enqueue_style( 'leaflet-css', 'https://unpkg.com/leaflet@1.9.3/dist/leaflet.css', array(), '1.9.3' );
+        wp_enqueue_script( 'leaflet-js', 'https://unpkg.com/leaflet@1.9.3/dist/leaflet.js', array(), '1.9.3', true );
+    }
+
+    /**
+     * Lister tout les biens sur la page de vente de biens dans un pays en particulier
      * Usage: [properties_pagination country="FR"]
      */
     public function estate_paging_shortcode($atts) {
@@ -558,44 +571,6 @@ class DisplayEstate {
         return ob_get_clean();
     }
 
-    /**
-     * Enqueue scripts and styles
-     */
-    public function enqueue_carousel_scripts() {
-        wp_enqueue_style( 'swiper-style', 'https://unpkg.com/swiper/swiper-bundle.min.css', array(), '8.4.5' );
-        wp_enqueue_script( 'swiper-script', 'https://unpkg.com/swiper/swiper-bundle.min.js', array(), '8.4.5', true );
-
-        wp_enqueue_style(
-            'plugin-style',
-            plugin_dir_url(__FILE__) . 'styles.css',
-            array(),
-            '1.0.0'
-        );
-
-        wp_add_inline_script( 'swiper-script', "
-            document.addEventListener('DOMContentLoaded', function () {
-                const carousels = document.querySelectorAll('.property-carousel, .single-property-carousel');
-                carousels.forEach(carousel => {
-                    new Swiper(carousel, {
-                        loop: true,
-                        navigation: {
-                            nextEl: '.swiper-button-next',
-                            prevEl: '.swiper-button-prev',
-                        },
-                        pagination: {
-                            el: '.swiper-pagination',
-                            clickable: true,
-                        },
-                    });
-                });
-            });
-        ");
-
-        // Leaflet
-        wp_enqueue_style( 'leaflet-css', 'https://unpkg.com/leaflet@1.9.3/dist/leaflet.css', array(), '1.9.3' );
-        wp_enqueue_script( 'leaflet-js', 'https://unpkg.com/leaflet@1.9.3/dist/leaflet.js', array(), '1.9.3', true );
-    }
-
     public function enqueue_pagination_scripts() {
         wp_enqueue_script(
             'pagination-script',
@@ -607,21 +582,16 @@ class DisplayEstate {
     }
 }
 
-// Instantiate our class
 $display_estate = new DisplayEstate();
 
-// Hooks & Shortcodes
+
 add_action( 'wp_enqueue_scripts', array( $display_estate, 'enqueue_carousel_scripts' ) );
 add_shortcode('properties_pagination', array( $display_estate, 'estate_paging_shortcode'));
 
-// [list_properties] => liste homepage
 add_shortcode('list_properties', array( $display_estate, 'shortcode_home_estate' ));
 
-// [estate_page] => single page
 add_shortcode('estate_page', array( $display_estate, 'shortcode_estate_page' ));
 
-// [list_property_page] => multiple listing page
 add_shortcode('list_property_page', array( $display_estate, 'shortcode_multiple_estate_page' ));
 
-// Pagination script
 add_action('wp_enqueue_scripts', array( $display_estate, 'enqueue_pagination_scripts'));
