@@ -41,7 +41,7 @@ class DisplayEstate {
 
     /**
      * Shortcode for displaying properties on homepage
-     * Usage: [list_properties country="France"]
+     * Usage: [list_properties country="FR"]
      */
     public function shortcode_home_estate($atts) {
         $atts = shortcode_atts(
@@ -130,8 +130,8 @@ class DisplayEstate {
     }
 
     /**
-     * Shortcode for displaying a single property page
-     * Usage: [estate_page ref="1234"]
+     * Shortcode for displaying a single property page (one estate page)
+     * Usage: [estate_page id="1234"]
      */
     public function shortcode_estate_page($atts) {
         $atts = shortcode_atts(
@@ -184,12 +184,12 @@ class DisplayEstate {
                                     strip_tags(
                                         html_entity_decode(
                                             $property['corps'] ?? '')
-                                        )
                                     )
-                                ),
-                                '></'
+                                )
                             ),
                             '></'
+                        ),
+                        '></'
                     );
                     ?>
                 </p>
@@ -308,8 +308,8 @@ class DisplayEstate {
     }
 
     /**
-     * Shortcode for listing multiple properties on a page
-     * Usage: [list_property_page country="France"]
+     * Shortcode for listing multiple properties on a page (for "tout les biens en" + country)
+     * Usage: [list_property_page country="FR"]
      */
     public function shortcode_multiple_estate_page( $atts ) {
         $atts = shortcode_atts(
@@ -335,6 +335,8 @@ class DisplayEstate {
 
         ob_start();
         ?>
+
+
         <div class="property-list-page">
             <?php foreach ( $filteredListings as $property ) : ?>
                 <div class="property-card">
@@ -382,8 +384,8 @@ class DisplayEstate {
     }
 
     /**
-     * Shortcode with pagination for properties
-     * Usage: [properties_pagination country="France"]
+     * Shortcode with pagination for properties (for all estate page)
+     * Usage: [properties_pagination country="FR"]
      */
     public function estate_paging_shortcode($atts) {
         $atts = shortcode_atts(array(
@@ -403,6 +405,73 @@ class DisplayEstate {
 
         ob_start();
         ?>
+        <form class="biens-filtre-form">
+            <label for="type_bien">Type de bien :</label>
+            <select id="type_bien" name="type_bien">
+                <option value="">Tous</option>
+                <option value="Appartement">Appartement</option>
+                <option value="Maison">Maison</option>
+            </select>
+
+            <label for="prix_min">Prix min :</label>
+            <input type="number" id="prix_min" name="prix_min" placeholder="Min (€)">
+            <label for="prix_max">Prix max :</label>
+            <input type="number" id="prix_max" name="prix_max" placeholder="Max (€)">
+
+            <label for="ville">Ville :</label>
+            <input type="text" id="ville" name="ville" placeholder="Nom de la ville">
+
+            <label for="habitable_surface_min">Surface habitable min (m²) :</label>
+            <input type="number" id="habitable_surface_min" name="habitable_surface_min">
+            <label for="habitable_surface_max">Surface habitable max (m²) :</label>
+            <input type="number" id="habitable_surface_max" name="habitable_surface_max">
+
+            <label for="class_energie">Classe énergie :</label>
+            <select id="class_energie" name="class_energie">
+                <option value="">Toutes</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+            </select>
+            <label for="class_climat">Classe climat :</label>
+            <select id="class_climat" name="class_climat">
+                <option value="">Toutes</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+            </select>
+
+            <label for="nb_chambres">Nombre de chambres :</label>
+            <input type="number" id="nb_chambres" name="nb_chambres" min="0">
+            <label for="nb_salle_bain">Nombre de salles de bain :</label>
+            <input type="number" id="nb_salle_bain" name="nb_salle_bain" min="0">
+
+            <label for="piscine">
+                <input type="checkbox" id="piscine" name="piscine"> Avec piscine
+            </label>
+
+            <label for="vue">Vue :</label>
+            <select id="vue" name="vue">
+                <option value="">Toutes</option>
+                <option value="ville">Ville</option>
+                <option value="mer">Mer</option>
+                <option value="montagne">Montagne</option>
+            </select>
+
+            <label for="orientation">Orientation :</label>
+            <select id="orientation" name="orientation">
+                <option value="">Toutes</option>
+                <option value="nord">Nord</option>
+                <option value="sud">Sud</option>
+                <option value="est">Est</option>
+                <option value="ouest">Ouest</option>
+                <option value="sud-est">Sud-Est</option>
+            </select>
+
+            <button type="submit">Filtrer</button>
+        </form>
         <div class="paginated-properties-list">
             <?php for ($i = 0; $i < $total_pages; $i++) : ?>
                 <div class="property-page"
