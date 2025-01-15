@@ -33,11 +33,11 @@ Lien du github (n'hésitez pas à regarder les branches pour voir les commits et
 
 Lien de nos rapports hebdomadaire respectifs: 
 
-- Chiheb : https://docs.google.com/document/d/1EmPwX0vx3Lqk7mpev2fTbdw0a9qEsuUVF6n9sk-N0ek/edit?usp=sharing
+- Chiheb : [https://docs.google.com/document/d/1EmPwX0vx3Lqk7mpev2fTbdw0a9qEsuUVF6n9sk-N0ek/edit?usp=sharing](https://docs.google.com/document/d/1qy7Ijqn4ewZFY8a6PrztdWoE2F0YgmSs6reLvSKtNkg/edit?usp=sharing)
 
-- Ayoub : https://docs.google.com/document/d/1Si0eeYaJzUU9pKbpnkTSLGfVn8o9HUXnW_EHe2BUD4Q/edit?usp=sharing
+- Ayoub : [https://docs.google.com/document/d/1Si0eeYaJzUU9pKbpnkTSLGfVn8o9HUXnW_EHe2BUD4Q/edit?usp=sharing]https://docs.google.com/document/d/1Si0eeYaJzUU9pKbpnkTSLGfVn8o9HUXnW_EHe2BUD4Q/edit?usp=sharing
 
-- Raoul : https://docs.google.com/document/d/17rQSgS0o3vyxEPA1k_ymJI5k_AgvA2AvS5bIgBVUhiM/edit?tab=t.0
+- Raoul : [https://docs.google.com/document/d/17rQSgS0o3vyxEPA1k_ymJI5k_AgvA2AvS5bIgBVUhiM/edit?tab=t.0]https://docs.google.com/document/d/17rQSgS0o3vyxEPA1k_ymJI5k_AgvA2AvS5bIgBVUhiM/edit?tab=t.0
 
 ### Comment lancer l'application front-end
 
