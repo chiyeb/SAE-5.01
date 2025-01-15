@@ -1,0 +1,426 @@
+<hektor>
+    <!-- 1. Paris, studio cosy -->
+    <ad>
+        <id dateEnr="2025-01-15" dateMaj="2025-01-15" mandateKey="110011">1001</id>
+        <titre><![CDATA[Paris, studio cosy proche du Louvre]]></titre>
+        <type_offre><![CDATA[Vente]]></type_offre>
+        <agence><![CDATA[Agence Paris Centre]]></agence>
+        <corps>
+            <![CDATA[Studio lumineux de 25m2, idéalement situé à deux pas du Louvre et de la Seine. Pièce de vie avec kitchenette équipée, salle d'eau moderne, parfait pour un premier investissement ou un pied-à-terre.]]>
+        </corps>
+        <prix>260000</prix>
+        <charges>1200</charges>
+        <honoraires>13000</honoraires>
+        <prixnetvendeur>247000</prixnetvendeur>
+        <type_bien><![CDATA[Appartement]]></type_bien>
+        <type_bien_code>2</type_bien_code>
+        <surface_habitable unit="meters"><![CDATA[25]]></surface_habitable>
+        <nb_pieces>1</nb_pieces>
+        <chambres>0</chambres>
+        <nb_etages>6</nb_etages>
+        <etage>2</etage>
+        <wc>1</wc>
+        <exposition><![CDATA[SUD-EST]]></exposition>
+        <pays ISO="FR"><![CDATA[France]]></pays>
+        <ville><![CDATA[Paris]]></ville>
+        <latitude>48.8566</latitude>
+        <longitude>2.3522</longitude>
+        <cp><![CDATA[75001]]></cp>
+        <departement>75</departement>
+        <images>
+            <image><![CDATA[https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1980&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D]]></image>
+            <image><![CDATA[https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D]]></image>        </images>
+    </ad>
+
+    <!-- 2. Marseille, appartement T3 -->
+    <ad>
+        <id dateEnr="2025-01-15" dateMaj="2025-01-15" mandateKey="223344">2002</id>
+        <titre><![CDATA[Marseille, T3 avec vue sur le Vieux-Port]]></titre>
+        <type_offre><![CDATA[Vente]]></type_offre>
+        <agence><![CDATA[Agence du Vieux-Port]]></agence>
+        <corps>
+            <![CDATA[Appartement de 60m2 au 4e étage d'un immeuble avec ascenseur, offrant une vue imprenable sur le Vieux-Port. Séjour spacieux, deux chambres, salle de bain, idéal pour profiter de la vie marseillaise.]]>
+        </corps>
+        <prix>295000</prix>
+        <charges>1500</charges>
+        <honoraires>14750</honoraires>
+        <prixnetvendeur>280250</prixnetvendeur>
+        <type_bien><![CDATA[Appartement]]></type_bien>
+        <surface_habitable unit="meters"><![CDATA[60]]></surface_habitable>
+        <nb_pieces>3</nb_pieces>
+        <chambres>2</chambres>
+        <nb_etages>6</nb_etages>
+        <etage>4</etage>
+        <wc>1</wc>
+        <exposition><![CDATA[SUD]]></exposition>
+        <pays ISO="FR"><![CDATA[France]]></pays>
+        <ville><![CDATA[Marseille]]></ville>
+        <latitude>43.2965</latitude>
+        <longitude>5.3698</longitude>
+        <cp><![CDATA[13002]]></cp>
+        <departement>13</departement>
+        <images>
+            <image><![CDATA[https://images.unsplash.com/photo-1499916078039-922301b0eb9b?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D]]></image>
+            <image><![CDATA[https://plus.unsplash.com/premium_photo-1684175656320-5c3f701c082c?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YXBhcnRtZW50fGVufDB8fDB8fHww]]></image>
+        </images>
+    </ad>
+
+    <!-- 3. Lyon, duplex moderne -->
+    <ad>
+        <id dateEnr="2025-01-15" dateMaj="2025-01-15" mandateKey="334455">3003</id>
+        <titre><![CDATA[Lyon, duplex contemporain proche Presqu'île]]></titre>
+        <type_offre><![CDATA[Vente]]></type_offre>
+        <agence><![CDATA[Lyon Immo Prestige]]></agence>
+        <corps>
+            <![CDATA[Duplex de 80m2 dans un immeuble récent, proche des quais. Vaste séjour avec cuisine ouverte, 2 chambres à l'étage, salle de bain moderne, cave et garage inclus.]]>
+        </corps>
+        <prix>420000</prix>
+        <charges>2000</charges>
+        <honoraires>21000</honoraires>
+        <prixnetvendeur>399000</prixnetvendeur>
+        <type_bien><![CDATA[Appartement]]></type_bien>
+        <type_bien_code>2</type_bien_code>
+        <surface_habitable unit="meters"><![CDATA[80]]></surface_habitable>
+        <nb_pieces>3</nb_pieces>
+        <chambres>2</chambres>
+        <nb_etages>5</nb_etages>
+        <etage>4</etage>
+        <exposition><![CDATA[OUEST]]></exposition>
+        <pays ISO="FR"><![CDATA[France]]></pays>
+        <ville><![CDATA[Lyon]]></ville>
+        <latitude>45.7640</latitude>
+        <longitude>4.8357</longitude>
+        <cp><![CDATA[69002]]></cp>
+        <departement>69</departement>
+        <images>
+            <image><![CDATA[https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXBhcnRtZW50fGVufDB8fDB8fHww]]></image>
+            <image><![CDATA[https://images.unsplash.com/photo-1499955085172-a104c9463ece?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXBhcnRtZW50fGVufDB8fDB8fHww]]></image>        </images>
+    </ad>
+
+    <!-- 4. Bordeaux, maison de ville -->
+    <ad>
+        <id dateEnr="2025-01-15" dateMaj="2025-01-15" mandateKey="4455667">4004</id>
+        <titre><![CDATA[Bordeaux, maison de ville avec jardin]]></titre>
+        <type_offre><![CDATA[Vente]]></type_offre>
+        <agence><![CDATA[Bordeaux Chartrons Immo]]></agence>
+        <corps>
+            <![CDATA[Charmante maison de ville de 110m2 avec petit jardin arboré. Salon avec cheminée, 3 chambres, cuisine séparée, buanderie, à proximité des transports et écoles.]]>
+        </corps>
+        <prix>590000</prix>
+        <charges>0</charges>
+        <honoraires>29500</honoraires>
+        <prixnetvendeur>560500</prixnetvendeur>
+        <type_bien><![CDATA[Maison]]></type_bien>
+        <type_bien_code>1</type_bien_code>
+        <surface_habitable unit="meters"><![CDATA[110]]></surface_habitable>
+        <nb_pieces>4</nb_pieces>
+        <chambres>3</chambres>
+        <nb_etages>2</nb_etages>
+        <exposition><![CDATA[SUD-OUEST]]></exposition>
+        <pays ISO="FR"><![CDATA[France]]></pays>
+        <ville><![CDATA[Bordeaux]]></ville>
+        <latitude>44.8378</latitude>
+        <longitude>-0.5792</longitude>
+        <cp><![CDATA[33000]]></cp>
+        <departement>33</departement>
+        <images>
+            <image><![CDATA[https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg]]></image>
+            <image><![CDATA[https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg]]></image>
+        </images>
+    </ad>
+
+    <!-- 5. Toulouse, appartement T4 -->
+    <ad>
+        <id dateEnr="2025-01-15" dateMaj="2025-01-15" mandateKey="556677">5005</id>
+        <titre><![CDATA[Toulouse, T4 proche de la Garonne]]></titre>
+        <type_offre><![CDATA[Vente]]></type_offre>
+        <agence><![CDATA[Occitanie Habitat]]></agence>
+        <corps>
+            <![CDATA[Appartement T4 de 85m2 à quelques minutes du centre historique. Grand séjour, 3 chambres, balcon filant avec vue sur la Garonne, cuisine équipée.]]>
+        </corps>
+        <prix>330000</prix>
+        <charges>1800</charges>
+        <honoraires>16500</honoraires>
+        <prixnetvendeur>313500</prixnetvendeur>
+        <type_bien><![CDATA[Appartement]]></type_bien>
+        <type_bien_code>2</type_bien_code>
+        <surface_habitable unit="meters"><![CDATA[85]]></surface_habitable>
+        <nb_pieces>4</nb_pieces>
+        <chambres>3</chambres>
+        <nb_etages>4</nb_etages>
+        <etage>2</etage>
+        <exposition><![CDATA[SUD]]></exposition>
+        <pays ISO="FR"><![CDATA[France]]></pays>
+        <ville><![CDATA[Toulouse]]></ville>
+        <latitude>43.6045</latitude>
+        <longitude>1.4442</longitude>
+        <cp><![CDATA[31000]]></cp>
+        <departement>31</departement>
+        <images>
+            <image><![CDATA[https://plus.unsplash.com/premium_photo-1676321046262-4978a752fb15?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YXBhcnRtZW50fGVufDB8fDB8fHww]]></image>
+            <image><![CDATA[https://images.unsplash.com/photo-1502672023488-70e25813eb80?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGFwYXJ0bWVudHxlbnwwfHwwfHx8MA%3D%3D]]></image>
+        </images>
+    </ad>
+
+    <!-- 6. Lille, loft -->
+    <ad>
+        <id dateEnr="2025-01-15" dateMaj="2025-01-15" mandateKey="667788">6006</id>
+        <titre><![CDATA[Lille, loft industriel rénové]]></titre>
+        <type_offre><![CDATA[Vente]]></type_offre>
+        <agence><![CDATA[Immo Flandres]]></agence>
+        <corps>
+            <![CDATA[Loft de 70m2 dans une ancienne manufacture réhabilitée. Espace ouvert, hauteur sous plafond, cuisine américaine, 1 chambre en mezzanine. Ambiance urbaine et contemporaine.]]>
+        </corps>
+        <prix>250000</prix>
+        <charges>1300</charges>
+        <honoraires>12500</honoraires>
+        <prixnetvendeur>237500</prixnetvendeur>
+        <type_bien><![CDATA[Appartement]]></type_bien>
+        <type_bien_code>2</type_bien_code>
+        <surface_habitable unit="meters"><![CDATA[70]]></surface_habitable>
+        <nb_pieces>2</nb_pieces>
+        <chambres>1</chambres>
+        <nb_etages>3</nb_etages>
+        <etage>1</etage>
+        <exposition><![CDATA[NORD]]></exposition>
+        <pays ISO="FR"><![CDATA[France]]></pays>
+        <ville><![CDATA[Lille]]></ville>
+        <latitude>50.6292</latitude>
+        <longitude>3.0573</longitude>
+        <cp><![CDATA[59000]]></cp>
+        <departement>59</departement>
+        <images>
+            <image><![CDATA[https://images.unsplash.com/photo-1690987601363-83022d125159?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGFwYXJ0bWVudHxlbnwwfHwwfHx8MA%3D%3D]]></image>
+            <image><![CDATA[https://images.unsplash.com/photo-1501876725168-00c445821c9e?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGFwYXJ0bWVudHxlbnwwfHwwfHx8MA%3D%3D]]></image>
+        </images>
+    </ad>
+
+    <!-- 7. Nantes, T3 avec terrasse -->
+    <ad>
+        <id dateEnr="2025-01-15" dateMaj="2025-01-15" mandateKey="778899">7007</id>
+        <titre><![CDATA[Nantes, T3 avec grande terrasse]]></titre>
+        <type_offre><![CDATA[Location]]></type_offre>
+        <agence><![CDATA[Nantes Est Immobilier]]></agence>
+        <corps>
+            <![CDATA[T3 de 65m2 dans une résidence récente. Séjour ouvrant sur une terrasse de 15m2 exposée sud, 2 chambres, salle de bain, parking privatif. Proche tram et commerces.]]>
+        </corps>
+        <prix>280000</prix>
+        <charges>1600</charges>
+        <honoraires>14000</honoraires>
+        <prixnetvendeur>266000</prixnetvendeur>
+        <type_bien><![CDATA[Appartement]]></type_bien>
+        <type_bien_code>2</type_bien_code>
+        <surface_habitable unit="meters"><![CDATA[65]]></surface_habitable>
+        <nb_pieces>3</nb_pieces>
+        <chambres>2</chambres>
+        <nb_etages>4</nb_etages>
+        <etage>3</etage>
+        <exposition><![CDATA[SUD]]></exposition>
+        <pays ISO="FR"><![CDATA[France]]></pays>
+        <ville><![CDATA[Nantes]]></ville>
+        <latitude>47.2184</latitude>
+        <longitude>-1.5536</longitude>
+        <cp><![CDATA[44000]]></cp>
+        <departement>44</departement>
+        <images>
+            <image><![CDATA[https://plus.unsplash.com/premium_photo-1672252617539-878656f17efe?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGFwYXJ0bWVudHxlbnwwfHwwfHx8MA%3D%3D]]></image>
+            <image><![CDATA[https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGFwYXJ0bWVudHxlbnwwfHwwfHx8MA%3D%3D]]></image>
+        </images>
+    </ad>
+
+    <!-- 8. Strasbourg, duplex atypique -->
+    <ad>
+        <id dateEnr="2025-01-15" dateMaj="2025-01-15" mandateKey="889900">8008</id>
+        <titre><![CDATA[Strasbourg, duplex atypique au bord de l’Ill]]></titre>
+        <type_offre><![CDATA[Vente]]></type_offre>
+        <agence><![CDATA[Alsace Patrimoine]]></agence>
+        <corps>
+            <![CDATA[Duplex de 90m2 dans un immeuble à colombages, rénové avec goût. Vaste salon, 2 chambres, cuisine équipée, vue sur l’Ill. Emplacement recherché, proche Petite France.]]>
+        </corps>
+        <prix>390000</prix>
+        <charges>1800</charges>
+        <honoraires>19500</honoraires>
+        <prixnetvendeur>370500</prixnetvendeur>
+        <type_bien><![CDATA[Appartement]]></type_bien>
+        <type_bien_code>2</type_bien_code>
+        <surface_habitable unit="meters"><![CDATA[90]]></surface_habitable>
+        <nb_pieces>3</nb_pieces>
+        <chambres>2</chambres>
+        <nb_etages>3</nb_etages>
+        <etage>2</etage>
+        <exposition><![CDATA[EST]]></exposition>
+        <pays ISO="FR"><![CDATA[France]]></pays>
+        <ville><![CDATA[Strasbourg]]></ville>
+        <latitude>48.5839</latitude>
+        <longitude>7.7455</longitude>
+        <cp><![CDATA[67000]]></cp>
+        <departement>67</departement>
+        <images>
+            <image><![CDATA[https://images.unsplash.com/photo-1571598301081-36702bef5e81?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGFwYXJ0bWVudHxlbnwwfHwwfHx8MA%3D%3D]]></image>
+            <image><![CDATA[https://images.unsplash.com/photo-1496180727794-817822f65950?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGFwYXJ0bWVudHxlbnwwfHwwfHx8MA%3D%3D]]></image>
+        </images>
+    </ad>
+
+    <!-- 9. Brest, appartement T2 -->
+    <ad>
+        <id dateEnr="2025-01-15" dateMaj="2025-01-15" mandateKey="990011">9009</id>
+        <titre><![CDATA[Brest, T2 avec vue rade]]></titre>
+        <type_offre><![CDATA[Vente]]></type_offre>
+        <agence><![CDATA[Finistère Habitat]]></agence>
+        <corps>
+            <![CDATA[T2 de 45m2 en étage élevé, vue dégagée sur la rade de Brest. Séjour avec balcon, cuisine aménagée, 1 chambre, salle de bain. Proche centre-ville et port.]]>
+        </corps>
+        <prix>135000</prix>
+        <charges>1000</charges>
+        <honoraires>6750</honoraires>
+        <prixnetvendeur>128250</prixnetvendeur>
+        <type_bien><![CDATA[Appartement]]></type_bien>
+        <type_bien_code>2</type_bien_code>
+        <surface_habitable unit="meters"><![CDATA[45]]></surface_habitable>
+        <nb_pieces>2</nb_pieces>
+        <chambres>1</chambres>
+        <nb_etages>6</nb_etages>
+        <etage>5</etage>
+        <exposition><![CDATA[OUEST]]></exposition>
+        <pays ISO="FR"><![CDATA[France]]></pays>
+        <ville><![CDATA[Brest]]></ville>
+        <latitude>48.3904</latitude>
+        <longitude>-4.4861</longitude>
+        <cp><![CDATA[29200]]></cp>
+        <departement>29</departement>
+        <images>
+            <image><![CDATA[https://plus.unsplash.com/premium_photo-1683769251695-963095b23d67?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGFwYXJ0bWVudHxlbnwwfHwwfHx8MA%3D%3D]]></image>
+            <image><![CDATA[https://images.unsplash.com/photo-1527772482340-7895c3f2b3f7?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGFwYXJ0bWVudHxlbnwwfHwwfHx8MA%3D%3D]]></image>
+        </images>
+    </ad>
+
+    <!-- 10. Montpellier, villa contemporaine -->
+    <ad>
+        <id dateEnr="2025-01-15" dateMaj="2025-01-15" mandateKey="101112">1010</id>
+        <titre><![CDATA[Montpellier, villa contemporaine avec piscine]]></titre>
+        <type_offre><![CDATA[Vente]]></type_offre>
+        <agence><![CDATA[Languedoc Luxury]]></agence>
+        <corps>
+            <![CDATA[Villa de 140m2 récente, prestations haut de gamme, piscine à débordement, 4 chambres, vaste pièce à vivre, cuisine design. Quartier calme et ensoleillé.]]>
+        </corps>
+        <prix>850000</prix>
+        <charges>0</charges>
+        <honoraires>42500</honoraires>
+        <prixnetvendeur>807500</prixnetvendeur>
+        <type_bien><![CDATA[Villa]]></type_bien>
+        <type_bien_code>24</type_bien_code>
+        <surface_habitable unit="meters"><![CDATA[140]]></surface_habitable>
+        <nb_pieces>5</nb_pieces>
+        <chambres>4</chambres>
+        <nb_etages>1</nb_etages>
+        <exposition><![CDATA[SUD]]></exposition>
+        <pays ISO="FR"><![CDATA[France]]></pays>
+        <ville><![CDATA[Montpellier]]></ville>
+        <latitude>43.6108</latitude>
+        <longitude>3.8767</longitude>
+        <cp><![CDATA[34000]]></cp>
+        <departement>34</departement>
+        <images>
+            <image><![CDATA[https://images.unsplash.com/photo-1460408037948-b89a5e837b41?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGFwYXJ0bWVudHxlbnwwfHwwfHx8MA%3D%3D]]></image>
+            <image><![CDATA[https://images.unsplash.com/photo-1489936724440-afaf5a115ede?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGFwYXJ0bWVudHxlbnwwfHwwfHx8MA%3D%3D]]></image>
+        </images>
+    </ad>
+
+    <!-- 11. Madrid, appartement moderne -->
+    <ad>
+        <id dateEnr="2025-01-15" dateMaj="2025-01-15" mandateKey="121314">1111</id>
+        <titre><![CDATA[Madrid, appartement moderne proche Gran Via]]></titre>
+        <type_offre><![CDATA[Vente]]></type_offre>
+        <agence><![CDATA[Inmobiliaria Central]]></agence>
+        <corps>
+            <![CDATA[Appartement de 100m2 en plein cœur de Madrid, à deux pas de la Gran Via. Salon spacieux, 3 chambres, cuisine équipée, salle de bain neuve. Quartier dynamique et commerçant.]]>
+        </corps>
+        <prix>480000</prix>
+        <charges>1200</charges>
+        <honoraires>24000</honoraires>
+        <prixnetvendeur>456000</prixnetvendeur>
+        <type_bien><![CDATA[Appartement]]></type_bien>
+        <type_bien_code>2</type_bien_code>
+        <surface_habitable unit="meters"><![CDATA[100]]></surface_habitable>
+        <nb_pieces>4</nb_pieces>
+        <chambres>3</chambres>
+        <nb_etages>5</nb_etages>
+        <etage>3</etage>
+        <wc>2</wc>
+        <exposition><![CDATA[SUD-EST]]></exposition>
+        <pays ISO="ES"><![CDATA[Espagne]]></pays>
+        <ville><![CDATA[Madrid]]></ville>
+        <latitude>40.4168</latitude>
+        <longitude>-3.7038</longitude>
+        <cp><![CDATA[28013]]></cp>
+        <departement><![CDATA[Communauté de Madrid]]></departement>
+        <images>
+            <image><![CDATA[https://plus.unsplash.com/premium_photo-1672252617602-e5de5c6aba9c?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjF8fGFwYXJ0bWVudHxlbnwwfHwwfHx8MA%3D%3D]]></image>
+            <image><![CDATA[https://images.unsplash.com/photo-1531835551805-16d864c8d311?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fGFwYXJ0bWVudHxlbnwwfHwwfHx8MA%3D%3D]]></image>
+        </images>
+    </ad>
+    <ad>
+        <id dateEnr="2025-01-15" dateMaj="2025-01-15" mandateKey="131415">1212</id>
+        <titre><![CDATA[Valence, penthouse ultra-moderne]]></titre>
+        <type_offre><![CDATA[Vente]]></type_offre>
+        <corps>
+            <![CDATA[Penthouse de 120m2 avec terrasse panoramique offrant une vue exceptionnelle sur la ville. Matériaux de haute qualité, 3 chambres, 2 salles de bain, cuisine design. Quartier branché et cosmopolite.]]>
+        </corps>
+        <prix>950000</prix>
+        <charges>2000</charges>
+        <honoraires>47500</honoraires>
+        <prixnetvendeur>902500</prixnetvendeur>
+        <type_bien><![CDATA[Appartement]]></type_bien>
+        <type_bien_code>2</type_bien_code>
+        <surface_habitable unit="meters"><![CDATA[120]]></surface_habitable>
+        <nb_pieces>4</nb_pieces>
+        <chambres>3</chambres>
+        <nb_etages>6</nb_etages>
+        <etage>6</etage>
+        <wc>2</wc>
+        <exposition><![CDATA[SUD]]></exposition>
+        <pays ISO="ES"><![CDATA[Espagne]]></pays>
+        <ville><![CDATA[Valence]]></ville>
+        <latitude>39.4699075</latitude>
+        <longitude>-0.3762881</longitude>
+        <cp><![CDATA[46026]]></cp>
+        <departement><![CDATA[Valence]]></departement>
+        <images>
+            <image><![CDATA[https://images.unsplash.com/photo-1501876725168-00c445821c9e?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGFwYXJ0bWVudHxlbnwwfHwwfHx8MA%3D%3D]]></image>
+            <image><![CDATA[https://plus.unsplash.com/premium_photo-1672252617539-878656f17efe?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGFwYXJ0bWVudHxlbnwwfHwwfHx8MA%3D%3D]]></image>
+        </images>
+    </ad>
+
+    <!-- 13. Rome, appartement historique -->
+    <ad>
+        <id dateEnr="2025-01-15" dateMaj="2025-01-15" mandateKey="141516">1313</id>
+        <titre><![CDATA[Barcelone, appartement dans un palais historique]]></titre>
+        <type_offre><![CDATA[Vente]]></type_offre>
+        <corps>
+            <![CDATA[Appartement de 95m2 dans un palais du XVIIe siècle, plafonds voûtés, salon avec fresques, 2 chambres, cuisine séparée, situé à proximité du Panthéon. Un bijou de la dolce vita romaine.]]>
+        </corps>
+        <prix>720000</prix>
+        <charges>900</charges>
+        <honoraires>36000</honoraires>
+        <prixnetvendeur>684000</prixnetvendeur>
+        <type_bien><![CDATA[Appartement]]></type_bien>
+        <type_bien_code>2</type_bien_code>
+        <surface_habitable unit="meters"><![CDATA[95]]></surface_habitable>
+        <nb_pieces>3</nb_pieces>
+        <chambres>2</chambres>
+        <nb_etages>4</nb_etages>
+        <etage>2</etage>
+        <wc>2</wc>
+        <exposition><![CDATA[SUD-EST]]></exposition>
+        <pays ISO="ES"><![CDATA[Espagne]]></pays>
+        <ville><![CDATA[Barcelone]]></ville>
+        <latitude>41.3887900</latitude>
+        <longitude>2.1589900</longitude>
+        <cp><![CDATA[08001]]></cp>
+        <departement><![CDATA[Barcelonès]]></departement>
+        <images>
+            <image><![CDATA[https://images.unsplash.com/photo-1529408686214-b48b8532f72c?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzF8fGFwYXJ0bWVudHxlbnwwfHwwfHx8MA%3D%3D]]></image>
+            <image><![CDATA[https://plus.unsplash.com/premium_photo-1683769252575-e986af039184?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzN8fGFwYXJ0bWVudHxlbnwwfHwwfHx8MA%3D%3D]]></image>
+        </images>
+    </ad>
+</hektor>

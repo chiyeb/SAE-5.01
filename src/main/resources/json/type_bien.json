@@ -1,0 +1,162 @@
+[
+  {
+    "code": 1,
+    "name": "Maison"
+  },
+  {
+    "code": 2,
+    "name": "Appartement"
+  },
+  {
+    "code": 4,
+    "name": "Studio"
+  },
+  {
+    "code": 5,
+    "name": "Terrain"
+  },
+  {
+    "code": 7,
+    "name": "Viager"
+  },
+  {
+    "code": 10,
+    "name": "Mas Bastide"
+  },
+  {
+    "code": 11,
+    "name": "Garage"
+  },
+  {
+    "code": 15,
+    "name": "Parking"
+  },
+  {
+    "code": 16,
+    "name": "Chalet"
+  },
+  {
+    "code": 17,
+    "name": "Duplex"
+  },
+  {
+    "code": 18,
+    "name": "Autre"
+  },
+  {
+    "code": 20,
+    "name": "Immeuble"
+  },
+  {
+    "code": 21,
+    "name": "Propriete"
+  },
+  {
+    "code": 22,
+    "name": "Commerce"
+  },
+  {
+    "code": 23,
+    "name": "Cabanon"
+  },
+  {
+    "code": 24,
+    "name": "Villa"
+  },
+  {
+    "code": 25,
+    "name": "Rez de jardin"
+  },
+  {
+    "code": 26,
+    "name": "Rez de villa"
+  },
+  {
+    "code": 27,
+    "name": "Château"
+  },
+  {
+    "code": 28,
+    "name": ""
+  },
+  {
+    "code": 29,
+    "name": "Cave"
+  },
+  {
+    "code": 30,
+    "name": "Ferme"
+  },
+  {
+    "code": 31,
+    "name": "Loft"
+  },
+  {
+    "code": 32,
+    "name": "Maison de maître"
+  },
+  {
+    "code": 33,
+    "name": "Maison individuelle"
+  },
+  {
+    "code": 34,
+    "name": "Maison bi-familiale"
+  },
+  {
+    "code": 35,
+    "name": "Fermette"
+  },
+  {
+    "code": 36,
+    "name": "Bungalow"
+  },
+  {
+    "code": 37,
+    "name": "Monastère"
+  },
+  {
+    "code": 38,
+    "name": "Maison de ville"
+  },
+  {
+    "code": 39,
+    "name": "Maison de village"
+  },
+  {
+    "code": 40,
+    "name": "Chambre"
+  },
+  {
+    "code": 41,
+    "name": "Triplex"
+  },
+  {
+    "code": 42,
+    "name": "Penthouse"
+  },
+  {
+    "code": 43,
+    "name": "Terrain à batir"
+  },
+  {
+    "code": 44,
+    "name": "Terrain agricole"
+  },
+  {
+    "code": 45,
+    "name": "Terrain de loisir"
+  },
+  {
+    "code": 46,
+    "name": "Emplacement intérieur"
+  },
+  {
+    "code": 47,
+    "name": "Parking ouvert"
+  },
+  {
+    "code": 48,
+    "name": "Box"
+  }
+]
