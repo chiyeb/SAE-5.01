@@ -1,0 +1,138 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+        .horizontal-estate-card {
+            aspect-ratio: 32/9;
+            background-color: #ffffff;
+            box-shadow: 0px 0 5px rgba(0, 0, 0, 0.5);
+            border-radius: 25px;
+            border: 0.25em solid black;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .horizontal-estate-card:hover {
+            transition: 0.3s;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .estate-photo-container {
+            aspect-ratio: 16/9;
+        }
+
+        .estate-photo-container img {
+            aspect-ratio: inherit;
+            height: 100%;
+            width: 100%;
+        }
+
+        .estate-info-container {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            flex: 50%;
+        }
+
+        .card-content {
+            padding: 25px 25px 0;
+            flex-grow: 1;
+        }
+
+        .bottom-bar {
+            display: flex;
+            padding-right: 2%;
+            align-items: center;
+            flex-direction: row-reverse;
+        }
+
+
+        .virtual-visit-button {
+            width: 35%;
+            height: 75%;
+            border: 0.25em solid black;
+            border-radius: 25px;
+            background-color: #BABABA;
+        }
+
+        .virtual-visit-button:hover {
+            transition: 1s;
+            background-color: #9a9a9a;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-text {
+            margin: 0;
+        }
+
+        .estate-title {
+            font-size: 20px;
+            color: #0bb6aa;
+        }
+
+        .estate-price {
+            font-size: 24px;
+        }
+
+        .estate-description {
+            font-size: 16px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* number of lines to show */
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        /*PC*/
+        @media (min-width: 1350px) {
+            .horizontal-estate-card {
+                width: 1350px;
+            }
+
+            .bottom-bar {
+                height: 54px;
+            }
+
+            .estate-description {
+                padding-top: 5px;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 5; /* number of lines to show */
+                line-clamp: 5;
+                -webkit-box-orient: vertical;
+            }
+        }
+
+        @media (max-width: 800px) {
+            /*Mobile*/
+            .horizontal-estate-card {
+                width: 90%;
+                aspect-ratio: 31/38;
+                flex-direction: column;
+            }
+
+            /*Mobile*/
+            .bottom-bar {
+                padding-right: 2%;
+            }
+
+            /*Mobile*/
+            .bottom-bar {
+                padding-right: 2%;
+            }
+
+            /*Mobile*/
+            .estate-price {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            /*Mobile*/
+            .estate-description {
+                padding-top: 3px;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 2; /* number of lines to show */
+                line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+        }</style>
+<!-- end Simple Custom CSS and JS -->

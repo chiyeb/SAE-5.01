@@ -1,0 +1,119 @@
+.wpzoom-forms-modal {
+	display: none;
+	position: fixed;
+	z-index: 9999;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+.wpzoom-forms-modal-content {
+	background-color: #fff;
+	margin: 15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width:100%;
+	max-width: 850px;
+}
+.wpzoom-forms-templates-list {
+	display: grid;
+	flex-wrap: wrap;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 20px;
+}
+.wpzoom-forms-templates-list li {
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	outline: none;
+}
+.wpzoom-forms-templates-list li:hover,
+.wpzoom-forms-templates-list li:focus,
+.wpzoom-forms-templates-list li.active {
+	border-color: #3496FF;
+}
+.wpzoom-forms-templates-list li a {
+	display: block;
+	padding: 15px 20px;
+	outline: none !important;
+	box-shadow: none;
+	text-decoration: none;
+	color:#242628;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 26px;
+}
+.wpzoom-forms-templates-list li a:hover,
+.wpzoom-forms-templates-list li.active a {
+	color: #3496FF;
+}
+.wpzoom-forms-icon-holder svg {
+	fill: #242628;
+}
+.wpzoom-forms-templates-list li a:hover .wpzoom-forms-icon-holder svg,
+.wpzoom-forms-templates-list li.active a .wpzoom-forms-icon-holder svg {
+	fill: #3496FF;
+}
+
+.wpzoom-forms-templates-list li a span,
+.wpzoom-forms-templates-list li a:hover span {
+	display:block;
+	font-size: 14px;
+	line-height: 22px;
+	color:#242628;
+	font-weight: 400;
+	opacity: 0.8;
+}
+
+.wpzoom-forms-modal-header {
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 20px;
+	margin-bottom: 30px;
+}
+.wpzoom-forms-modal-header h2 {
+	display: flex;
+	font-size: 20px;
+	line-height: 26px;
+	margin: 0;
+}
+.wpzoom-forms-modal-header h2 span {
+	margin-right: 15px;
+}
+.wpzoom-forms-templates-list li a .wpzoom-forms-icon-holder {
+	display: flex;
+	padding-right: 10px;
+	position: relative;
+	top:6px;
+}
+.wpzoom-forms-template-list-wrapper {
+	display: flex;
+}
+
+.wpzoom-forms-modal-footer {
+	display: flex;
+	justify-content: flex-end;
+	border-top: 1px solid #ddd;
+	padding-top: 20px;
+	margin-top:30px;
+}
+.wpzoom-forms-modal-footer .button-primary {
+	background: #3496ff !important;
+	border: none !important;
+	padding: 0 20px;
+}
+#wpzoom_close_modal {
+	background: none;
+	margin-right: 15px;
+	color: #3496ff;
+	border-color: #3496ff;
+}
+
+.wpzoom-forms-modal-close {
+	color: #aaa;
+	font-size: 28px;
+	font-weight: bold;
+	cursor: pointer;
+}

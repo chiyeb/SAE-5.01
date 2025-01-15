@@ -1,0 +1,92 @@
+.annonces-liste {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 colonnes fixes */
+    gap: 20px; /* Espace entre les colonnes et les lignes */
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 1200px; /* Ajuste si besoin */
+}
+
+.annonce-carte {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Pour gérer le débordement éventuel de l'image */
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s ease, transform 0.3s ease;
+    position: relative;
+}
+
+.annonce-carte:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+}
+
+.annonce-carousel {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
+.annonce-carousel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.annonce-details {
+    padding: 20px;
+}
+
+.annonce-titre {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.annonce-prix {
+    font-size: 1rem;
+    color: #c0392b;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.annonce-localisation, .annonce-type {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 6px;
+}
+
+.swiper-navigation-next,
+.swiper-navigation-prev {
+    color: #fff;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.swiper-navigation-next:hover,
+.swiper-navigation-prev:hover {
+    color: #ccc;
+}
+
+.swiper-pagination-bullet {
+    background: #fff;
+    opacity: 0.7;
+}
+
+.swiper-pagination-bullet-active {
+    background: #0073aa;
+}
+
+/* Adaptation mobile */
+@media (max-width: 768px) {
+    .annonces-liste {
+        grid-template-columns: 1fr; /* Une seule colonne sur les petits écrans */
+    }
+
+    .annonce-carte {
+        margin-bottom: 20px;
+    }
+}
