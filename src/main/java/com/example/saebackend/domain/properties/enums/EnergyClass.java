@@ -10,6 +10,7 @@ public enum EnergyClass {
     G;
 
     public static EnergyClass fromString(String energyClass) {
+        if(energyClass == null || energyClass.isEmpty())  return null;
         return switch (energyClass) {
             case "A" -> A;
             case "B" -> B;

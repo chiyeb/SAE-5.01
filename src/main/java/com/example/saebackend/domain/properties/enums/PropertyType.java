@@ -5,6 +5,7 @@ public enum PropertyType {
     APARTMENT;
 
     public static PropertyType fromString(String type) {
+        if(type == null || type.isEmpty())  return null;
         return switch (type) {
             case "HOUSE" -> HOUSE;
             case "APARTMENT" -> APARTMENT;
