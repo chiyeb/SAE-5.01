@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public record EstateFilterData(String pays, String code_postal, Integer type_bien, Double max_budget, Double surface,
                                Integer nombre_pieces, Integer nombres_chambres, Double habitable_surface_min, Double habitable_surface_max,
-                               String class_energie, String class_climat, Integer nb_salle_bain, Boolean piscine, String orientation, String type_offre) {
+                               String class_energie, String class_climat, Integer nb_salle_bain, Boolean piscine, String orientation, String type_offre, Boolean meuble) {
 
     public List<Annonce> filter(List<Annonce> annonces) {
         return annonces.stream().filter(
@@ -25,7 +25,8 @@ public record EstateFilterData(String pays, String code_postal, Integer type_bie
                         (nb_salle_bain == null || Objects.equals(annonce.getSdb(), nb_salle_bain)) &&
                         (piscine == null || annonce.hasPiscine() == piscine) &&
                         (orientation == null || annonce.getExposition().contains(orientation)) &&
-                        (type_offre == null || annonce.getTypeOffre().equals(type_offre))
+                        (type_offre == null || annonce.getTypeOffre().equals(type_offre)) &&
+                        (meuble == null || annonce.isMeuble() == meuble)
         ).toList();
     }
 }

@@ -3,8 +3,6 @@ package impulse.passerelle.domain.estates.elements;
 import com.google.gson.annotations.SerializedName;
 import jakarta.xml.bind.annotation.*;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -38,7 +36,7 @@ public class Id {
 
     public Id() {}
 
-    public Id(int id, Date dateEnr, Date dateMaj, String mandateKey) throws ParseException {
+    public Id(int id, Date dateEnr, Date dateMaj, String mandateKey) {
         this.id = id;
         this.dateEnr = dateEnr;
         this.dateMaj = dateMaj;
