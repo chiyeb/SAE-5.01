@@ -225,6 +225,11 @@ class GetEstate
             $filters['type_offre'] = $params['type_offre'];
         }
 
+        // Annonce meublé ou non
+        if (!empty($params['meuble'])) {
+            $filters['meuble'] = $params['meuble'];
+        }
+
         return $filters;
     }
 }

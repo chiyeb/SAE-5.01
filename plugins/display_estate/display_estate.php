@@ -369,6 +369,7 @@ class DisplayEstate {
 
         // Attributs utilisés dans $_GET pour filtrer
         $_GET['type_offre'] = $atts['offer_type'];
+        if (isset($atts['meuble'])) $_GET['meuble'] = $atts['meuble'];
         $url = "https://impulsepasserelle.alwaysdata.net/annonce/get";
 
         // Récupère la liste des biens filtrés par pays
