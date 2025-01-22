@@ -10,6 +10,11 @@
     max-width: 1200px;
 }
 
+.btns-estate i {
+    font-size: 1.7rem;
+    margin-right: 1rem;
+}
+
 .property-item {
     background-color: #fff;
     border-radius: 5px;
@@ -561,3 +566,5 @@
 #voir-plus:active {
     transform: scale(0.98);
 }
+
+

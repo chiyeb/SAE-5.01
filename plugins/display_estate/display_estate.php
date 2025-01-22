@@ -24,6 +24,7 @@ require_once 'get_estate.php';
 require_once 'get_estate_type.php';
 require_once 'get_city.php';
 require_once plugin_dir_path(__FILE__) . 'favorites_handler.php';
+require_once plugin_dir_path(__FILE__) . 'head_handler.php';
 
 
 /**
@@ -141,10 +142,10 @@ class DisplayEstate {
 
                         <!-- Lien vers la page du bien -->
                         <a href="<?php echo '/index.php/bien?id=' . htmlspecialchars($property['id']['id'], ENT_QUOTES, 'UTF-8'); ?>">
-                            Voir le bien
+                            <i class="fa-solid fa-eye"></i>
                         </a>
                         <a class="fav-btns" data-info="<?php echo htmlspecialchars($property['id']['id'],ENT_QUOTES, 'UTF-8'); ?>">
-                            Ajouter le bien en favoris
+
                         </a>
                     </div>
                 </div>
@@ -465,7 +466,7 @@ class DisplayEstate {
 
                                     <!-- Lien vers la page du bien -->
                                     <a href="<?php echo '/index.php/bien?id=' . htmlspecialchars($property['id']['id'], ENT_QUOTES, 'UTF-8'); ?>">
-                                        Voir le bien
+                                        <i class="fa-solid fa-eye"></i>
                                     </a>
                                     <a class="fav-btns" data-info="<?php echo htmlspecialchars($property['id']['id'],ENT_QUOTES, 'UTF-8'); ?>">
                                         Ajouté le bien en favoris
@@ -652,114 +653,6 @@ class DisplayEstate {
         <?php
     }
 
-    public function shortcode_fav_estates() {
-        ob_start();
-
-        // recup les données envoyées en JSON
-        $data = json_decode(file_get_contents('php://input'), true);
-
-        // verif si le JSON contient la clé 'favorites'
-        if (empty($data['favorites'])) {
-            echo "Aucune donnée reçue ou la liste de favoris est vide.";
-            return ob_get_clean();
-        }
-
-        // recup la liste d’IDs de biens
-        $estate_ids = $data['favorites'];
-
-        // recup les biens correspondants
-        $allListings = $this->getEstate->get_estates_by_ids($estate_ids);
-
-        // vérif si la fonction get_estates_by_ids(...) a renvoyé quelque chose
-        if (empty($allListings)) {
-            echo "Aucun bien trouvé pour les favoris spécifiés.";
-            return ob_get_clean();
-        }
-        ?>
-
-        <div class="property-list">
-            <?php foreach ($allListings as $property) : ?>
-                <div class="property-item">
-
-                    <!-- Carrousel d’images pour chaque bien -->
-                    <?php if (!empty($property['images']) && is_array($property['images'])) : ?>
-                        <div class="property-carousel swiper">
-                            <div class="swiper-wrapper">
-                                <?php foreach ($property['images'] as $image) : ?>
-                                    <div class="swiper-slide">
-                                        <img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($property['titre']); ?>">
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-button-prev"></div>
-                            <div class="swiper-pagination"></div>
-                        </div>
-                    <?php endif; ?>
-
-                    <!-- Informations principales du bien -->
-                    <div class="property-content">
-                        <h3 class="property-title">
-                            <?php echo esc_html($property['titre']); ?>
-                        </h3>
-
-                        <p class="property-description">
-                            <?php
-                            // Nettoyage du texte pour éviter les tags HTML indésirables
-                            echo esc_html(
-                                ltrim(
-                                    rtrim(
-                                        trim(
-                                            strip_tags(
-                                                html_entity_decode(
-                                                    $property['corps_impression']
-                                                    ?? substr($property['corps'], 0, 80) . '...'
-                                                )
-                                            )
-                                        ),
-                                        '></'
-                                    ),
-                                    '></'
-                                )
-                            );
-                            ?>
-                        </p>
-
-                        <p class="property-price">
-                            <?php echo esc_html($property['prix'] . "€"); ?>
-                        </p>
-
-                        <p class="property-location">
-                            <?php
-                            // Gestion de la ville/pays (vérification si 'pays' est un tableau ou objet)
-                            $paysNom = is_array($property['pays']) && isset($property['pays']['nom'])
-                                ? $property['pays']['nom']
-                                : '';
-                            echo esc_html($property['ville'] . ', ' . $paysNom);
-                            ?>
-                        </p>
-
-                        <p class="property-type">
-                            <?php echo esc_html($property['type_bien']); ?>
-                        </p>
-
-                        <!-- Lien vers la page du bien -->
-                        <a href="<?php echo '/index.php/bien?id=' . urlencode($property['id']['id'] ?? ''); ?>">
-                            Voir le bien
-                        </a>
-                        <a class="fav-btns" data-info="<?php echo htmlspecialchars($property['id']['id'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
-                            Ajouter ce bien aux favoris
-                        </a>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-
-        <?php
-        // Retourne le contenu du tampon
-        return ob_get_clean();
-    }
-
     /**
      * Shortcode : [list_favorites]
      * Affiche la liste des biens favoris (stockés dans localStorage > "favorites")
@@ -812,6 +705,10 @@ class DisplayEstate {
                         //  Injecter le HTML
                         container.innerHTML = html;
 
+                        if (typeof initAllSwipers === 'function') {
+                            initAllSwipers('#favorite-properties');
+                        }
+
                     })
                     .catch(err => {
                         console.error(err);
@@ -819,7 +716,6 @@ class DisplayEstate {
                     });
 
                 function buildPropertyHTML(property) {
-                    console.log(property.id.id);
                     return `
             <div class="property-item">
                 ${generateCarouselHTML(property)}
@@ -840,13 +736,15 @@ class DisplayEstate {
                     <p class="property-type">
                         ${escapeHTML(property.type_bien || '')}
                     </p>
-                    <a href="/index.php/bien?id=${encodeHTML(property.id.id)}">
-                        Voir le bien
-                    </a>
-                    <!-- Bouton Favoris -->
-                    <a class="fav-btns" data-info="${encodeHTML(property.id.id)}">
-                        Ajouter le bien en favoris
-                    </a>
+                    <div class="btns-estate">
+                        <a href="/index.php/bien?id=${encodeHTML(property.id.id)}">
+                            <i class="fa-regular fa-eye"></i>
+                        </a>
+                        <!-- Bouton Favoris -->
+                        <a class="fav-btns" data-info="${encodeHTML(property.id.id)}">
+                            <i class=\"fa-solid fa-heart-circle-xmark\"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
             `;
@@ -883,15 +781,23 @@ class DisplayEstate {
                     return tmp.textContent || tmp.innerText || "";
                 }
 
-                function escapeHTML(str) {
-                    if (typeof str !== 'string') return '';
-                    return str
+                function escapeHTML(value) {
+                    // si c'est un nombre, on le convertit
+                    if (typeof value === 'number') {
+                        value = String(value);
+                    }
+                    // sinon on retourne vide
+                    if (typeof value !== 'string') {
+                        return '';
+                    }
+                    return value
                         .replace(/&/g, "&amp;")
                         .replace(/</g, "&lt;")
                         .replace(/>/g, "&gt;")
                         .replace(/"/g, "&quot;")
                         .replace(/'/g, "&#039;");
                 }
+
 
                 function encodeHTML(str) {
                     return escapeHTML(str);
@@ -901,57 +807,70 @@ class DisplayEstate {
         <?php
         return ob_get_clean();
     }
+    /**
+     * Pour l’AJOUT / SUPPRESSION des favoris : listener global
+     */
     public function euqueue_fav_script() {
+        // On charge un JS (même vide) pour avoir un handle
         wp_enqueue_script('fav_script', get_template_directory_uri() . '/js/fav-script.js', array(), null, true);
 
+        // On injecte du code inline
         wp_add_inline_script(
             'fav_script',
             "
-        document.addEventListener('DOMContentLoaded', function() {
-            function getFavorites() {
-                const favorites = localStorage.getItem('favorites');
-                return favorites ? JSON.parse(favorites) : [];
-            }
-
-            function saveFavorites(favorites) {
-                localStorage.setItem('favorites', JSON.stringify(favorites));
-            }
-
-            const favBtns = document.querySelectorAll('.fav-btns');
-
-            function updateFavButtons() {
+            window.updateAllFavButtons = function() {
                 const favorites = getFavorites();
-                favBtns.forEach(button => {
-                    const propertyId = button.dataset.info;
-                    button.textContent = favorites.includes(propertyId)
-                        ? 'Retirer le bien des favoris'
-                        : 'Ajouter le bien en favoris';
+                const favBtns   = document.querySelectorAll('.fav-btns');
+                favBtns.forEach(btn => {
+                    const propId = btn.dataset.info;
+                    if (favorites.includes(propId)) {
+                        btn.innerHTML = '<i class=\"fa-solid fa-heart-circle-xmark\"></i>';
+                        btn.title     = 'Retirer ce bien des favoris';
+                    } else {
+                        btn.innerHTML = '<i class=\"fa-solid fa-heart-circle-plus\"></i>';
+                        btn.title     = 'Ajouter ce bien en favoris';
+                    }
                 });
             }
 
-            updateFavButtons();
+            window.getFavorites = function() {
+                const favs = localStorage.getItem('favorites');
+                return favs ? JSON.parse(favs) : [];
+            }
+            window.saveFavorites = function(favs) {
+                localStorage.setItem('favorites', JSON.stringify(favs));
+            }
 
-            favBtns.forEach(button => {
-                button.addEventListener('click', function() {
-                    const propertyId = this.dataset.info;
+            document.addEventListener('DOMContentLoaded', function() {
+                if (typeof updateAllFavButtons === 'function') {
+                    updateAllFavButtons();
+                }
+
+                document.body.addEventListener('click', function(e) {
+                    const button = e.target.closest('.fav-btns');
+                    if (!button) return;
+
                     let favorites = getFavorites();
+                    const propId = button.dataset.info;
 
-                    if (favorites.includes(propertyId)) {
-                        favorites = favorites.filter(fav => fav !== propertyId);
+                    // Ajout / retrait
+                    if (favorites.includes(propId)) {
+                        favorites = favorites.filter(id => id !== propId);
                         alert('Bien retiré des favoris !');
                     } else {
-                        favorites.push(propertyId);
+                        favorites.push(propId);
                         alert('Bien ajouté aux favoris !');
                     }
-
                     saveFavorites(favorites);
-                    updateFavButtons();
+
+                    updateAllFavButtons();
                 });
             });
-        });
-        "
+            ",
+            'after'
         );
     }
+
 
     /**
      * Enqueue les scripts et styles nécessaires au carrousel (Swiper) et à la carte (Leaflet).
@@ -973,24 +892,42 @@ class DisplayEstate {
         );
 
         // Initialise le carrousel après le chargement du DOM
-        wp_add_inline_script( 'swiper-script', "
-            document.addEventListener('DOMContentLoaded', function () {
-                const carousels = document.querySelectorAll('.property-carousel, .single-property-carousel');
-                carousels.forEach(carousel => {
-                    new Swiper(carousel, {
-                        loop: true,
-                        navigation: {
-                            nextEl: '.swiper-button-next',
-                            prevEl: '.swiper-button-prev',
-                        },
-                        pagination: {
-                            el: '.swiper-pagination',
-                            clickable: true,
-                        },
-                    });
-                });
+        wp_add_inline_script(
+            'swiper-script',
+            "
+    // déclare une fonction globale 
+    function initAllSwipers(containerSelector) {
+        
+        const container = containerSelector
+            ? document.querySelector(containerSelector)
+            : document;
+
+        if (!container) return; // Sécurité
+
+        // Sélectionne tous les .property-carousel, .single-property-carousel dans ce container
+        const carousels = container.querySelectorAll('.property-carousel, .single-property-carousel');
+        carousels.forEach(carousel => {
+            new Swiper(carousel, {
+                loop: true,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
             });
-        ");
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        initAllSwipers();
+    });
+    ",
+            'after'
+        );
+
 
         // Leaflet CSS & JS
         wp_enqueue_style( 'leaflet-css', 'https://unpkg.com/leaflet@1.9.3/dist/leaflet.css', array(), '1.9.3' );
