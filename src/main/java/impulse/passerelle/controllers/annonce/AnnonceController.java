@@ -43,13 +43,14 @@ public class AnnonceController {
             @RequestParam(required = false) String tri_valeur,
             @RequestParam(required = false) Boolean tri_croissant,
             @RequestParam(required = false) String  type_offre,
-            @RequestParam(required = false) Boolean meuble
+            @RequestParam(required = false) Boolean meuble,
+            @RequestParam(required = false) Boolean professionnel
     ) {
         boolean tri_croissant_default = tri_croissant != null ? tri_croissant : true;
         SortData sortData = (tri_valeur != null) ?
                 new SortData(tri_valeur, tri_croissant_default) :
                 null;
-        EstateFilterData filterData = new EstateFilterData(pays, ville, type_bien, max_budget, surface, nombre_pieces, nombres_chambres, habitable_surface_min, habitable_surface_max, class_energie, class_climat, nb_salle_bain, piscine, orientation, type_offre, meuble);
+        EstateFilterData filterData = new EstateFilterData(pays, ville, type_bien, max_budget, surface, nombre_pieces, nombres_chambres, habitable_surface_min, habitable_surface_max, class_energie, class_climat, nb_salle_bain, piscine, orientation, type_offre, meuble, professionnel);
         return ResponseEntity.ok(gson.toJson(annonceRepository.getAllAnnonces(sortData, filterData)));
     }
 
