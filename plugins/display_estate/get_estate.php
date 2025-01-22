@@ -73,6 +73,42 @@ class GetEstate
     }
 
     /**
+     * Récupère plusieurs biens par leurs identifiants depuis l’API
+     *
+     * @param array $ids Tableau contenant les identifiants uniques des biens
+     * @return array | WP_Error Tableau associatif contenant deux clés :
+     *               - 'success' : les biens récupérés sous forme de tableau associatif
+     *               - 'errors' : les erreurs associées aux identifiants qui n'ont pas pu être récupérés
+     */
+    public function get_estates_by_ids($ids)
+    {
+        if (empty($ids) || !is_array($ids)) {
+            return new \WP_Error(
+                'invalid_ids',
+                'Le paramètre des identifiants doit être un tableau non vide.'
+            );
+        }
+
+        $results = [];
+        $errors = [];
+
+        foreach ($ids as $id) {
+            $response = $this->get_estate_by_id($id);
+
+            if (is_wp_error($response)) {
+                $errors[$id] = $response->get_error_message();
+            } else {
+                $results[$id] = $response;
+            }
+        }
+        return [
+            'success' => $results,
+            'errors' => $errors,
+        ];
+    }
+
+
+    /**
      * Effectue l'appel à l'API et gère les différents cas d'erreurs
      *
      * @param string $path  Chemin supplémentaire à ajouter à l’URL de base (pour l’ID)
