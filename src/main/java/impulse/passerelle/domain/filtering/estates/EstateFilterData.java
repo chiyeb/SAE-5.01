@@ -25,7 +25,7 @@ public record EstateFilterData(String pays, String code_postal, Integer type_bie
                         (nb_salle_bain == null || Objects.equals(annonce.getSdb(), nb_salle_bain)) &&
                         (piscine == null || annonce.hasPiscine() == piscine) &&
                         (orientation == null || annonce.getExposition().contains(orientation)) &&
-                        (type_offre == null || annonce.getTypeOffre().equals(type_offre)) &&
+                        (type_offre == null || annonce.getTypeOffre().contains(type_offre)) &&
                         (meuble == null || annonce.isMeuble() == meuble) &&
                         (professionnel == null || annonce.getTypeOffre().contains("Professionnel") == professionnel)
         ).toList();
