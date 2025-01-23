@@ -186,6 +186,11 @@ class GetEstate
     {
         $filters = [];
 
+        // Filtre par pays
+        if (!empty($params['pays'])) {
+            $filters['pays'] = $params['pays'];
+        }
+
         // Filtre par ville
         if (!empty($params['ville'])) {
             $filters['ville'] = $params['ville'];
@@ -265,7 +270,12 @@ class GetEstate
         if (!empty($params['meuble'])) {
             $filters['meuble'] = $params['meuble'];
         }
-
+        if (!empty($params['meuble'])) {
+            $filters['meuble'] = $params['meuble'];
+        }
+        if (!empty($params['professionnel'])) {
+            $filters['professionnel'] = $params['professionnel'];
+        }
         return $filters;
     }
 }

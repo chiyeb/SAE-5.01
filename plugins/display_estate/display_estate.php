@@ -65,11 +65,10 @@ class DisplayEstate {
 
         // Prépare l’URL pour récupérer les biens
         $_GET['pays'] = $atts['country'];
-        $url = "https://impulsepasserelle.alwaysdata.net/annonce/get";
 
         // Instancie la classe GetEstate et récupère la liste des biens (3 biens max)
 
-        $allListings = array_slice($this->getEstate->get_estate_by_country($atts['country']), 0, 3);
+        $allListings = array_slice($this->getEstate->get_all_estate($_GET), 0, 3);
 
         $country = $atts['country'];
 
@@ -174,13 +173,21 @@ class DisplayEstate {
             'estate_page'
         );
 
-        // Prépare l’URL pour récupérer les détails du bien
-        $url = "https://impulsepasserelle.alwaysdata.net/annonce/get";
         $property = $this->getEstate->get_estate_by_id($atts['id']);
 
         // Vérification du format des données renvoyées
         if ( ! is_array($property) || empty($property) ) {
             return "<p>Error with the listing</p>";
+        }
+
+        if (preg_match('/https:\/\/www\.airbnb\.[a-z]+\/rooms\/[0-9]+/', $property['corps'], $matches)) {
+            $airbnbLink = $matches[0];
+            $property['corps'] = str_replace($airbnbLink, '', $property['corps']);
+        }
+
+        if (preg_match('/https:\/\/www\.booking\.com\/Share-.+/', $property['corps'], $matches)) {
+            $bookingLink = $matches[0];
+            $property['corps'] = str_replace($bookingLink, '', $property['corps']);
         }
 
         // Démarrage du buffer pour construire le HTML
@@ -233,7 +240,7 @@ class DisplayEstate {
                 </p>
 
                 <p class="single-property-price">
-                    <?php echo esc_html($property['prix'] ?? '') . "€"; ?>
+                    <?php echo esc_html($property['prix'] ?? '') . " €"; ?>
                 </p>
 
                 <p class="single-property-location">
@@ -243,6 +250,25 @@ class DisplayEstate {
                 <p class="single-property-type">
                     <?php echo esc_html($property['type_bien'] ?? ''); ?>
                 </p>
+
+                <ul class="wp-block-social-links has-icon-color is-style-logos-only is-layout-flex wp-block-social-links-is-layout-flex">
+                    <?php if (!empty($airbnbLink)) {?>
+                        <li style="color: #FF5A5F; " class="wp-social-link wp-social-link-airbnb has-rausch-color wp-block-social-link">
+                            <a href="<?php echo $airbnbLink; ?>" class="wp-block-social-link-anchor">
+                                <svg width="24" height="24" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M224 373.1c-25.2-31.7-40.1-59.4-45-83.2-22.6-88 112.6-88 90.1 0-5.5 24.3-20.3 52-45 83.2zm138.2 73.2c-42.1 18.3-83.7-10.9-119.3-50.5 103.9-130.1 46.1-200-18.9-200-54.9 0-85.2 46.5-73.3 100.5 6.9 29.2 25.2 62.4 54.4 99.5-32.5 36.1-60.6 52.7-85.2 54.9-50 7.4-89.1-41.1-71.3-91.1 15.1-39.2 111.7-231.2 115.9-241.6 15.8-30.1 25.6-57.4 59.4-57.4 32.3 0 43.4 25.9 60.4 59.9 36 70.6 89.4 177.5 114.8 239.1 13.2 33.1-1.4 71.3-37 86.6zm47-136.1C280.3 35.9 273.1 32 224 32c-45.5 0-64.9 31.7-84.7 72.8C33.2 317.1 22.9 347.2 22 349.8-3.2 419.1 48.7 480 111.6 480c21.7 0 60.6-6.1 112.4-62.4 58.7 63.8 101.3 62.4 112.4 62.4 62.9 .1 114.9-60.9 89.6-130.2 0-3.9-16.8-38.9-16.8-39.6z"/></svg>
+                                <span class="wp-block-social-link-label screen-reader-text">AirBnb</span>
+                            </a>
+                        </li>
+                    <?php }
+                    if (!empty($bookingLink)) { ?>
+                    <li style="color: #3565ff; " class="wp-social-link wp-social-link-booking has-blue-color wp-block-social-link">
+                        <a href="<?php echo $bookingLink; ?>" class="wp-block-social-link-anchor">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 3.036 3.037"><path d="M1.113 2.524h-.51v-.61c0-.13.05-.2.162-.214h.35a.38.38 0 0 1 .41.411c0 .26-.157.415-.41.415zM.602.875v-.16c0-.14.06-.208.19-.216h.262c.224 0 .36.134.36.36 0 .17-.092.37-.35.37h-.46zm1.164.61l-.092-.052.08-.07c.094-.08.25-.262.25-.575 0-.48-.372-.79-.947-.79h-.73a.32.32 0 0 0-.309.317v2.72H1.07c.64 0 1.052-.348 1.052-.888 0-.29-.133-.54-.358-.665" fill="#273b7d"/><path d="M2.288 2.67c0-.203.163-.367.365-.367s.367.164.367.367-.164.367-.367.367-.365-.164-.365-.367" fill="#499fdd"/></svg>
+                            <span class="wp-block-social-link-label screen-reader-text">AirBnb</span>
+                        </a>
+                    </li>
+                    <?php } ?>
+                </ul>
             </div>
         </div>
 
@@ -360,12 +386,12 @@ class DisplayEstate {
     }
 
     /**
-     * Shortcode : [properties_pagination country="FR" offer_type="Vente"]
+     * Shortcode : [properties_pagination country="FR" offer_type="Vente" furnished=1 pro=0]
      *
      * Gère l'affichage paginé des biens immobiliers pour un pays et un type d'offre donnés.
      * Possibilité de filtrer les biens en fonction d’autres critères (via GET).
      *
-     * @param array $atts Attributs du shortcode : 'country' => 'FR', 'offer_type' => 'Vente'.
+     * @param array $atts Attributs du shortcode : 'country' => 'FR', 'offer_type' => 'Vente', 'furnished' => 1, 'pro' => 0.
      * @return string Retourne le code HTML généré, incluant la pagination.
      */
     public function estate_paging_shortcode($atts) {
@@ -376,12 +402,13 @@ class DisplayEstate {
         ), $atts, 'properties_pagination');
 
         // Attributs utilisés dans $_GET pour filtrer
+        $_GET['pays'] = $atts['country'];
         $_GET['type_offre'] = $atts['offer_type'];
-        if (isset($atts['meuble'])) $_GET['meuble'] = $atts['meuble'];
-        $url = "https://impulsepasserelle.alwaysdata.net/annonce/get";
+        if (isset($atts['furnished'])) $_GET['meuble'] = $atts['furnished'];
+        if (isset($atts['pro'])) $_GET['professionnel'] = $atts['pro'];
 
         // Récupère la liste des biens filtrés par pays
-        $allListings = $this->getEstate->get_estate_by_country($atts['country'], $_GET);
+        $allListings = $this->getEstate->get_all_estate($_GET);
 
         $country = $atts['country'];
         $items_per_page = 10; // Nombre de biens par page
@@ -391,7 +418,7 @@ class DisplayEstate {
         ob_start();
 
         // Affiche le formulaire de recherche / filtrage
-        $this->search_tab($atts['country']);
+        $this->search_tab($country);
 
         // Si aucun bien
         if (empty($allListings)) {

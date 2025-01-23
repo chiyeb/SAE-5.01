@@ -16,7 +16,7 @@
 
 require_once 'domain/estate_type.php';
 
-use domain\EstateType;
+use display_estate\domain\EstateType;
 
 /**
  * Classe GetEstateType

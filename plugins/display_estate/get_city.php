@@ -16,7 +16,7 @@
 
 require_once 'domain/city.php';
 
-use domain\City;
+use display_estate\domain\City;
 
 /**
  * Classe GetCity
